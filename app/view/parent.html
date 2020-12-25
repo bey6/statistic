@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Query</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/public/css/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <script src="/public/js/jquery.min.js" defer="defer"></script>
+    <script src="/public/js/bootstrap.min.js" defer="defer"></script>
+    {% block header %} {% endblock %}
+  </head>
+  <body>
+    <header>
+      <img
+        src="http://xhdev.docimaxvip.com/img/logo-small.png"
+        alt="logo.png"
+        style="margin: 10px 8px 0px 25px"
+        width="32"
+        height="32"
+      />
+      <h1 style="margin: 0; font-size: 1.345em; line-height: 50px; color: #fff">
+        首页统计
+      </h1>
+    </header>
+
+    {% block content %} {% endblock %}
+  </body>
+</html>

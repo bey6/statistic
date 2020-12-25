@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #2cbf9a;
+  --sub-color: #239175;
+  --border: 1px solid #ced4da;
+}
+
+html,
+body {
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+ol,
+ul {
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+}
+
+header {
+  display: flex;
+  background-color: var(--main-color);
+  height: 51px;
+  border-bottom: 1px solid #555;
+}
+
+@-moz-document url-prefix() {
+  select.form-control {
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('../img/chevron-down.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 7px) 50%;
+    background-size: 14px 14px;
+    border-radius: 3px;
+    padding: 0;
+  }
+}

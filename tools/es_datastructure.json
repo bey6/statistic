@@ -1,0 +1,333 @@
+{
+  "mrfs": [
+    {
+      "_id": "1",
+      "mrid": "0011662",
+
+      "clinical": {
+        "in_diagnosis": [
+          {
+            "sequence": 1,
+            "name": "多程化疗后"
+          }
+        ],
+        "out_diagnosis": [],
+        "emergency_diagnosis": [],
+        "allergy_diagnosis": [],
+        "infect_diagnosis": [],
+        "surgery": [],
+        "operation": []
+      },
+      "pumch": {
+        "in_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          }
+        ],
+        "out_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          },
+          {
+            "sequence": 2,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          },
+          {
+            "sequence": 3,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          },
+          {
+            "sequence": 4,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          }
+        ],
+        "out_injury_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          }
+        ],
+        "out_pathology_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": "",
+            "pathology_name": "",
+            "pathology_code": "",
+            "according_name": "",
+            "according_code": "",
+            "diff_name": "",
+            "diff_code": ""
+          }
+        ],
+        "emergency_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": ""
+          }
+        ],
+        "allergy_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": ""
+          },
+          {
+            "sequence": 2,
+            "code": "",
+            "name": ""
+          }
+        ],
+        "infect_diagnosis": [],
+        "surgery": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "start_time": "",
+            "surgeon_id": "",
+            "surgeon_name": "",
+            "surgeon_code": "",
+            "i_assistant_id": "",
+            "i_assistant_name": "",
+            "i_assistant_code": "",
+            "ii_assistant_id": "",
+            "ii_assistant_name": "",
+            "ii_assistant_code": "",
+            "anesthesia_mode_name": "",
+            "anesthesia_mode_code": "",
+            "anaesthetist_id": "",
+            "anaesthetist_name": "",
+            "anaesthetist_code": "",
+            "anesthesia_grade_name": "",
+            "anesthesia_grade_code": "",
+            "heal_grade_name": "",
+            "heal_grade_code": "",
+            "surgery_grade_name": "",
+            "surgery_grade_code": ""
+          }
+        ],
+        "operation": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "start_time": "",
+            "surgeon_id": "",
+            "surgeon_name": "",
+            "surgeon_code": "",
+            "i_assistant_id": "",
+            "i_assistant_name": "",
+            "i_assistant_code": "",
+            "ii_assistant_id": "",
+            "ii_assistant_name": "",
+            "ii_assistant_code": "",
+            "anesthesia_mode_name": "",
+            "anesthesia_mode_code": "",
+            "anaesthetist_id": "",
+            "anaesthetist_name": "",
+            "anaesthetist_code": "",
+            "anesthesia_grade_name": "",
+            "anesthesia_grade_code": "",
+            "heal_grade_name": "",
+            "heal_grade_code": "",
+            "surgery_grade_name": "",
+            "surgery_grade_code": ""
+          }
+        ]
+      },
+      "beijing": {
+        "in_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          }
+        ],
+        "out_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          },
+          {
+            "sequence": 2,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          },
+          {
+            "sequence": 3,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          },
+          {
+            "sequence": 4,
+            "code": "C50.401",
+            "name": "乳房上外象限恶性肿瘤",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          }
+        ],
+        "out_injury_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": ""
+          }
+        ],
+        "out_pathology_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "admitted_name": "",
+            "admitted_code": "",
+            "effect_name": "",
+            "effect_code": "",
+            "pathology_name": "",
+            "pathology_code": "",
+            "according_name": "",
+            "according_code": "",
+            "diff_name": "",
+            "diff_code": ""
+          }
+        ],
+        "emergency_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": ""
+          }
+        ],
+        "allergy_diagnosis": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": ""
+          },
+          {
+            "sequence": 2,
+            "code": "",
+            "name": ""
+          }
+        ],
+        "infect_diagnosis": [],
+        "surgery": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "start_time": "",
+            "surgeon_id": "",
+            "surgeon_name": "",
+            "surgeon_code": "",
+            "i_assistant_id": "",
+            "i_assistant_name": "",
+            "i_assistant_code": "",
+            "ii_assistant_id": "",
+            "ii_assistant_name": "",
+            "ii_assistant_code": "",
+            "anesthesia_mode_name": "",
+            "anesthesia_mode_code": "",
+            "anaesthetist_id": "",
+            "anaesthetist_name": "",
+            "anaesthetist_code": "",
+            "anesthesia_grade_name": "",
+            "anesthesia_grade_code": "",
+            "heal_grade_name": "",
+            "heal_grade_code": "",
+            "surgery_grade_name": "",
+            "surgery_grade_code": ""
+          }
+        ],
+        "operation": [
+          {
+            "sequence": 1,
+            "code": "",
+            "name": "",
+            "start_time": "",
+            "surgeon_id": "",
+            "surgeon_name": "",
+            "surgeon_code": "",
+            "i_assistant_id": "",
+            "i_assistant_name": "",
+            "i_assistant_code": "",
+            "ii_assistant_id": "",
+            "ii_assistant_name": "",
+            "ii_assistant_code": "",
+            "anesthesia_mode_name": "",
+            "anesthesia_mode_code": "",
+            "anaesthetist_id": "",
+            "anaesthetist_name": "",
+            "anaesthetist_code": "",
+            "anesthesia_grade_name": "",
+            "anesthesia_grade_code": "",
+            "heal_grade_name": "",
+            "heal_grade_code": "",
+            "surgery_grade_name": "",
+            "surgery_grade_code": ""
+          }
+        ]
+      }
+    }
+  ]
+}

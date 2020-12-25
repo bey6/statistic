@@ -1,0 +1,14 @@
+{% extends "../parent.html" %} {% block content %}
+<ul class="news-view view">
+  {% for item in list %}
+  <li class="item">
+    {{ item.mrid +'['+ item.date + ']' }}
+    <ol>
+      {% for diag in item.diagnosis %}
+      <li>{{ diag.InternalICDCode }}</li>
+      {% endfor %}
+    </ol>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
