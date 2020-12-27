@@ -9,21 +9,13 @@
     "cache": "/home/bey/codes/statistic/node_modules/egg-view/config/config.local.js",
     "defaultExtension": "/home/bey/codes/statistic/node_modules/egg-view/config/config.default.js"
   },
-  "middleware": "/home/bey/codes/statistic/config/config.default.js",
   "robot": {
     "ua": "/home/bey/codes/statistic/config/config.default.js"
   },
-  "session": {
-    "maxAge": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
-    "key": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
-    "httpOnly": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
-    "encrypt": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js"
-  },
   "security": {
-    "domainWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
-    "protocolWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
-    "defaultMiddleware": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
     "csrf": {
+      "queryName": "/home/bey/codes/statistic/config/config.default.js",
+      "bodyName": "/home/bey/codes/statistic/config/config.default.js",
       "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "type": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "ignoreJSON": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
@@ -31,10 +23,11 @@
       "cookieName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "sessionName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "headerName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
-      "bodyName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
-      "queryName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "refererWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
+    "domainWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+    "protocolWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+    "defaultMiddleware": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
     "xframe": {
       "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "value": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
@@ -72,6 +65,12 @@
       "ipBlackList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
       "checkAddress": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     }
+  },
+  "session": {
+    "maxAge": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
+    "key": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
+    "httpOnly": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
+    "encrypt": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js"
   },
   "helper": {
     "shtml": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"

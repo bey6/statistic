@@ -41,12 +41,11 @@
   {
     "name": null,
     "methods": [
-      "HEAD",
-      "GET"
+      "POST"
     ],
     "paramNames": [],
-    "path": "/query/result",
-    "regexp": "/^\\/query\\/result(?:\\/(?=$))?$/",
+    "path": "/search",
+    "regexp": "/^\\/search(?:\\/(?=$))?$/",
     "stack": [
       "wrappedController"
     ]
@@ -60,6 +59,19 @@
     "paramNames": [],
     "path": "/fulltext",
     "regexp": "/^\\/fulltext(?:\\/(?=$))?$/",
+    "stack": [
+      "wrappedController"
+    ]
+  },
+  {
+    "name": null,
+    "methods": [
+      "HEAD",
+      "GET"
+    ],
+    "paramNames": [],
+    "path": "/dic/condition",
+    "regexp": "/^\\/dic\\/condition(?:\\/(?=$))?$/",
     "stack": [
       "wrappedController"
     ]

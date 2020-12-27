@@ -300,17 +300,14 @@
       "responseTimeout": 60000
     },
     "onClientError": null,
-    "middleware": [
-      "robot"
-    ],
     "robot": {
       "ua": [
         {}
       ]
     },
     "coreMiddlewares": "~config~coreMiddleware",
-    "appMiddlewares": "~config~middleware",
-    "appMiddleware": "~config~middleware"
+    "appMiddlewares": [],
+    "appMiddleware": "~config~appMiddlewares"
   },
   "plugins": {
     "onerror": {

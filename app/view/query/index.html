@@ -3,79 +3,43 @@
 <script src="../../public/js/query/index.js" defer="defer"></script>
 {% endblock %} {% block content %}
 <div style="display: flex; height: calc(100vh - 51px)">
-  <form class="form-inline" style="width: 100%; align-items: flex-start">
+  <form
+    class="form-inline"
+    style="width: 100%; align-items: flex-start"
+    action="/search?_csrf={{ ctx.csrf | safe}}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
     <div class="condition-list">
-      <ol id="condition-list">
-        <li draggable="true">
-          <i class="bi bi-x btn-del rounded" style="color: brown"></i>
-          <select
-            class="form-control form-control-sm condition-list__item"
-            style="flex: 0 0 64px"
-          >
-            <option>并且</option>
-            <option>或者</option>
-          </select>
-          <span class="condition-list__name rounded">姓名</span>
-          <select
-            class="condition-list__item form-control form-control-sm"
-            style="flex: 0 0 128px"
-          >
-            <option>=</option>
-            <option>≥</option>
-            <option>≤</option>
-          </select>
-          <input
-            class="condition-list__item form-control form-control-sm"
-            type="text"
-            style="margin: 0"
-          />
-          <i class="bi bi-arrows-move btn-drag"></i>
-        </li>
-      </ol>
-      <div style="padding: 4px">
+      <ol id="condition-list"></ol>
+      <div style="padding: 4px; text-align: right">
         <button
           class="btn btn-sm btn-primary"
-          style="margin-right: 8px"
           id="query"
           data-toggle="modal"
           data-target="#staticBackdrop"
+          type="submit"
         >
           <i class="bi bi-search" style="margin-right: 8px"></i>查询
         </button>
       </div>
     </div>
-
-    <ul class="condition-tag">
-      <li>常用</li>
-      <li>基本</li>
-      <li>住院</li>
-      <li>门急诊</li>
-      <li>过敏</li>
-      <li>手术</li>
-      <li>操作</li>
-      <li>费用</li>
-      <li>医师</li>
-      <li>转科</li>
-      <li>联系地址</li>
-      <li>其他</li>
-    </ul>
-
-    <ol class="condition-tag-list" id="condition-tag-list">
-      <li style="border-bottom: none">
-        <input
-          type="search"
-          class="form-control form-control-sm"
-          style="width: 100%"
-        />
-      </li>
-      <li><i class="bi bi-arrow-left-square-fill"></i> 病案号</li>
-      <li><i class="bi bi-arrow-left-square-fill"></i> 姓名</li>
-      <li><i class="bi bi-arrow-left-square-fill"></i> 性别</li>
-      <li><i class="bi bi-arrow-left-square-fill"></i> 年龄</li>
-      <li><i class="bi bi-arrow-left-square-fill"></i> 出生日期</li>
-      <li><i class="bi bi-arrow-left-square-fill"></i> 出院日期</li>
-    </ol>
   </form>
+  <ul class="condition-tag" id="condition-tag">
+    <li data-code="common" class="condition-tag--active">常用</li>
+    {% for tag in tags %}
+    <li data-code="{{tag.code}}">{{tag.name}}</li>
+    {% endfor %}
+  </ul>
+
+  <div class="condition-tag-list">
+    <input
+      type="search"
+      class="form-control form-control-sm"
+      style="width: calc(100% - 16px); margin: 8px 8px 0px 8px"
+    />
+    <ol id="condition-tag-list"></ol>
+  </div>
 </div>
 
 <div

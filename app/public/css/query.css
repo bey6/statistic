@@ -43,7 +43,7 @@
   background-color: var(--bgc);
   cursor: pointer;
 }
-.condition-tag > li:first-of-type {
+.condition-tag > li.condition-tag--active {
   background-color: #fff;
   color: var(--main-color);
   border-left: none;
@@ -73,13 +73,14 @@
   height: 100%;
   border-left: var(--bd);
 }
-.condition-tag-list > li {
+.condition-tag-list > ol > li {
+  padding: 2px 4px;
   border-bottom: var(--bd);
   user-select: none;
 }
-.condition-tag-list > li:hover {
+.condition-tag-list > ol > li:hover {
   background-color: var(--bgc);
 }
-.condition-tag-list > li:last-of-type {
+.condition-tag-list > ol > li:last-of-type {
   border-bottom: none;
 }

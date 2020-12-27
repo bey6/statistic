@@ -1,8 +1,9 @@
 const Controller = require('egg').Controller
+const dic_condition = require('../dic/dic_conditions')
 
 class QueryController extends Controller {
     async index() {
-        await this.ctx.render('query/index.html')
+        await this.ctx.render('query/index.html', { conditions: dic_condition.common, tags: dic_condition.mapping })
     }
 
     getWsl(diagnosis_array) {
@@ -135,6 +136,12 @@ class QueryController extends Controller {
 
     async search() {
         try {
+            console.log('in')
+            console.log(this.ctx.request.body)
+            if (!this.ctx.query.icu) {
+                this.ctx.body = this.ctx.request.body
+                return
+            }
             if (!this.ctx.query.id) return
             // 2321391,2251626
             // 希望异次并发的项
