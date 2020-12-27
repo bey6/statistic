@@ -1,18 +1,37 @@
 $(function () {
 
-    $('#query').click('click', event => {
+    $('#query').click(event => {
         window.location.href = '/query/result?id=1'
     })
-
-    $('#condition-list').click('click', event => {
-        if (event.target.tagName === 'I') $(event.target.parentNode).remove()
+    $('#condition-list').click(event => {
+        if (event.target.tagName === 'I') {
+            if ($(event.target).hasClass('btn-del')) {
+                $(event.target.parentNode).remove()
+            }
+        }
     })
+    $('#condition-list').mousedown(event => {
+        if ($(event.target).hasClass('btn-drag')) {
+            const drop_li = `
+                <li class="dropable"></li>
+            `
+            $('#condition-list').children().filter(e => {
+                console.log(e)
+                console.log($(e))
+            })
+            $.each($('#condition-list').children().filter(e => $(e).attr('draggable') === true), function (idx, item) {
+                // $(drop_li).insertBefore(item)
+                $(drop_li).insertAfter(item)
 
-    $('#condition-tag-list').click('click', event => {
+            })
+        }
+        // else event.preventDefault()
+    })
+    $('#condition-tag-list').click(event => {
         if (event.target.tagName === 'LI') {
             let element = `
-            <li>
-            <i class="bi bi-x btn-icon rounded" style="color: brown"></i>
+            <li draggable="true">
+            <i class="bi bi-x btn-del rounded" style="color: brown"></i>
             <select
               class="form-control form-control-sm condition-list__item"
               style="flex: 0 0 64px"
@@ -34,6 +53,7 @@ $(function () {
               type="text"
               style="margin: 0"
             />
+            <i class="bi bi-arrows-move btn-drag"></i>
           </li>
             `
             $('#condition-list').append(element)

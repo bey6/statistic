@@ -75,7 +75,7 @@
     "onerror": {
       "errorPageUrl": "",
       "appErrorFilter": null,
-      "templatePath": "D:\\codes\\local\\statistic\\node_modules\\egg-onerror\\lib\\onerror_page.mustache"
+      "templatePath": "/home/bey/codes/statistic/node_modules/egg-onerror/lib/onerror_page.mustache"
     },
     "i18n": {
       "defaultLocale": "en_US",
@@ -88,8 +88,8 @@
     "watcher": {
       "type": "development",
       "eventSources": {
-        "default": "D:\\codes\\local\\statistic\\node_modules\\egg-watcher\\lib\\event-sources\\default",
-        "development": "D:\\codes\\local\\statistic\\node_modules\\egg-watcher\\lib\\event-sources\\development"
+        "default": "/home/bey/codes/statistic/node_modules/egg-watcher/lib/event-sources/default",
+        "development": "/home/bey/codes/statistic/node_modules/egg-watcher/lib/event-sources/development"
       }
     },
     "customLogger": {
@@ -112,7 +112,7 @@
       "files": 10,
       "fileExtensions": [],
       "whitelist": null,
-      "tmpdir": "C:\\Users\\liub\\AppData\\Local\\Temp\\egg-multipart-tmp\\statistic",
+      "tmpdir": "/tmp/egg-multipart-tmp/statistic",
       "cleanSchedule": {
         "cron": "0 30 4 * * *"
       }
@@ -136,14 +136,14 @@
     },
     "static": {
       "prefix": "/public/",
-      "dir": "D:\\codes\\local\\statistic\\app\\public",
+      "dir": "/home/bey/codes/statistic/app/public",
       "dynamic": true,
       "preload": false,
       "buffer": false,
       "maxFiles": 1000
     },
     "view": {
-      "root": "D:\\codes\\local\\statistic\\app\\view",
+      "root": "/home/bey/codes/statistic/app/view",
       "cache": false,
       "defaultExtension": ".html",
       "defaultViewEngine": "nunjucks",
@@ -203,9 +203,9 @@
         "egg-mock": "^4.0.1"
       }
     },
-    "baseDir": "D:\\codes\\local\\statistic",
-    "HOME": "C:\\Users\\liub",
-    "rundir": "D:\\codes\\local\\statistic\\run",
+    "baseDir": "/home/bey/codes/statistic",
+    "HOME": "/home/bey",
+    "rundir": "/home/bey/codes/statistic/run",
     "dump": {
       "ignore": "<Set>"
     },
@@ -237,7 +237,7 @@
       "onerror": "<Function onerror>"
     },
     "logger": {
-      "dir": "D:\\codes\\local\\statistic\\logs\\statistic",
+      "dir": "/home/bey/codes/statistic/logs/statistic",
       "encoding": "utf8",
       "env": "local",
       "level": "INFO",
@@ -322,8 +322,8 @@
         "jsonp"
       ],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-onerror",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-onerror",
       "version": "2.1.0"
     },
     "session": {
@@ -333,8 +333,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-session",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-session",
       "version": "3.2.0"
     },
     "i18n": {
@@ -344,8 +344,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-i18n",
       "version": "2.1.1"
     },
     "watcher": {
@@ -355,8 +355,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-watcher",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-watcher",
       "version": "3.1.1"
     },
     "multipart": {
@@ -368,8 +368,8 @@
         "schedule"
       ],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-multipart",
       "version": "2.10.3"
     },
     "security": {
@@ -381,8 +381,8 @@
         "session"
       ],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-security",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-security",
       "version": "2.8.0"
     },
     "development": {
@@ -396,8 +396,8 @@
       "env": [
         "local"
       ],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-development",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-development",
       "version": "2.7.0"
     },
     "logrotator": {
@@ -409,8 +409,8 @@
       ],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-logrotator",
       "version": "3.1.0"
     },
     "schedule": {
@@ -420,8 +420,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-schedule",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-schedule",
       "version": "3.6.6"
     },
     "static": {
@@ -431,8 +431,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-static",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-static",
       "version": "2.2.0"
     },
     "jsonp": {
@@ -444,8 +444,8 @@
         "security"
       ],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-jsonp",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-jsonp",
       "version": "2.0.0"
     },
     "view": {
@@ -455,8 +455,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-view",
+      "from": "/home/bey/codes/statistic/node_modules/egg/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-view",
       "version": "2.1.3"
     },
     "nunjucks": {
@@ -469,8 +469,8 @@
       ],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\codes\\local\\statistic\\config\\plugin.js",
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg-view-nunjucks",
+      "from": "/home/bey/codes/statistic/config/plugin.js",
+      "path": "/home/bey/codes/statistic/node_modules/egg-view-nunjucks",
       "version": "2.2.0"
     }
   }

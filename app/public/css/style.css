@@ -7,7 +7,9 @@
 :root {
   --main-color: #2cbf9a;
   --sub-color: #239175;
-  --border: 1px solid #ced4da;
+  --bd: 1px solid #ced4da;
+  --bdr: 3px;
+  --bgc: #eee;
 }
 
 html,

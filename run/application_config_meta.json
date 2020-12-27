@@ -1,295 +1,295 @@
 {
-  "keys": "D:\\codes\\local\\statistic\\config\\config.default.js",
+  "keys": "/home/bey/codes/statistic/config/config.default.js",
   "view": {
-    "defaultViewEngine": "D:\\codes\\local\\statistic\\config\\config.default.js",
+    "defaultViewEngine": "/home/bey/codes/statistic/config/config.default.js",
     "mapping": {
-      ".tpl": "D:\\codes\\local\\statistic\\config\\config.default.js"
+      ".tpl": "/home/bey/codes/statistic/config/config.default.js"
     },
-    "root": "D:\\codes\\local\\statistic\\node_modules\\egg-view\\config\\config.default.js",
-    "cache": "D:\\codes\\local\\statistic\\node_modules\\egg-view\\config\\config.local.js",
-    "defaultExtension": "D:\\codes\\local\\statistic\\node_modules\\egg-view\\config\\config.default.js"
+    "root": "/home/bey/codes/statistic/node_modules/egg-view/config/config.default.js",
+    "cache": "/home/bey/codes/statistic/node_modules/egg-view/config/config.local.js",
+    "defaultExtension": "/home/bey/codes/statistic/node_modules/egg-view/config/config.default.js"
   },
-  "middleware": "D:\\codes\\local\\statistic\\config\\config.default.js",
+  "middleware": "/home/bey/codes/statistic/config/config.default.js",
   "robot": {
-    "ua": "D:\\codes\\local\\statistic\\config\\config.default.js"
+    "ua": "/home/bey/codes/statistic/config/config.default.js"
   },
   "session": {
-    "maxAge": "D:\\codes\\local\\statistic\\node_modules\\egg-session\\config\\config.default.js",
-    "key": "D:\\codes\\local\\statistic\\node_modules\\egg-session\\config\\config.default.js",
-    "httpOnly": "D:\\codes\\local\\statistic\\node_modules\\egg-session\\config\\config.default.js",
-    "encrypt": "D:\\codes\\local\\statistic\\node_modules\\egg-session\\config\\config.default.js"
+    "maxAge": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
+    "key": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
+    "httpOnly": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js",
+    "encrypt": "/home/bey/codes/statistic/node_modules/egg-session/config/config.default.js"
   },
   "security": {
-    "domainWhiteList": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-    "protocolWhiteList": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-    "defaultMiddleware": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
+    "domainWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+    "protocolWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+    "defaultMiddleware": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
     "csrf": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "type": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "ignoreJSON": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "useSession": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "cookieName": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "sessionName": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "headerName": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "bodyName": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "queryName": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "refererWhiteList": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "type": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "ignoreJSON": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "useSession": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "cookieName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "sessionName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "headerName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "bodyName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "queryName": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "refererWhiteList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "xframe": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "value": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "value": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "hsts": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.local.js",
-      "maxAge": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "includeSubdomains": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.local.js",
+      "maxAge": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "includeSubdomains": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "dta": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "methodnoallow": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "noopen": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "nosniff": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "referrerPolicy": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "value": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "value": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "xssProtection": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "value": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "value": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "csp": {
-      "enable": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "policy": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "enable": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "policy": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     },
     "ssrf": {
-      "ipBlackList": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js",
-      "checkAddress": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+      "ipBlackList": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js",
+      "checkAddress": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
     }
   },
   "helper": {
-    "shtml": "D:\\codes\\local\\statistic\\node_modules\\egg-security\\config\\config.default.js"
+    "shtml": "/home/bey/codes/statistic/node_modules/egg-security/config/config.default.js"
   },
   "jsonp": {
-    "limit": "D:\\codes\\local\\statistic\\node_modules\\egg-jsonp\\config\\config.default.js",
-    "callback": "D:\\codes\\local\\statistic\\node_modules\\egg-jsonp\\config\\config.default.js",
-    "csrf": "D:\\codes\\local\\statistic\\node_modules\\egg-jsonp\\config\\config.default.js"
+    "limit": "/home/bey/codes/statistic/node_modules/egg-jsonp/config/config.default.js",
+    "callback": "/home/bey/codes/statistic/node_modules/egg-jsonp/config/config.default.js",
+    "csrf": "/home/bey/codes/statistic/node_modules/egg-jsonp/config/config.default.js"
   },
   "onerror": {
-    "errorPageUrl": "D:\\codes\\local\\statistic\\node_modules\\egg-onerror\\config\\config.default.js",
-    "appErrorFilter": "D:\\codes\\local\\statistic\\node_modules\\egg-onerror\\config\\config.default.js",
-    "templatePath": "D:\\codes\\local\\statistic\\node_modules\\egg-onerror\\config\\config.default.js"
+    "errorPageUrl": "/home/bey/codes/statistic/node_modules/egg-onerror/config/config.default.js",
+    "appErrorFilter": "/home/bey/codes/statistic/node_modules/egg-onerror/config/config.default.js",
+    "templatePath": "/home/bey/codes/statistic/node_modules/egg-onerror/config/config.default.js"
   },
   "i18n": {
-    "defaultLocale": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n\\config\\config.default.js",
-    "dirs": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n\\config\\config.default.js",
-    "queryField": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n\\config\\config.default.js",
-    "cookieField": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n\\config\\config.default.js",
-    "cookieDomain": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n\\config\\config.default.js",
-    "cookieMaxAge": "D:\\codes\\local\\statistic\\node_modules\\egg-i18n\\config\\config.default.js"
+    "defaultLocale": "/home/bey/codes/statistic/node_modules/egg-i18n/config/config.default.js",
+    "dirs": "/home/bey/codes/statistic/node_modules/egg-i18n/config/config.default.js",
+    "queryField": "/home/bey/codes/statistic/node_modules/egg-i18n/config/config.default.js",
+    "cookieField": "/home/bey/codes/statistic/node_modules/egg-i18n/config/config.default.js",
+    "cookieDomain": "/home/bey/codes/statistic/node_modules/egg-i18n/config/config.default.js",
+    "cookieMaxAge": "/home/bey/codes/statistic/node_modules/egg-i18n/config/config.default.js"
   },
   "watcher": {
-    "type": "D:\\codes\\local\\statistic\\node_modules\\egg-watcher\\config\\config.local.js",
+    "type": "/home/bey/codes/statistic/node_modules/egg-watcher/config/config.local.js",
     "eventSources": {
-      "default": "D:\\codes\\local\\statistic\\node_modules\\egg-watcher\\config\\config.default.js",
-      "development": "D:\\codes\\local\\statistic\\node_modules\\egg-watcher\\config\\config.default.js"
+      "default": "/home/bey/codes/statistic/node_modules/egg-watcher/config/config.default.js",
+      "development": "/home/bey/codes/statistic/node_modules/egg-watcher/config/config.default.js"
     }
   },
   "customLogger": {
     "scheduleLogger": {
-      "consoleLevel": "D:\\codes\\local\\statistic\\node_modules\\egg-schedule\\config\\config.default.js",
-      "file": "D:\\codes\\local\\statistic\\node_modules\\egg-schedule\\config\\config.default.js"
+      "consoleLevel": "/home/bey/codes/statistic/node_modules/egg-schedule/config/config.default.js",
+      "file": "/home/bey/codes/statistic/node_modules/egg-schedule/config/config.default.js"
     }
   },
   "schedule": {
-    "directory": "D:\\codes\\local\\statistic\\node_modules\\egg-schedule\\config\\config.default.js"
+    "directory": "/home/bey/codes/statistic/node_modules/egg-schedule/config/config.default.js"
   },
   "multipart": {
-    "mode": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "autoFields": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "defaultCharset": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "fieldNameSize": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "fieldSize": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "fields": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "fileSize": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "files": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "fileExtensions": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "whitelist": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
-    "tmpdir": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js",
+    "mode": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "autoFields": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "defaultCharset": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "fieldNameSize": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "fieldSize": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "fields": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "fileSize": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "files": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "fileExtensions": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "whitelist": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
+    "tmpdir": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js",
     "cleanSchedule": {
-      "cron": "D:\\codes\\local\\statistic\\node_modules\\egg-multipart\\config\\config.default.js"
+      "cron": "/home/bey/codes/statistic/node_modules/egg-multipart/config/config.default.js"
     }
   },
   "development": {
-    "watchDirs": "D:\\codes\\local\\statistic\\node_modules\\egg-development\\config\\config.default.js",
-    "ignoreDirs": "D:\\codes\\local\\statistic\\node_modules\\egg-development\\config\\config.default.js",
-    "fastReady": "D:\\codes\\local\\statistic\\node_modules\\egg-development\\config\\config.default.js",
-    "reloadOnDebug": "D:\\codes\\local\\statistic\\node_modules\\egg-development\\config\\config.default.js",
-    "overrideDefault": "D:\\codes\\local\\statistic\\node_modules\\egg-development\\config\\config.default.js",
-    "overrideIgnore": "D:\\codes\\local\\statistic\\node_modules\\egg-development\\config\\config.default.js"
+    "watchDirs": "/home/bey/codes/statistic/node_modules/egg-development/config/config.default.js",
+    "ignoreDirs": "/home/bey/codes/statistic/node_modules/egg-development/config/config.default.js",
+    "fastReady": "/home/bey/codes/statistic/node_modules/egg-development/config/config.default.js",
+    "reloadOnDebug": "/home/bey/codes/statistic/node_modules/egg-development/config/config.default.js",
+    "overrideDefault": "/home/bey/codes/statistic/node_modules/egg-development/config/config.default.js",
+    "overrideIgnore": "/home/bey/codes/statistic/node_modules/egg-development/config/config.default.js"
   },
   "logrotator": {
-    "filesRotateByHour": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js",
-    "hourDelimiter": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js",
-    "filesRotateBySize": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js",
-    "maxFileSize": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js",
-    "maxFiles": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js",
-    "rotateDuration": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js",
-    "maxDays": "D:\\codes\\local\\statistic\\node_modules\\egg-logrotator\\config\\config.default.js"
+    "filesRotateByHour": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js",
+    "hourDelimiter": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js",
+    "filesRotateBySize": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js",
+    "maxFileSize": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js",
+    "maxFiles": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js",
+    "rotateDuration": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js",
+    "maxDays": "/home/bey/codes/statistic/node_modules/egg-logrotator/config/config.default.js"
   },
   "static": {
-    "prefix": "D:\\codes\\local\\statistic\\node_modules\\egg-static\\config\\config.default.js",
-    "dir": "D:\\codes\\local\\statistic\\node_modules\\egg-static\\config\\config.default.js",
-    "dynamic": "D:\\codes\\local\\statistic\\node_modules\\egg-static\\config\\config.default.js",
-    "preload": "D:\\codes\\local\\statistic\\node_modules\\egg-static\\config\\config.default.js",
-    "buffer": "D:\\codes\\local\\statistic\\node_modules\\egg-static\\config\\config.default.js",
-    "maxFiles": "D:\\codes\\local\\statistic\\node_modules\\egg-static\\config\\config.default.js"
+    "prefix": "/home/bey/codes/statistic/node_modules/egg-static/config/config.default.js",
+    "dir": "/home/bey/codes/statistic/node_modules/egg-static/config/config.default.js",
+    "dynamic": "/home/bey/codes/statistic/node_modules/egg-static/config/config.default.js",
+    "preload": "/home/bey/codes/statistic/node_modules/egg-static/config/config.default.js",
+    "buffer": "/home/bey/codes/statistic/node_modules/egg-static/config/config.default.js",
+    "maxFiles": "/home/bey/codes/statistic/node_modules/egg-static/config/config.default.js"
   },
   "nunjucks": {
-    "autoescape": "D:\\codes\\local\\statistic\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
-    "throwOnUndefined": "D:\\codes\\local\\statistic\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
-    "trimBlocks": "D:\\codes\\local\\statistic\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
-    "lstripBlocks": "D:\\codes\\local\\statistic\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
-    "cache": "D:\\codes\\local\\statistic\\node_modules\\egg-view-nunjucks\\config\\config.local.js"
+    "autoescape": "/home/bey/codes/statistic/node_modules/egg-view-nunjucks/config/config.default.js",
+    "throwOnUndefined": "/home/bey/codes/statistic/node_modules/egg-view-nunjucks/config/config.default.js",
+    "trimBlocks": "/home/bey/codes/statistic/node_modules/egg-view-nunjucks/config/config.default.js",
+    "lstripBlocks": "/home/bey/codes/statistic/node_modules/egg-view-nunjucks/config/config.default.js",
+    "cache": "/home/bey/codes/statistic/node_modules/egg-view-nunjucks/config/config.local.js"
   },
-  "env": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "name": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "cookies": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "proxy": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "maxIpsCount": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "maxProxyCount": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "protocolHeaders": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "ipHeaders": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "hostHeaders": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+  "env": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "name": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "cookies": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "proxy": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "maxIpsCount": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "maxProxyCount": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "protocolHeaders": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "ipHeaders": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "hostHeaders": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
   "pkg": {
-    "name": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "version": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "description": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "main": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+    "name": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "version": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "description": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "main": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
     "scripts": {
-      "dev": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "debug": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "test-local": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "test": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "cov": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "lint": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "pkgfiles": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "autod": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "ci": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "start": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "stop": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "dev": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "debug": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "test-local": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "test": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "cov": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "lint": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "pkgfiles": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "autod": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "ci": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "start": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "stop": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     },
-    "keywords": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "author": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "license": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+    "keywords": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "author": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "license": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
     "dependencies": {
-      "bootstrap-icons": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "egg": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "egg-scripts": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "egg-view-nunjucks": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "elasticsearch": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "moment": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "mssql": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "bootstrap-icons": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "egg": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "egg-scripts": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "egg-view-nunjucks": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "elasticsearch": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "moment": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "mssql": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     },
     "devDependencies": {
-      "egg-bin": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "egg-mock": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "egg-bin": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "egg-mock": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     }
   },
-  "baseDir": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "HOME": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "rundir": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+  "baseDir": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "HOME": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "rundir": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
   "dump": {
-    "ignore": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "ignore": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
   "confusedConfigurations": {
-    "bodyparser": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "notFound": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "sitefile": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "middlewares": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "httpClient": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "bodyparser": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "notFound": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "sitefile": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "middlewares": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "httpClient": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
   "notfound": {
-    "pageUrl": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "pageUrl": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
   "siteFile": {
-    "/favicon.ico": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "/favicon.ico": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
   "bodyParser": {
-    "enable": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "encoding": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "formLimit": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "jsonLimit": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "textLimit": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "strict": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+    "enable": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "encoding": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "formLimit": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "jsonLimit": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "textLimit": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "strict": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
     "queryString": {
-      "arrayLimit": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "depth": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "parameterLimit": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "arrayLimit": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "depth": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "parameterLimit": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     },
-    "onerror": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "onerror": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
   "logger": {
-    "dir": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "encoding": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "env": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "level": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "consoleLevel": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "disableConsoleAfterReady": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "outputJSON": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "buffer": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "appLogName": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "coreLogName": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "agentLogName": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "errorLogName": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+    "dir": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "encoding": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "env": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "level": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "consoleLevel": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "disableConsoleAfterReady": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "outputJSON": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "buffer": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "appLogName": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "coreLogName": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "agentLogName": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "errorLogName": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
     "coreLogger": {
-      "consoleLevel": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.local.js"
+      "consoleLevel": "/home/bey/codes/statistic/node_modules/egg/config/config.local.js"
     },
-    "allowDebugAtProd": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "allowDebugAtProd": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
   "httpclient": {
-    "enableDNSCache": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "dnsCacheLookupInterval": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "dnsCacheMaxLength": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+    "enableDNSCache": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "dnsCacheLookupInterval": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "dnsCacheMaxLength": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
     "request": {
-      "timeout": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "timeout": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     },
     "httpAgent": {
-      "keepAlive": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "freeSocketTimeout": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "maxSockets": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "maxFreeSockets": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "keepAlive": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "freeSocketTimeout": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "maxSockets": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     },
     "httpsAgent": {
-      "keepAlive": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "freeSocketTimeout": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "maxSockets": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "maxFreeSockets": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "keepAlive": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "freeSocketTimeout": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "maxSockets": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     }
   },
   "meta": {
-    "enable": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "logging": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "enable": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "logging": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
-  "coreMiddleware": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "workerStartTimeout": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-  "serverTimeout": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
+  "coreMiddleware": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "workerStartTimeout": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+  "serverTimeout": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
   "cluster": {
     "listen": {
-      "path": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "port": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-      "hostname": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+      "path": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "port": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+      "hostname": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
     }
   },
   "clusterClient": {
-    "maxWaitTime": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js",
-    "responseTimeout": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+    "maxWaitTime": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js",
+    "responseTimeout": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
   },
-  "onClientError": "D:\\codes\\local\\statistic\\node_modules\\egg\\config\\config.default.js"
+  "onClientError": "/home/bey/codes/statistic/node_modules/egg/config/config.default.js"
 }
