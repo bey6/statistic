@@ -1,5 +1,47 @@
-{% extends "../parent.html" %} {% block content %}
+{% extends "../parent.html" %} {% block header %}
+<link rel="stylesheet" href="../../public/css/home.css" />
+{% endblock %} {% block content %}
+<table class="table table-sm table-bordered table-hover">
+  <thead>
+    <tr>
+      <th scope="col" width="50" style="text-align: center">序号</th>
+      <th scope="col">包名</th>
+      <th scope="col">描述</th>
+      <th scope="col" width="100">贡献者</th>
+      <th scope="col" width="50">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pkg in packages %}
+    <tr>
+      <th scope="row" width="50" style="text-align: center">{{ pkg.key }}</th>
+      <td>{{ pkg.name }}</td>
+      <td>{{ pkg.description }}</td>
+      <td width="100">{{pkg.contributor}}</td>
+      <td><a href="/query?id={{ pkg.key }}">进入</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-<a href="/query">查询</a>
-
+<nav aria-label="Page navigation example">
+  <ul
+    class="pagination pagination-sm justify-content-end"
+    style="text-align: center"
+  >
+    <li class="page-item">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+        >上一页</a
+      >
+    </li>
+    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+    <li class="page-item" aria-current="page">
+      <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">下一页</a>
+    </li>
+  </ul>
+</nav>
 {% endblock %}
