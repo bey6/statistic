@@ -84,8 +84,8 @@ module.exports.Bool = class Bool {
 
 module.exports.Nested = class Nested {
     path = ''
-    query = new Bool()
-    constructor(path = '', query = new Bool()) {
+    query = {}
+    constructor(path = '', query) {
         this.path = path
         this.query = query
     }

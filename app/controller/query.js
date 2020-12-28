@@ -118,82 +118,89 @@ class QueryController extends Controller {
 
     // 获取异次病发病案号
     async getParoxysmMrids(diagnosis_array_2d, formData, columns) {
-        let mrids = [], // 不去重的 mrids
-            paroxysm = [] // 符合异次病发的 mrid
+        try {
+            let mrids = [], // 不去重的 mrids
+                paroxysm = [] // 符合异次病发的 mrid
 
-        for (let x = 0; x < diagnosis_array_2d.length; x++) {
-            const diagnosis_array_1d = diagnosis_array_2d[x]
-            let wsl = this.packageWsl(formData, columns)
-            let nestedBool = new Bool({ filter: [], must: [], must_not: [], should: [] })
-            diagnosis_array_1d.forEach(d => {
-                nestedBool.addTermsTo('should', 'Diagnosis.InternalICDCode.keyword', d)
+            for (let x = 0; x < diagnosis_array_2d.length; x++) {
+                const diagnosis_array_1d = diagnosis_array_2d[x]
+                let wsl = this.packageWsl(formData, columns)
+                let nestedBool = new Bool({ filter: [], must: [], must_not: [], should: [] })
+                diagnosis_array_1d.forEach(d => {
+                    nestedBool.addTermsTo('should', 'Diagnosis.InternalICDCode', d)
+                })
+                let nested = new Nested('Diagnosis', nestedBool)
+                wsl.query.addNestedTo('must', nested)
+                console.log(JSON.stringify(wsl.wsl))
+                let list = await this.ctx.service.es.search(wsl.wsl)
+                if (list.length === 0) return []
+                else mrids.push(...Array.from(new Set(list.map(d => d._source.MRID))))
+            }
+            Array.from(new Set(mrids)).forEach(mrid => {
+                if (mrids.filter(m => m === mrid).length === diagnosis_array_2d.length) paroxysm.push(mrid)
             })
-            let nested = new Nested('Diagnosis', nestedBool)
-            wsl.query.addNestedTo('must', nested)
-            let list = await this.ctx.service.es.search(wsl.wsl)
-            if (list.length === 0) return []
-            else mrids.push(...Array.from(new Set(list.map(d => d._source.MRID))))
+            return paroxysm
+        } catch (error) {
+            throw error
         }
-        Array.from(new Set(mrids)).forEach(mrid => {
-            if (mrids.filter(m => m === mrid).length === diagnosis_array_2d.length) paroxysm.push(mrid)
-        })
-        return paroxysm
     }
 
     // 获取异次病发文档记录
     async getParoxysmRecords(diagnosis_array_2d, paroxysm_mrids) {
-        let wsl = {
-            body: {
-                timeout: '300s',
-                query: {
-                    bool: {
-                        filter: [
-                            {
-                                terms: {
-                                    'MRID.keyword': paroxysm_mrids
+        try {
+            let wsl = {
+                body: {
+                    timeout: '300s',
+                    query: {
+                        bool: {
+                            filter: [
+                                {
+                                    terms: {
+                                        'MRID.keyword': paroxysm_mrids
+                                    }
                                 }
-                            }
-                        ],
-                        should: [
-                            {
-                                nested: {
-                                    path: 'Diagnosis',
-                                    query: {
-                                        bool: {
-                                            should: diagnosis_array_2d.map(diagnosis_array_1d => {
-                                                return {
-                                                    bool: {
-                                                        should: diagnosis_array_1d.map(diagnosis => ({
-                                                            term: {
-                                                                "Diagnosis.InternalICDCode.keyword": diagnosis
-                                                            }
-                                                        })),
-                                                        minimum_should_match: 1,
-                                                        boost: 1.0
+                            ],
+                            should: [
+                                {
+                                    nested: {
+                                        path: 'Diagnosis',
+                                        query: {
+                                            bool: {
+                                                should: diagnosis_array_2d.map(diagnosis_array_1d => {
+                                                    return {
+                                                        bool: {
+                                                            should: diagnosis_array_1d.map(diagnosis => ({
+                                                                term: {
+                                                                    "Diagnosis.InternalICDCode.keyword": diagnosis
+                                                                }
+                                                            })),
+                                                            minimum_should_match: 1,
+                                                            boost: 1.0
+                                                        }
                                                     }
-                                                }
-                                            }),
+                                                }),
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        ],
-                        minimum_should_match: 1,
-                        boost: 1
-                    }
-                },
-                sort: [
-                    {
-                        'MRID.keyword': { order: 'desc' },
-                    }
-                ],
-                size: 200000000
+                            ],
+                            minimum_should_match: 1,
+                            boost: 1
+                        }
+                    },
+                    sort: [
+                        {
+                            'MRID.keyword': { order: 'desc' },
+                        }
+                    ],
+                    size: 200000000
+                }
             }
+            let res = await this.ctx.service.es.search(wsl)
+            return res.map(r => ({ mrid: r._source.MRID, date: r._source.DischargeDateTime, diagnosis: r._source.Diagnosis }))
+        } catch (error) {
+            throw error
         }
-
-        let res = await this.ctx.service.es.search(wsl)
-
-        return res.map(r => ({ mrid: r._source.MRID, date: r._source.DischargeDateTime, diagnosis: r._source.Diagnosis }))
     }
 
     /**
