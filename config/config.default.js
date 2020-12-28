@@ -22,3 +22,9 @@ exports.security = {
         bodyName: '_csrf', // 通过 body 传递 CSRF token 的默认字段为 _csrf
     }
 }
+
+// 表单最大长度
+exports.bodyParser = {
+    jsonLimit: '2mb',
+    formLimit: '2mb',
+}

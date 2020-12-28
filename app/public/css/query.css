@@ -1,5 +1,6 @@
 .condition-list {
   flex: 1;
+  height: 100%;
 }
 .condition-list > ol {
   height: calc(100% - 39px);
@@ -25,7 +26,6 @@
   margin-right: 4px;
   height: 31px;
   text-align: center;
-  border: var(--bd);
 }
 .condition-tag {
   position: fixed;

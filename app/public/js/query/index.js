@@ -1,29 +1,29 @@
 $(function () {
     const storageRanking = 'docimax@statistic:common'
+
     getCommonTags()
 
-    // 点击查询按钮
-    $('#query').click(event => {
-        event.preventDefault()
-        let mapping = ['relation', 'operation', 'value'],
-            params = $('form').serializeArray(),
-            formData = []
+    // // 点击查询按钮
+    // $('#query').click(event => {
+    //     event.preventDefault()
+    //     let mapping = ['name', 'code', 'relation', 'operation', 'value'],
+    //         formData = []
 
-        mapping.forEach((m, idx) => {
-            let arr = params.filter(p => p.name === m)
-            arr.forEach((rlt, idxItem) => {
-                if (idx === 0) {
-                    formData.push({
-                        m: rlt.value
-                    })
-                } else {
-                    formData[idxItem][m] = rlt.value
-                }
-            })
-        })
-        console.log(formData)
-        $('form').submit()
-    })
+    //     // re-package the form data.
+    //     mapping.forEach((m, idx) => {
+    //         document.getElementsByName(m).forEach((t, offset) => {
+    //             if (idx === 0) {
+    //                 formData.push({
+    //                     [m]: t.value
+    //                 })
+    //             } else {
+    //                 formData[offset][m] = t.value
+    //             }
+    //         })
+    //     })
+    //     return false
+    //     // $('form').submit()
+    // })
 
     // 条件列表的代理事件
     // 内含--删除事件
@@ -34,8 +34,8 @@ $(function () {
             }
         }
     })
-
     // 欲实现拖拽移位功能, 目前尚未实现
+    // [未完成的]
     $('#condition-list').mousedown(event => {
         if ($(event.target).hasClass('btn-drag')) {
             const drop_li = `
@@ -73,7 +73,7 @@ $(function () {
     function generateTagList(tags) {
         $('#condition-tag-list').empty()
         tags.forEach(tag => {
-            $('#condition-tag-list').append(`<li data-code="${tag.code}"><i class="bi bi-arrow-left-square-fill"></i> ${tag.name}</li>`)
+            $('#condition-tag-list').append(`<li data-code="${tag.code}"><i class="bi bi-arrow-left-square-fill" style="margin-right:4px"></i>${tag.name}</li>`)
         })
     }
     // 条件标签点击事件代理
@@ -91,35 +91,48 @@ $(function () {
                 code = $(event.target).data('code')
             }
 
+            // draggable="true"
+            // <span class="condition-list__name rounded">${name}</span>
             let element = `
-            <li draggable="true">
-            <i class="bi bi-x btn-del rounded" style="color: brown"></i>
-            <select
-              name="relation"
-              class="form-control form-control-sm condition-list__item"
-              style="flex: 0 0 64px"
-            >
-              <option value="and">并且</option>
-              <option value="or">或者</option>
-            </select>
-            <span class="condition-list__name rounded">${name}</span>
-            <select
-              name="operation"
-              class="condition-list__item form-control form-control-sm"
-              style="flex: 0 0 128px"
-            >
-              <option>=</option>
-              <option>≥</option>
-              <option>≤</option>
-            </select>
-            <input
-              name="value"
-              class="condition-list__item form-control form-control-sm"
-              type="text"
-              style="margin: 0"
-            />
-            <i class="bi bi-arrows-move btn-drag"></i>
-          </li>`
+            <li>
+                <i class="bi bi-x btn-del rounded" style="color: brown"></i>
+                <select
+                    name="relation"
+                    class="form-control form-control-sm condition-list__item"
+                    style="flex: 0 0 64px"
+                >
+                    <option value="and">并且</option>
+                    <option value="or">或者</option>
+                </select>
+                <input
+                    name="name"
+                    class="form-control form-control-sm condition-list__name"
+                    readonly="true"
+                    type="text"
+                    value="${name}"
+                />
+                <input name="code" type="hidden" value="${code}">
+                <select
+                    name="operation"
+                    class="condition-list__item form-control form-control-sm"
+                    style="flex: 0 0 128px"
+                >
+                    <option value="eq">等于</option>
+                    <option value="gt">大于</option>
+                    <option value="gte">大于等于</option>
+                    <option value="lt">小于</option>
+                    <option value="lte">小于等于</option>
+                    <option value="in">包括</option>
+                    <option value="diff">异次病发</option>
+                </select>
+                <input
+                    name="value"
+                    class="condition-list__item form-control form-control-sm"
+                    type="text"
+                    style="margin: 0"
+                />
+                <i class="bi bi-arrows-move btn-drag"></i>
+            </li>`
             $('#condition-list').append(element)
             increaseTagScore({ code: code, name: name })
         }

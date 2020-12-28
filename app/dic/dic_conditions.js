@@ -54,31 +54,41 @@ module.exports = {
     basic: [
         {
             key: 0,
-            code: 'mrid',
+            code: 'MRID',
             name: '病案号',
-            py: 'bah'
+            py: 'bah',
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                }
+            ]
         },
         {
             key: 1,
-            code: 'patient_name',
+            code: 'PatientName',
             name: '姓名',
             py: 'xm'
         },
         {
             key: 2,
-            code: 'gender',
+            code: 'Gender',
             name: '性别',
             py: 'xb'
         },
         {
             key: 3,
-            code: 'age',
+            code: 'Age',
             name: '年龄',
             py: 'nl'
         },
         {
             key: 4,
-            code: 'out_datetime',
+            code: 'DischargeDateTime',
             name: '出院日期',
             py: 'cyrq'
         }
@@ -88,12 +98,12 @@ module.exports = {
      */
     inpatient: [
         {
-            code: 'internal_diagnosis_code',
+            code: 'Diagnosis.InternalICDCode',
             name: '协和诊断',
             py: 'xhzd'
         },
         {
-            code: 'external_diagnosis_code',
+            code: 'Diagnosis.DiagnosisICDCode',
             name: '北京诊断',
             py: 'bjzd'
         }
@@ -111,14 +121,19 @@ module.exports = {
      */
     surgical_operation: [
         {
-            code: 'internal_operation_code',
+            code: 'VSurgery.InternalICDCode',
             name: '协和手术',
             py: 'xhss'
         },
         {
-            code: 'external_operation_code',
+            code: 'VSurgery.OperateICDCode',
             name: '北京手术',
             py: 'bjss'
+        },
+        {
+            code: 'VSurgery.OperateLevel',
+            name: '手术级别',
+            py: 'ssjb'
         }
     ],
     /**
