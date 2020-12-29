@@ -1,29 +1,8 @@
+/* eslint-disable no-undef */
 $(function () {
     const storageRanking = 'docimax@statistic:common'
 
     getCommonTags()
-
-    // // 点击查询按钮
-    // $('#query').click(event => {
-    //     event.preventDefault()
-    //     let mapping = ['name', 'code', 'relation', 'operation', 'value'],
-    //         formData = []
-
-    //     // re-package the form data.
-    //     mapping.forEach((m, idx) => {
-    //         document.getElementsByName(m).forEach((t, offset) => {
-    //             if (idx === 0) {
-    //                 formData.push({
-    //                     [m]: t.value
-    //                 })
-    //             } else {
-    //                 formData[offset][m] = t.value
-    //             }
-    //         })
-    //     })
-    //     return false
-    //     // $('form').submit()
-    // })
 
     // 条件列表的代理事件
     // 内含--删除事件
@@ -100,8 +79,7 @@ $(function () {
             }
 
             // draggable="true"
-            // <span class="condition-list__name rounded">${name}</span>
-            let element = `
+            let element = $(`
             <li>
                 <i class="bi bi-x btn-del rounded" style="color: brown"></i>
                 <select
@@ -133,15 +111,47 @@ $(function () {
                     <option value="in">包括</option>
                     <option value="diff">异次病发</option>
                 </select>
-                <input
-                    name="value"
-                    class="condition-list__item form-control form-control-sm"
-                    type="text"
-                    style="margin: 0"
-                />
+                <div class="values condition-list__item" style="margin: 0"></div>
                 <i class="bi bi-arrows-move btn-drag"></i>
-            </li>`
-            $('#condition-list').append(element)
+            </li>`)
+            let values = element.find('.values')[0]
+            if (name === '协和诊断') {
+                xmSelect.render({
+                    el: values,
+                    size: 'mini',
+                    style: {
+                        height: '31px'
+                    },
+                    toolbar: {
+                        show: true,
+                        showIcon: false,
+                    },
+                    model: { label: { type: 'text' } },
+                    data: () => ([
+                        { name: '霍乱', value: 1 },
+                        { name: '霍乱ex', value: 2 }
+                    ]),
+                    paging: true,
+                    pageSize: 3,
+                    filterable: true,
+                    remoteSearch: true,
+                    remoteMethod: function (val, cb, show) {
+                        //这里模拟3s后返回数据
+                        setTimeout(function () {
+                            //需要回传一个数组
+                            cb([
+                                { name: '水果' + val, value: val + 1 },
+                                { name: '蔬菜' + val, value: val + 2, selected: true },
+                                { name: '桌子' + val, value: val + 3 },
+                                { name: '北京' + val, value: val + 4 },
+                            ])
+                        }, 3000)
+                    }
+                })
+            } else {
+                values.replaceWith($('<input name="value" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>')[0])
+            }
+            $('#condition-list').append($(element))
             increaseTagScore({ code: code, name: name })
         }
     })

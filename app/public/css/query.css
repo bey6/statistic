@@ -87,3 +87,8 @@
 .condition-tag-list > ol > li:last-of-type {
     border-bottom: none;
 }
+
+div > xm-select {
+    border: var(--bd);
+    border-radius: var(--bdr);
+}

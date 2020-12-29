@@ -57,6 +57,8 @@ module.exports = {
             code: 'MRID',
             name: '病案号',
             py: 'bah',
+            enumerable: false, // 可枚举
+            type: 'string', // 字段类型: string|number|date
             operation: [
                 {
                     name: '等于',
@@ -101,6 +103,8 @@ module.exports = {
             code: 'Diagnosis.InternalICDCode',
             name: '协和诊断',
             py: 'xhzd',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
         },
         {
             code: 'Diagnosis.DiagnosisICDCode',
