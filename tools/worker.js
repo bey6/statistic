@@ -19,7 +19,7 @@ const client = new elasticsearch.Client({
     host: '172.30.199.166:9200',
     index: 'bei',
     // log: 'trace',
-    apiVersion: '7.6'
+    apiVersion: '7.6',
 })
 
 // mssql 配置
@@ -30,8 +30,8 @@ const config = {
     database: 'MR_FS_DB',
     options: {
         instanceName: 'dev',
-        encrypt: false
-    }
+        encrypt: false,
+    },
 }
 
 /**
@@ -40,13 +40,17 @@ const config = {
  * @param { string } endDate YYYY-MM-DD
  * @param { string } dateFields 默认为 dischargeDateTime
  */
-function getThisRangeDataIds(startDate, endDate, dateFields = 'dischargeDateTime') {
+function getThisRangeDataIds(
+    startDate,
+    endDate,
+    dateFields = 'dischargeDateTime'
+) {
     return new Promise((resolve, reject) => {
         try {
             let tsql = `select id from fs_inPatientBase where codeState=1000 and (deleted is null or deleted = 0)
 and ${dateFields} >= '${startDate}' and ${dateFields} < '${endDate}'`,
                 result = []
-            sql.connect(config, err => {
+            sql.connect(config, (err) => {
                 if (err) {
                     console.trace(err.message)
                     reject(err)
@@ -57,7 +61,7 @@ and ${dateFields} >= '${startDate}' and ${dateFields} < '${endDate}'`,
                             console.trace(err.message)
                             reject(err)
                         } else {
-                            result = res.recordset.map(r => r.id)
+                            result = res.recordset.map((r) => r.id)
                             resolve(result)
                         }
                     })
@@ -75,7 +79,8 @@ and ${dateFields} >= '${startDate}' and ${dateFields} < '${endDate}'`,
  * @param { array } items 住院信息
  */
 function assembleBase(items) {
-    if (items.length > 1) items.sort((x, y) => x.LastModifyTime - y.LastModifyTime)
+    if (items.length > 1)
+        items.sort((x, y) => x.LastModifyTime - y.LastModifyTime)
     let obj = items[0]
     return {
         mrid: obj.MRID,
@@ -216,8 +221,8 @@ function assembleBase(items) {
  * @param { array } items 联系人列表
  */
 function assembleContact(items) {
-    if (items.length = 0) return []
-    return items.map(c => ({
+    if ((items.length = 0)) return []
+    return items.map((c) => ({
         name: c.ContactName,
         address: c.Adress,
         phone_number: c.PhoneNum,
@@ -234,27 +239,35 @@ function assembleContact(items) {
 function assembleClinical(diagnosis, operation, mrid, times) {
     // 诊断类别 100:入院诊断 200:出院诊断 300:门急诊诊断 400:过敏药物 500:医院感染
     let process_diagnosis = (type) => {
-        return diagnosis.filter(a => a.DiagnosisType === type).map(b => ({
-            sequence: b.DiagnosisOrder,
-            mrid,
-            times,
-            name: b.ClinicDiagnosis,
-        })).filter(c => c.name).map((d, idx) => ({
-            sequence: idx + 1,
-            name: d.name
-        }))
+        return diagnosis
+            .filter((a) => a.DiagnosisType === type)
+            .map((b) => ({
+                sequence: b.DiagnosisOrder,
+                mrid,
+                times,
+                name: b.ClinicDiagnosis,
+            }))
+            .filter((c) => c.name)
+            .map((d, idx) => ({
+                sequence: idx + 1,
+                name: d.name,
+            }))
     }
     // 手术操作类别  100:手术 200:操作
     let process_operation = (type) => {
-        return operation.filter(a => a.OperateType === type).map(b => ({
-            sequence: b.OperateOrder,
-            mrid,
-            times,
-            name: b.ClinicalOperateName,
-        })).filter(c => c.name).map((d, idx) => ({
-            sequence: idx + 1,
-            name: d.name
-        }))
+        return operation
+            .filter((a) => a.OperateType === type)
+            .map((b) => ({
+                sequence: b.OperateOrder,
+                mrid,
+                times,
+                name: b.ClinicalOperateName,
+            }))
+            .filter((c) => c.name)
+            .map((d, idx) => ({
+                sequence: idx + 1,
+                name: d.name,
+            }))
     }
     return {
         in_diagnosis: process_diagnosis(100),
@@ -275,57 +288,65 @@ function assembleClinical(diagnosis, operation, mrid, times) {
 function assemblePumch(diagnosis, operation, mrid, times) {
     // 诊断类别 100:入院诊断 200:出院诊断 300:门急诊诊断 400:过敏药物 500:医院感染
     let process_diagnosis = (type, fileds) => {
-        return diagnosis.filter(a => a.DiagnosisType === type).map(b => ({
-            sequence: b.DiagnosisOrder,
-            mrid,
-            times,
-            code: b[`${fileds}ICDCode`],
-            name: b[`${fileds}ICDName`],
-            admitted_code: b.AdmittedCode, // 入院病情
-            admitted_name: b.Admitted,
-            effect_code: b.DischargeStateCode,
-            effect_name: b.DischargeState, // 疗效
-            // pathology_code: b.PathologyNum,
-            pathology_name: b.PathologyNum,
-            according_code: b.DiagnosticbasisCode,
-            according_name: b.Diagnosticbasis,
-            diff_code: b.DifferentiationCode,
-            diff_name: b.Differentiation,
-        })).filter(c => c.name).map((d, idx) => ({
-            ...d,
-            sequence: idx + 1
-        }))
+        return diagnosis
+            .filter((a) => a.DiagnosisType === type)
+            .map((b) => ({
+                sequence: b.DiagnosisOrder,
+                mrid,
+                times,
+                code: b[`${fileds}ICDCode`],
+                name: b[`${fileds}ICDName`],
+                admitted_code: b.AdmittedCode, // 入院病情
+                admitted_name: b.Admitted,
+                effect_code: b.DischargeStateCode,
+                effect_name: b.DischargeState, // 疗效
+                // pathology_code: b.PathologyNum,
+                pathology_name: b.PathologyNum,
+                according_code: b.DiagnosticbasisCode,
+                according_name: b.Diagnosticbasis,
+                diff_code: b.DifferentiationCode,
+                diff_name: b.Differentiation,
+            }))
+            .filter((c) => c.name)
+            .map((d, idx) => ({
+                ...d,
+                sequence: idx + 1,
+            }))
     }
     // 手术操作类别  100:手术 200:操作
     let process_operation = (type) => {
-        return operation.filter(a => a.OperateType === type).map(b => ({
-            sequence: b.OperateOrder,
-            mrid,
-            times,
-            code: b.OperateICDCode,
-            name: b.OperateICDName,
-            start_time: b.OperateBeginTime,
-            end_time: b.OperateEndTime,
-            surgeon_code: b.OperatorCode,
-            surgeon_name: b.OperatorName,
-            i_assistant_code: b.FirstAssistantSurgeonCode,
-            i_assistant_name: b.FirstAssistantSurgeon,
-            ii_assistant_code: b.SecondAssistantCode,
-            ii_assistant_name: b.SecondAssistantName,
-            anesthesia_mode_code: b.AnesthesiaTypeCode,
-            anesthesia_mode_name: b.AnesthesiaType,
-            anaesthetist_code: b.AnesthesiologistCode,
-            anaesthetist_name: b.Anesthesiologist,
-            anesthesia_grade_code: b.AnesthesiaLevelCode,
-            anesthesia_grade_name: b.AnesthesiaLevel,
-            heal_grade_code: b.CicatrizeCode,
-            heal_grade_name: b.Cicatrize,
-            surgery_grade_code: b.OperateLevelCode,
-            surgery_grade_name: b.OperateLevel,
-        })).filter(c => c.name).map((d, idx) => ({
-            ...d,
-            sequence: idx + 1
-        }))
+        return operation
+            .filter((a) => a.OperateType === type)
+            .map((b) => ({
+                sequence: b.OperateOrder,
+                mrid,
+                times,
+                code: b.OperateICDCode,
+                name: b.OperateICDName,
+                start_time: b.OperateBeginTime,
+                end_time: b.OperateEndTime,
+                surgeon_code: b.OperatorCode,
+                surgeon_name: b.OperatorName,
+                i_assistant_code: b.FirstAssistantSurgeonCode,
+                i_assistant_name: b.FirstAssistantSurgeon,
+                ii_assistant_code: b.SecondAssistantCode,
+                ii_assistant_name: b.SecondAssistantName,
+                anesthesia_mode_code: b.AnesthesiaTypeCode,
+                anesthesia_mode_name: b.AnesthesiaType,
+                anaesthetist_code: b.AnesthesiologistCode,
+                anaesthetist_name: b.Anesthesiologist,
+                anesthesia_grade_code: b.AnesthesiaLevelCode,
+                anesthesia_grade_name: b.AnesthesiaLevel,
+                heal_grade_code: b.CicatrizeCode,
+                heal_grade_name: b.Cicatrize,
+                surgery_grade_code: b.OperateLevelCode,
+                surgery_grade_name: b.OperateLevel,
+            }))
+            .filter((c) => c.name)
+            .map((d, idx) => ({
+                ...d,
+                sequence: idx + 1,
+            }))
     }
     return {
         in_diagnosis: process_diagnosis(100, 'Internal'),
@@ -348,57 +369,65 @@ function assemblePumch(diagnosis, operation, mrid, times) {
 function assembleBeijing(diagnosis, operation, mrid, times) {
     // 诊断类别 100:入院诊断 200:出院诊断 300:门急诊诊断 400:过敏药物 500:医院感染
     let process_diagnosis = (type, fileds) => {
-        return diagnosis.filter(a => a.DiagnosisType === type).map(b => ({
-            sequence: b.DiagnosisOrder,
-            mrid,
-            times,
-            code: b[`${fileds}ICDCode`],
-            name: b[`${fileds}ICDName`],
-            admitted_code: b.AdmittedCode, // 入院病情
-            admitted_name: b.Admitted,
-            effect_code: b.DischargeStateCode,
-            effect_name: b.DischargeState, // 疗效
-            // pathology_code: b.PathologyNum,
-            pathology_name: b.PathologyNum,
-            according_code: b.DiagnosticbasisCode,
-            according_name: b.Diagnosticbasis,
-            diff_code: b.DifferentiationCode,
-            diff_name: b.Differentiation,
-        })).filter(c => c.name).map((d, idx) => ({
-            ...d,
-            sequence: idx + 1
-        }))
+        return diagnosis
+            .filter((a) => a.DiagnosisType === type)
+            .map((b) => ({
+                sequence: b.DiagnosisOrder,
+                mrid,
+                times,
+                code: b[`${fileds}ICDCode`],
+                name: b[`${fileds}ICDName`],
+                admitted_code: b.AdmittedCode, // 入院病情
+                admitted_name: b.Admitted,
+                effect_code: b.DischargeStateCode,
+                effect_name: b.DischargeState, // 疗效
+                // pathology_code: b.PathologyNum,
+                pathology_name: b.PathologyNum,
+                according_code: b.DiagnosticbasisCode,
+                according_name: b.Diagnosticbasis,
+                diff_code: b.DifferentiationCode,
+                diff_name: b.Differentiation,
+            }))
+            .filter((c) => c.name)
+            .map((d, idx) => ({
+                ...d,
+                sequence: idx + 1,
+            }))
     }
     // 手术操作类别  100:手术 200:操作
     let process_operation = (type) => {
-        return operation.filter(a => a.OperateType === type).map(b => ({
-            sequence: b.OperateOrder,
-            mrid,
-            times,
-            code: b.OperateICDCode,
-            name: b.OperateICDName,
-            start_time: b.OperateBeginTime,
-            end_time: b.OperateEndTime,
-            surgeon_code: b.OperatorCode,
-            surgeon_name: b.OperatorName,
-            i_assistant_code: b.FirstAssistantSurgeonCode,
-            i_assistant_name: b.FirstAssistantSurgeon,
-            ii_assistant_code: b.SecondAssistantCode,
-            ii_assistant_name: b.SecondAssistantName,
-            anesthesia_mode_code: b.AnesthesiaTypeCode,
-            anesthesia_mode_name: b.AnesthesiaType,
-            anaesthetist_code: b.AnesthesiologistCode,
-            anaesthetist_name: b.Anesthesiologist,
-            anesthesia_grade_code: b.AnesthesiaLevelCode,
-            anesthesia_grade_name: b.AnesthesiaLevel,
-            heal_grade_code: b.CicatrizeCode,
-            heal_grade_name: b.Cicatrize,
-            surgery_grade_code: b.OperateLevelCode,
-            surgery_grade_name: b.OperateLevel,
-        })).filter(c => c.name).map((d, idx) => ({
-            ...d,
-            sequence: idx + 1
-        }))
+        return operation
+            .filter((a) => a.OperateType === type)
+            .map((b) => ({
+                sequence: b.OperateOrder,
+                mrid,
+                times,
+                code: b.OperateICDCode,
+                name: b.OperateICDName,
+                start_time: b.OperateBeginTime,
+                end_time: b.OperateEndTime,
+                surgeon_code: b.OperatorCode,
+                surgeon_name: b.OperatorName,
+                i_assistant_code: b.FirstAssistantSurgeonCode,
+                i_assistant_name: b.FirstAssistantSurgeon,
+                ii_assistant_code: b.SecondAssistantCode,
+                ii_assistant_name: b.SecondAssistantName,
+                anesthesia_mode_code: b.AnesthesiaTypeCode,
+                anesthesia_mode_name: b.AnesthesiaType,
+                anaesthetist_code: b.AnesthesiologistCode,
+                anaesthetist_name: b.Anesthesiologist,
+                anesthesia_grade_code: b.AnesthesiaLevelCode,
+                anesthesia_grade_name: b.AnesthesiaLevel,
+                heal_grade_code: b.CicatrizeCode,
+                heal_grade_name: b.Cicatrize,
+                surgery_grade_code: b.OperateLevelCode,
+                surgery_grade_name: b.OperateLevel,
+            }))
+            .filter((c) => c.name)
+            .map((d, idx) => ({
+                ...d,
+                sequence: idx + 1,
+            }))
     }
     return {
         in_diagnosis: process_diagnosis(100, 'Diagnosis'),
@@ -423,20 +452,20 @@ function assembleDoctor(items) {
     if (items.length === 0) return shell
 
     // 去重，多个同类型的医生时取最新(lastModifyTime)的一条为准
-    keys.forEach(key => {
-        let res = items.filter(d => d.DoctorType === key)
+    keys.forEach((key) => {
+        let res = items.filter((d) => d.DoctorType === key)
         if (res.length > 1) {
             res.sort((x, y) => x.LastModifyTime - y.LastModifyTime)
             for (let i = 1; i < res.length; i++) {
-                let idx = items.findIndex(d => d.ID === res[i].ID)
+                let idx = items.findIndex((d) => d.ID === res[i].ID)
                 if (idx !== -1) items.splice(idx, 1)
             }
         }
     })
 
     // 组装
-    items.forEach(doctor => {
-        let idx = keys.findIndex(k => k === doctor.DoctorType)
+    items.forEach((doctor) => {
+        let idx = keys.findIndex((k) => k === doctor.DoctorType)
         if (idx !== -1) {
             let fields = mapping.doctor[keys[idx]]
             shell[`${fields}_code`] = doctor.DoctorCode
@@ -456,20 +485,20 @@ function assembleFee(items) {
     if (items.length === 0) return shell
 
     // 去重，多个同类型的费用时取最新(lastModifyTime)的一条为准
-    keys.forEach(key => {
-        let res = items.filter(d => d.FeeClassName === key)
+    keys.forEach((key) => {
+        let res = items.filter((d) => d.FeeClassName === key)
         if (res.length > 1) {
             res.sort((x, y) => x.LastModifyTime - y.LastModifyTime)
             for (let i = 1; i < res.length; i++) {
-                let idx = items.findIndex(d => d.ID === res[i].ID)
+                let idx = items.findIndex((d) => d.ID === res[i].ID)
                 if (idx !== -1) items.splice(idx, 1)
             }
         }
     })
 
     // 组装
-    items.forEach(fee => {
-        let idx = keys.findIndex(k => k === fee.FeeClassName)
+    items.forEach((fee) => {
+        let idx = keys.findIndex((k) => k === fee.FeeClassName)
         if (idx !== -1) {
             let fields = mapping.fee[keys[idx]]
             shell[`${fields}_code`] = fee.FeeClassCode
@@ -485,12 +514,12 @@ function assembleFee(items) {
  * @param { array } items icu 列表
  */
 function assembleICU(items) {
-    if (items.length = 0) return []
-    return items.map(icu => ({
+    if ((items.length = 0)) return []
+    return items.map((icu) => ({
         code: icu.ICUCode,
         name: icu.ICUName,
         entry_time: icu.EntryTime,
-        out_time: icu.OutTime
+        out_time: icu.OutTime,
     }))
 }
 
@@ -499,14 +528,14 @@ function assembleICU(items) {
  * @param { array } items 转科列表
  */
 function assembleTransfer(items) {
-    if (items.length = 0) return []
-    return items.map(t => ({
+    if ((items.length = 0)) return []
+    return items.map((t) => ({
         origin_code: t.OriginalDeptCode,
         origin_name: t.OriginalDeptName,
         target_code: t.NewDeptCode,
         target_name: t.NewDeptName,
         transfer_order: t.TransferOrder,
-        transfer_date: t.TransferDate
+        transfer_date: t.TransferDate,
     }))
 }
 
@@ -580,7 +609,11 @@ async function getThisDocumentById(id) {
         }
         // 查询 住院基础信息
         let baseRecordset = await request.query(tsqlBase)
-        if (baseRecordset.recordset.length > 0) document = Object.assign(document, assembleBase(baseRecordset.recordset))
+        if (baseRecordset.recordset.length > 0)
+            document = Object.assign(
+                document,
+                assembleBase(baseRecordset.recordset)
+            )
         else throw new Error(`${id}, 没有查找到对应的住院信息`)
 
         // 查询 联系人信息
@@ -593,21 +626,41 @@ async function getThisDocumentById(id) {
         // 查询 诊断信息
         let baseDiagnosis = await request.query(tsqlDiagnosis),
             baseOperation = await request.query(tsqlOperation)
-        if (baseDiagnosis.recordset.length > 0 || baseOperation.recordset.length > 0) {
-            document.clinical = assembleClinical(baseDiagnosis.recordset, baseOperation.recordset, document.mrid, document.hospitalized_times)
-            document.pumch = assemblePumch(baseDiagnosis.recordset, baseOperation.recordset, document.mrid, document.hospitalized_times)
-            document.beijing = assembleBeijing(baseDiagnosis.recordset, baseOperation.recordset, document.mrid, document.hospitalized_times)
+        if (
+            baseDiagnosis.recordset.length > 0 ||
+            baseOperation.recordset.length > 0
+        ) {
+            document.clinical = assembleClinical(
+                baseDiagnosis.recordset,
+                baseOperation.recordset,
+                document.mrid,
+                document.hospitalized_times
+            )
+            document.pumch = assemblePumch(
+                baseDiagnosis.recordset,
+                baseOperation.recordset,
+                document.mrid,
+                document.hospitalized_times
+            )
+            document.beijing = assembleBeijing(
+                baseDiagnosis.recordset,
+                baseOperation.recordset,
+                document.mrid,
+                document.hospitalized_times
+            )
 
             // 这里还需要一个 国际 诊断
         }
 
         // 查询 医生信息
         let baseDoctor = await request.query(tsqlDoctor)
-        if (baseDoctor.recordset.length > 0) document.doctor = assembleDoctor(baseDoctor.recordset)
+        if (baseDoctor.recordset.length > 0)
+            document.doctor = assembleDoctor(baseDoctor.recordset)
 
         // 查询 费用信息
         let baseFee = await request.query(tsqlFee)
-        if (baseFee.recordset.length > 0) document.fee = assembleFee(baseFee.recordset)
+        if (baseFee.recordset.length > 0)
+            document.fee = assembleFee(baseFee.recordset)
 
         // 查询 icu 信息
         let baseIcu = await request.query(tsqlIcu)
@@ -636,11 +689,11 @@ async function getThisDocumentById(id) {
  */
 async function batchInsert(items) {
     try {
-        let body = items.map(doc => ({
+        let body = items.map((doc) => ({
             index: {
-                _index: 'bei'
+                _index: 'bei',
             },
-            ...doc
+            ...doc,
         }))
         const res = await client.bulk({ refresh: true, body })
         return res
@@ -679,4 +732,4 @@ setInterval(async () => {
         console.log(`${start} - ${end}: [${count}]`)
         start = end
     }
-}, frequency);
+}, frequency)

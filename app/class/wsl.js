@@ -1,92 +1,69 @@
 module.exports.Wsl = class Wsl {
-    _source = []
-    timeout = '10s'
-    size = 100
-    query = {}
-
-    constructor({ _source = ['MRID'], timeout = '300s', size = 200000000, query = {} }) {
-        this._source = _source
-        this.timeout = timeout
-        this.size = size
-        this.query = query
-    }
-
-    get wsl() {
-        return {
-            body: {
-                _source: this._source,
-                timeout: this.timeout,
-                query: this.query.wsl,
-                size: this.size,
-            }
+    constructor(_source = ['MRID'], timeout = '300s', size = 200000000, query = {}) {
+        this.body = {
+            _source: _source,
+            timeout: timeout,
+            size: size,
+            query: query,
+            sort: [{
+                'MRID.keyword': { order: 'desc' }
+            }]
         }
     }
 }
 
 module.exports.Bool = class Bool {
-    filter = []
-    should = []
-    must = []
-    must_not = []
-    minimum_should_match = 0
-    boost = 1.0
-
-    constructor({ filter = [], should = [], must = [], must_not = [] }) {
-        this.filter = filter
-        this.should = should
-        this.must = must
-        this.must_not = must_not
-    }
-
-    get wsl() {
-        return {
-            bool: {
-                filter: this.filter,
-                should: this.should,
-                must: this.must,
-                must_not: this.must_not,
-                minimum_should_match: this.minimum_should_match,
-                boost: this.boost,
-            }
+    constructor(filter = [], should = [], must = [], must_not = [], minimum_should_match = 0) {
+        this.bool = {
+            filter: filter,
+            should: should,
+            must: must,
+            must_not: must_not,
+            minimum_should_match: minimum_should_match,
+            boost: 1.0,
         }
     }
 
     addTermTo(occur, fields, value) {
-        this[occur].push({
+        this.bool[occur].push({
             term: {
-                [fields + '.keyword']: value
-            }
+                [fields + '.keyword']: value,
+            },
         })
     }
 
     addTermsTo(occur, fields, value) {
-        this[occur].push({
+        this.bool[occur].push({
             terms: {
-                [fields + '.keyword']: value
-            }
+                [fields + '.keyword']: value,
+            },
         })
     }
 
     addRangeTo(occur, fields, r, v) {
-        this[occur].push({
+        this.bool[occur].push({
             range: {
                 [fields]: {
-                    [r]: v
-                }
-            }
+                    [r]: v,
+                },
+            },
         })
     }
 
     addNestedTo(occur, nested) {
-        this[occur].push(nested)
+        this.bool[occur].push(nested)
+    }
+
+    addBoolTo(occur, query) {
+        this.bool[occur].push(query)
     }
 }
 
 module.exports.Nested = class Nested {
-    path = ''
-    query = {}
     constructor(path = '', query) {
-        this.path = path
-        this.query = query
+        this.nested = {
+            path: path,
+            query: query,
+        }
     }
 }

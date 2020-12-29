@@ -46,7 +46,7 @@ module.exports = {
         {
             code: 'other',
             name: '其他',
-        }
+        },
     ],
     /**
      * 基本
@@ -65,33 +65,33 @@ module.exports = {
                 {
                     name: '大于',
                     code: 'gt',
-                }
-            ]
+                },
+            ],
         },
         {
             key: 1,
             code: 'PatientName',
             name: '姓名',
-            py: 'xm'
+            py: 'xm',
         },
         {
             key: 2,
             code: 'Gender',
             name: '性别',
-            py: 'xb'
+            py: 'xb',
         },
         {
             key: 3,
             code: 'Age',
             name: '年龄',
-            py: 'nl'
+            py: 'nl',
         },
         {
             key: 4,
             code: 'DischargeDateTime',
             name: '出院日期',
-            py: 'cyrq'
-        }
+            py: 'cyrq',
+        },
     ],
     /**
      * 住院
@@ -100,13 +100,13 @@ module.exports = {
         {
             code: 'Diagnosis.InternalICDCode',
             name: '协和诊断',
-            py: 'xhzd'
+            py: 'xhzd',
         },
         {
             code: 'Diagnosis.DiagnosisICDCode',
             name: '北京诊断',
-            py: 'bjzd'
-        }
+            py: 'bjzd',
+        },
     ],
     /**
      * 门急诊
@@ -123,18 +123,18 @@ module.exports = {
         {
             code: 'VSurgery.InternalICDCode',
             name: '协和手术',
-            py: 'xhss'
+            py: 'xhss',
         },
         {
             code: 'VSurgery.OperateICDCode',
             name: '北京手术',
-            py: 'bjss'
+            py: 'bjss',
         },
         {
             code: 'VSurgery.OperateLevel',
             name: '手术级别',
-            py: 'ssjb'
-        }
+            py: 'ssjb',
+        },
     ],
     /**
      * 操作
@@ -159,5 +159,5 @@ module.exports = {
     /**
      * 其他
      */
-    other: []
+    other: [],
 }

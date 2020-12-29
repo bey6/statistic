@@ -1,11 +1,11 @@
 .pkg-list {
-  -webkit-column-count: 3; /* Chrome, Safari, Opera */
-  -moz-column-count: 3; /* Firefox */
-  column-count: 3;
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
 }
 
 .pkg-list > li {
-  margin-bottom: 4px;
-  padding: 2px 8px;
-  background-color: var(--bgc);
+    margin-bottom: 4px;
+    padding: 2px 8px;
+    background-color: var(--bgc);
 }

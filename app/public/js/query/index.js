@@ -27,7 +27,7 @@ $(function () {
 
     // 条件列表的代理事件
     // 内含--删除事件
-    $('#condition-list').click(event => {
+    $('#condition-list').click((event) => {
         if (event.target.tagName === 'I') {
             if ($(event.target).hasClass('btn-del')) {
                 $(event.target.parentNode).remove()
@@ -36,26 +36,32 @@ $(function () {
     })
     // 欲实现拖拽移位功能, 目前尚未实现
     // [未完成的]
-    $('#condition-list').mousedown(event => {
+    $('#condition-list').mousedown((event) => {
         if ($(event.target).hasClass('btn-drag')) {
             const drop_li = `
                 <li class="dropable"></li>
             `
-            $('#condition-list').children().filter(e => {
-                console.log(e)
-                console.log($(e))
-            })
-            $.each($('#condition-list').children().filter(e => $(e).attr('draggable') === true), function (idx, item) {
-                // $(drop_li).insertBefore(item)
-                $(drop_li).insertAfter(item)
-
-            })
+            $('#condition-list')
+                .children()
+                .filter((e) => {
+                    console.log(e)
+                    console.log($(e))
+                })
+            $.each(
+                $('#condition-list')
+                    .children()
+                    .filter((e) => $(e).attr('draggable') === true),
+                function (idx, item) {
+                    // $(drop_li).insertBefore(item)
+                    $(drop_li).insertAfter(item)
+                }
+            )
         }
         // else event.preventDefault()
     })
     // 条件标签点击事件
     // 点击后请求接口, 获取相应的条件集合
-    $('#condition-tag').click(event => {
+    $('#condition-tag').click((event) => {
         let target = event.target
         if (target.nodeName === 'LI') {
             $('#condition-tag').children().removeClass('condition-tag--active')
@@ -63,7 +69,7 @@ $(function () {
             let selectedTag = $(target).data('code')
             if (selectedTag === 'common') getCommonTags()
             else {
-                $.get(`/dic/condition?t=${selectedTag}`, res => {
+                $.get(`/dic/condition?t=${selectedTag}`, (res) => {
                     generateTagList(res.data)
                 })
             }
@@ -72,14 +78,16 @@ $(function () {
     // 生成条件 tag 列表
     function generateTagList(tags) {
         $('#condition-tag-list').empty()
-        tags.forEach(tag => {
-            $('#condition-tag-list').append(`<li data-code="${tag.code}"><i class="bi bi-arrow-left-square-fill" style="margin-right:4px"></i>${tag.name}</li>`)
+        tags.forEach((tag) => {
+            $('#condition-tag-list').append(
+                `<li data-code="${tag.code}"><i class="bi bi-arrow-left-square-fill" style="margin-right:4px"></i>${tag.name}</li>`
+            )
         })
     }
     // 条件标签点击事件代理
     // 点击后将会在条件列表添加一条对应的项
     // 同时也会记录标签的点击次数
-    $('#condition-tag-list').click(event => {
+    $('#condition-tag-list').click((event) => {
         if (event.target.tagName === 'LI' || event.target.tagName === 'I') {
             let name = '',
                 code = ''
@@ -139,15 +147,16 @@ $(function () {
     })
     // 增加标签得分
     function increaseTagScore({ code, name }) {
-        let ranking = localStorage.getItem(storageRanking) || "[]",
+        let ranking = localStorage.getItem(storageRanking) || '[]',
             rankingObj = JSON.parse(ranking),
-            idx = rankingObj.findIndex(r => r.code === code)
+            idx = rankingObj.findIndex((r) => r.code === code)
         if (idx !== -1) rankingObj[idx].score++
-        else rankingObj.push({
-            code: code,
-            name: name,
-            score: 1
-        })
+        else
+            rankingObj.push({
+                code: code,
+                name: name,
+                score: 1,
+            })
 
         rankingObj.sort((x, y) => x.score - y.score)
         if (rankingObj.length < rankingObj[rankingObj.length - 1].score) {
@@ -162,7 +171,7 @@ $(function () {
     }
     // 提取常用项
     function getCommonTags() {
-        let ranking = localStorage.getItem(storageRanking) || "[]",
+        let ranking = localStorage.getItem(storageRanking) || '[]',
             rankingObj = JSON.parse(ranking)
         rankingObj.sort((x, y) => y.score - x.score)
         generateTagList(rankingObj)

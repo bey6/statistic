@@ -3,79 +3,82 @@
 <script src="../../public/js/query/index.js" defer="defer"></script>
 {% endblock %} {% block content %}
 <div style="display: flex; height: calc(100vh - 51px)">
-  <form
-    class="form-inline"
-    style="width: 100%; align-items: flex-start"
-    action="/search?_csrf={{ ctx.csrf | safe}}"
-    method="POST"
-    enctype="application/x-www-form-urlencoded"
-    autocomplete="off"
-  >
-    <div class="condition-list">
-      <ol id="condition-list"></ol>
+    <form
+        class="form-inline"
+        style="width: 100%; align-items: flex-start"
+        action="/search?_csrf={{ ctx.csrf | safe}}"
+        method="POST"
+        enctype="application/x-www-form-urlencoded"
+        autocomplete="off"
+    >
+        <div class="condition-list">
+            <ol id="condition-list"></ol>
 
-      <div style="padding: 4px; text-align: right">
-        <button
-          type="button"
-          class="btn btn-sm btn-light"
-          data-toggle="collapse"
-          data-target="#collapseExample"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
-          <i class="bi bi-chevron-double-up" style="margin-right: 8px"></i>
-          设置统计项
-        </button>
-        <button
-          class="btn btn-sm btn-primary"
-          id="query"
-          data-toggle="modal"
-          data-target="#staticBackdrop"
-          type="submit"
-        >
-          <i class="bi bi-search" style="margin-right: 8px"></i> 执行
-        </button>
-      </div>
+            <div style="padding: 4px; text-align: right">
+                <button
+                    type="button"
+                    class="btn btn-sm btn-light"
+                    data-toggle="collapse"
+                    data-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                    <i
+                        class="bi bi-chevron-double-up"
+                        style="margin-right: 8px"
+                    ></i>
+                    设置统计项
+                </button>
+                <button
+                    class="btn btn-sm btn-primary"
+                    id="query"
+                    data-toggle="modal"
+                    data-target="#staticBackdrop"
+                    type="submit"
+                >
+                    <i class="bi bi-search" style="margin-right: 8px"></i> 执行
+                </button>
+            </div>
+        </div>
+    </form>
+    <ul class="condition-tag" id="condition-tag">
+        <li data-code="common" class="condition-tag--active">常用</li>
+        {% for tag in tags %}
+        <li data-code="{{tag.code}}">{{tag.name}}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="condition-tag-list">
+        <input
+            type="search"
+            class="form-control form-control-sm"
+            style="width: calc(100% - 16px); margin: 8px 8px 0px 8px"
+        />
+        <ol id="condition-tag-list"></ol>
     </div>
-  </form>
-  <ul class="condition-tag" id="condition-tag">
-    <li data-code="common" class="condition-tag--active">常用</li>
-    {% for tag in tags %}
-    <li data-code="{{tag.code}}">{{tag.name}}</li>
-    {% endfor %}
-  </ul>
-
-  <div class="condition-tag-list">
-    <input
-      type="search"
-      class="form-control form-control-sm"
-      style="width: calc(100% - 16px); margin: 8px 8px 0px 8px"
-    />
-    <ol id="condition-tag-list"></ol>
-  </div>
 </div>
 
 <div
-  class="modal fade"
-  id="staticBackdrop"
-  data-backdrop="static"
-  data-keyboard="false"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
+    class="modal fade"
+    id="staticBackdrop"
+    data-backdrop="static"
+    data-keyboard="false"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="spinner-border text-success" role="status">
-          <span class="sr-only">Loading...</span>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <h3 style="display: inline-block; margin: 0 0 0 12px">
+                    正在拼命检索 ···
+                </h3>
+            </div>
         </div>
-        <h3 style="display: inline-block; margin: 0 0 0 12px">
-          正在拼命检索 ···
-        </h3>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock %}

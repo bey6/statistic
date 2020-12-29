@@ -1,86 +1,89 @@
 .condition-list {
-  flex: 1;
-  height: 100%;
+    flex: 1;
+    height: 100%;
 }
 .condition-list > ol {
-  height: calc(100% - 39px);
-  overflow-y: auto;
-  border-bottom: var(--bd);
+    height: calc(100% - 39px);
+    overflow-y: auto;
+    border-bottom: var(--bd);
 }
 .condition-list > ol > li {
-  display: flex;
-  margin-bottom: 4px;
+    display: flex;
+    margin-bottom: 4px;
 }
 .dropable {
-  height: 32px;
-  border-radius: var(--bdr);
-  /* background-color: rgb(230, 216, 245); */
-  background-image: radial-gradient(rgb(230, 216, 245), rgb(209, 170, 250) 90%);
+    height: 32px;
+    border-radius: var(--bdr);
+    /* background-color: rgb(230, 216, 245); */
+    background-image: radial-gradient(
+        rgb(230, 216, 245),
+        rgb(209, 170, 250) 90%
+    );
 }
 .condition-list__item {
-  flex: 1;
-  margin-right: 4px;
+    flex: 1;
+    margin-right: 4px;
 }
 .condition-list__name {
-  flex: 0 0 256px;
-  margin-right: 4px;
-  height: 31px;
-  text-align: center;
+    flex: 0 0 256px;
+    margin-right: 4px;
+    height: 31px;
+    text-align: center;
 }
 .condition-tag {
-  position: fixed;
-  padding: 0;
-  top: 51px;
-  right: 0px;
-  width: 24px;
-  text-align: center;
+    position: fixed;
+    padding: 0;
+    top: 51px;
+    right: 0px;
+    width: 24px;
+    text-align: center;
 }
 .condition-tag > li {
-  padding: 2px 0;
-  line-height: 20px;
-  border-bottom: var(--bd);
-  border-left: var(--bd);
-  background-color: var(--bgc);
-  cursor: pointer;
+    padding: 2px 0;
+    line-height: 20px;
+    border-bottom: var(--bd);
+    border-left: var(--bd);
+    background-color: var(--bgc);
+    cursor: pointer;
 }
 .condition-tag > li.condition-tag--active {
-  background-color: #fff;
-  color: var(--main-color);
-  border-left: none;
+    background-color: #fff;
+    color: var(--main-color);
+    border-left: none;
 }
 .condition-tag > li:hover {
-  background-color: #ccc;
+    background-color: #ccc;
 }
 .btn-del {
-  font-size: 32px;
-  cursor: pointer;
+    font-size: 32px;
+    cursor: pointer;
 }
 .btn-del:active {
-  background-color: #f4f4f8;
+    background-color: #f4f4f8;
 }
 .btn-drag {
-  padding: 6px 4px 4px 4px;
-  border-radius: var(--bdr);
-  font-size: 20px;
-  cursor: pointer;
+    padding: 6px 4px 4px 4px;
+    border-radius: var(--bdr);
+    font-size: 20px;
+    cursor: pointer;
 }
 .btn-drag:active {
-  background-color: var(--bgc);
+    background-color: var(--bgc);
 }
 .condition-tag-list {
-  margin-right: 24px;
-  width: 256px;
-  height: 100%;
-  border-left: var(--bd);
+    margin-right: 24px;
+    width: 256px;
+    height: 100%;
+    border-left: var(--bd);
 }
 .condition-tag-list > ol > li {
-  padding: 2px 4px;
-  border-bottom: var(--bd);
-  user-select: none;
+    padding: 2px 4px;
+    border-bottom: var(--bd);
+    user-select: none;
 }
 .condition-tag-list > ol > li:hover {
-  background-color: var(--bgc);
+    background-color: var(--bgc);
 }
 .condition-tag-list > ol > li:last-of-type {
-  border-bottom: none;
+    border-bottom: none;
 }

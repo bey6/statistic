@@ -5,7 +5,7 @@ const client = new elasticsearch.Client({
     host: '172.30.199.166:9200',
     // index: 'bei',
     index: 'mrfs',
-    apiVersion: '7.6'
+    apiVersion: '7.6',
 })
 
 class ESService extends Service {
@@ -15,10 +15,10 @@ class ESService extends Service {
                 body: {
                     query: {
                         match: {
-                            patient_name: keywords
-                        }
-                    }
-                }
+                            patient_name: keywords,
+                        },
+                    },
+                },
             }
             console.log(JSON.stringify(wsl))
             const res = await client.search(wsl)

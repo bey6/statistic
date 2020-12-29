@@ -11,7 +11,7 @@ module.exports = {
         编码员: 'bmy',
         质控医师: 'zkys',
         质控护士: 'zkhs',
-        进修医师: 'jxys'
+        进修医师: 'jxys',
     },
     fee: {
         诊查费: 'zc',
@@ -52,5 +52,5 @@ module.exports = {
         治疗用一次性医用材料费: 'ylyycxyycl',
         介入用一次性医用材料费: 'jryycxyycl',
         手术用一次性医用材料费: 'ssyycxyycl',
-    }
+    },
 }
