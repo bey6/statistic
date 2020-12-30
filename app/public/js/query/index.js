@@ -113,12 +113,20 @@ $(function () {
                 </select>
                 <div class="values condition-list__item" style="margin: 0"></div>
                 <i class="bi bi-arrows-move btn-drag"></i>
-            </li>`)
+            </li>`
+            )
             let values = element.find('.values')[0]
-            if (name === '协和诊断') {
+            if (name === '协和诊断')
                 xmSelect.render({
                     el: values,
                     size: 'mini',
+                    template({ item, value }) {
+                        return item.name + '<span style="position: absolute; right: 10px; color: #8799a3">' + value + '</span>'
+                    },
+                    prop: {
+                        name: 'name',
+                        value: 'code',
+                    },
                     style: {
                         height: '31px'
                     },
@@ -132,25 +140,20 @@ $(function () {
                         { name: '霍乱ex', value: 2 }
                     ]),
                     paging: true,
-                    pageSize: 3,
+                    pageSize: 20,
                     filterable: true,
                     remoteSearch: true,
-                    remoteMethod: function (val, cb, show) {
-                        //这里模拟3s后返回数据
-                        setTimeout(function () {
-                            //需要回传一个数组
-                            cb([
-                                { name: '水果' + val, value: val + 1 },
-                                { name: '蔬菜' + val, value: val + 2, selected: true },
-                                { name: '桌子' + val, value: val + 3 },
-                                { name: '北京' + val, value: val + 4 },
-                            ])
-                        }, 3000)
+                    remoteMethod: function (val, cb, /* show */) {
+                        $.get(`/dic?t=1&k=${val}`, res => {
+                            console.log(res)
+                            if (res.code === 200) cb(res.data)
+                            else cb([])
+                        })
                     }
                 })
-            } else {
+            else
                 values.replaceWith($('<input name="value" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>')[0])
-            }
+
             $('#condition-list').append($(element))
             increaseTagScore({ code: code, name: name })
         }
@@ -161,12 +164,11 @@ $(function () {
             rankingObj = JSON.parse(ranking),
             idx = rankingObj.findIndex((r) => r.code === code)
         if (idx !== -1) rankingObj[idx].score++
-        else
-            rankingObj.push({
-                code: code,
-                name: name,
-                score: 1,
-            })
+        else rankingObj.push({
+            code: code,
+            name: name,
+            score: 1,
+        })
 
         rankingObj.sort((x, y) => x.score - y.score)
         if (rankingObj.length < rankingObj[rankingObj.length - 1].score) {
@@ -175,7 +177,6 @@ $(function () {
             }
         }
         rankingObj.sort((x, y) => y.score - x.score)
-
         let rankingStr = JSON.stringify(rankingObj)
         localStorage.setItem(storageRanking, rankingStr)
     }
