@@ -150,6 +150,7 @@ $(function () {
             </li>`
             )
             let values = element.find('.values')[0]
+            // 可枚举 + string (单项, 多选, 要有区别)
             if (name === '协和诊断')
                 xmSelect.render({
                     el: values,
@@ -163,7 +164,8 @@ $(function () {
                         value: 'code',
                     },
                     style: {
-                        height: '31px'
+                        height: '31px',
+                        'min-width': '221px'
                     },
                     toolbar: {
                         show: true,
@@ -186,7 +188,23 @@ $(function () {
                         })
                     }
                 })
-            else
+            else if (name === '出院日期') // date
+            {
+                let idx = $('#condition-list').children().length
+                let dateEle = $(`
+                <div class="input-group date condition-list__item" id="datetimepicker${idx}" data-target-input="nearest" style="margin:0;min-width: 221px">
+                    <input name="vls" type="text" class="form-control form-control-sm datetimepicker-input" data-target="#datetimepicker${idx}"/>
+                    <div class="input-group-append" data-target="#datetimepicker${idx}" data-toggle="datetimepicker" style="height:31px">
+                        <div class="input-group-text"><i class="bi bi-calendar-date"></i></div>
+                    </div>
+                </div>`)[0]
+                $($(dateEle)[0]).datetimepicker({ format: 'YYYY-MM-DD' })
+                values.replaceWith(dateEle)
+                // values.replaceWith($('<input name="vls" type="date" class="condition-list__item form-control form-control-sm datetimepicker-input" value="2018-07-22" min="2018-01-01" max="2018-12-31" style="margin: 0">')[0])
+            }
+            else if (name === '年龄') // number
+                values.replaceWith($('<input name="vls" type="number" class="condition-list__item form-control form-control-sm" style="margin: 0" min="0"/>')[0])
+            else // 不可枚举 + string 
                 values.replaceWith($('<input name="vls" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>')[0])
 
             $('#condition-list').append($(element))
