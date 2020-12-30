@@ -16,7 +16,7 @@ class DicController extends Controller {
             this.ctx.body = new Rep({ code: 401, msg: 'paramater \'t\' missed', data: [] })
         } else {
             let keywords = ''
-            if (this.ctx.request.query.k) { keywords = this.ctx.request.query.k || '' }
+            if (this.ctx.request.query.k) keywords = this.ctx.request.query.k || ''
             let res = await this.ctx.service.dictionary.search('mrfs', keywords)
             this.ctx.body = new Rep({ data: res })
         }

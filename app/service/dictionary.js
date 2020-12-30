@@ -36,10 +36,10 @@ class DictionaryService extends Service {
                         (internalIcdName='${keywords}' or internalIcdName like '${keywords}%')
                         )`
                 }
-                console.log(tsql)
                 let config = ''
                 if (db === 'mrfs') config = mrfs_db
                 else config = security_db
+                console.log(config)
                 mssql.connect(config, (err) => {
                     if (err) {
                         console.trace(err.message)

@@ -15,7 +15,7 @@ class QueryController extends Controller {
     // 查询
     async search() {
         try {
-            let mapping = ['name', 'code', 'relation', 'operation', 'value'],
+            let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
                 columns = [
                     'MRID',
                     'DischargeDateTime',
@@ -43,7 +43,7 @@ class QueryController extends Controller {
             if (formData.some((v) => v.operation === 'diff'))
                 res = await this.diffParoxysmQuery(formData, columns)
             else res = await this.standardQuery(formData, columns)
-
+            console.log(JSON.stringify(res))
             let resArr = res.map((d) => ({
                 ...d._source,
                 DischargeDateTime: moment(d._source.DischargeDateTime).format(
@@ -51,7 +51,7 @@ class QueryController extends Controller {
                 ),
                 Diagnosis: d._source.Diagnosis.map(
                     (c) => c.InternalICDCode
-                ).join(', '),
+                ).filter(d => d).join(', '),
             }))
             await this.ctx.render('query/result.html', {
                 list: resArr,
@@ -107,8 +107,8 @@ class QueryController extends Controller {
     }
 
     // 组装不包含异次病发的基础 wsl
-    packageWsl(formData, columns) {
-        let wsl = new Wsl(columns, '300000s', 20000, '30000s')
+    packageWsl(formData, columns, size = 20000, from = 1) {
+        let wsl = new Wsl(columns, '300000ms', size, from, {})
         let query = new Bool()
         // 如果没有 or 关系的，这个参数给 1 拿不到结果
         if (formData.some((c) => c.relation === 'or'))
@@ -118,14 +118,14 @@ class QueryController extends Controller {
             if (condition.relation === 'or') occur = 'should'
             switch (condition.operation) {
                 case 'eq':
-                    query.addTermTo(occur, condition.code, condition.value)
+                    query.addTermTo(occur, condition.code, condition.vls)
                     break
                 case 'gt':
                     query.addRangeTo(
                         occur,
                         condition.code,
                         'gt',
-                        condition.value
+                        condition.vls
                     )
                     break
                 case 'gte':
@@ -133,7 +133,7 @@ class QueryController extends Controller {
                         occur,
                         condition.code,
                         'gte',
-                        condition.value
+                        condition.vls
                     )
                     break
                 case 'lt':
@@ -141,7 +141,7 @@ class QueryController extends Controller {
                         occur,
                         condition.code,
                         'lt',
-                        condition.value
+                        condition.vls
                     )
                     break
                 case 'lte':
@@ -149,14 +149,14 @@ class QueryController extends Controller {
                         occur,
                         condition.code,
                         'lte',
-                        condition.value
+                        condition.vls
                     )
                     break
                 case 'in':
                     query.addTermsTo(
                         occur,
                         condition.code,
-                        condition.value.split(',')
+                        condition.vls.split(',')
                     )
                     break
                 default:
@@ -205,7 +205,7 @@ class QueryController extends Controller {
     // 获取异次病发文档记录
     async getParoxysmRecords(diagnosis_array_2d, paroxysm_mrids, formData, columns) {
 
-        let wsl = this.packageWsl(formData, columns)
+        let wsl = this.packageWsl(formData, columns, 20, 1)
         wsl.body.query.bool.minimum_should_match = 1
         // 填充 filter
         wsl.body.query.addTermsTo('filter', 'MRID', paroxysm_mrids)
@@ -232,9 +232,8 @@ class QueryController extends Controller {
      * @param { array } formData 组织好的参数数组
      */
     async standardQuery(formData, columns) {
-        let wsl = this.packageWsl(formData, columns)
-        let list = await this.ctx.service.es.search(wsl)
-        return list
+        let wsl = this.packageWsl(formData, columns, 20, 1)
+        return await this.ctx.service.es.search(wsl)
     }
 
     /**
@@ -250,7 +249,7 @@ class QueryController extends Controller {
         formData
             .filter((d) => d.operation === 'diff')
             .forEach((c) => {
-                paroxysm_diagnosis_items.push(c.value.split(','))
+                paroxysm_diagnosis_items.push(c.vls.split(','))
             })
 
         // 获取符合异次发病的所有 MRID

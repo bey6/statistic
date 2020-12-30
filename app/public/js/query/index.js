@@ -2,6 +2,40 @@
 $(function () {
     const storageRanking = 'docimax@statistic:common'
 
+    // // 点击查询按钮
+    // $('#query').click(event => {
+    //     event.preventDefault()
+
+    //     // let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
+    //     //     formData = []
+
+    //     // mapping.forEach((m, idx) => {
+    //     //     document.getElementsByName(m).forEach((t, offset) => {
+    //     //         if (idx === 0) {
+    //     //             formData.push({
+    //     //                 [m]: t.value
+    //     //             })
+    //     //         } else {
+    //     //             formData[offset][m] = t.value
+    //     //         }
+    //     //     })
+    //     // })
+    //     let arr = $('form').serializeArray(),
+    //         action = $('form').attr('action')
+    //     console.log(arr)
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: action,
+    //         data: arr,
+    //         success: res => {
+    //             console.log(res)
+    //         }
+    //     })
+
+    //     return false
+    //     // $('form').submit()
+    // })
+
     getCommonTags()
 
     // 条件列表的代理事件
@@ -119,6 +153,7 @@ $(function () {
             if (name === '协和诊断')
                 xmSelect.render({
                     el: values,
+                    name: 'vls',
                     size: 'mini',
                     template({ item, value }) {
                         return item.name + '<span style="position: absolute; right: 10px; color: #8799a3">' + value + '</span>'
@@ -152,7 +187,7 @@ $(function () {
                     }
                 })
             else
-                values.replaceWith($('<input name="value" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>')[0])
+                values.replaceWith($('<input name="vls" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>')[0])
 
             $('#condition-list').append($(element))
             increaseTagScore({ code: code, name: name })
