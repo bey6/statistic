@@ -8,6 +8,7 @@
             <th scope="col">包名</th>
             <th scope="col">描述</th>
             <th scope="col" width="100">贡献者</th>
+            <th scope="col" width="165">创建时间</th>
             <th scope="col" width="50">操作</th>
         </tr>
     </thead>
@@ -20,7 +21,8 @@
             <td>{{ pkg.name }}</td>
             <td>{{ pkg.description }}</td>
             <td width="100">{{pkg.contributor}}</td>
-            <td><a href="/query?id={{ pkg.key }}">进入</a></td>
+            <td width="120">{{pkg.createTime}}</td>
+            <td><a href="/query?id={{ pkg.id }}">进入</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -36,13 +38,14 @@
                 >上一页</a
             >
         </li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item" aria-current="page">
-            <a class="page-link" href="#"
-                >2 <span class="sr-only">(current)</span></a
-            >
+        {% for p in pages %} {% if page === p %}
+        <li class="page-item active">{% else %}</li>
+        <li class="page-item">
+            {% endif %}
+            <a class="page-link" href="?page={{p}}">{{ p }}</a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        {% endfor %}
+
         <li class="page-item">
             <a class="page-link" href="#">下一页</a>
         </li>

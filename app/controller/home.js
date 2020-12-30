@@ -1,70 +1,18 @@
 const Controller = require('egg').Controller
+const moment = require('moment')
 
 class HomeController extends Controller {
     async index() {
-        let packages = [
-            {
-                key: 1,
-                name: 'pkg_1',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 2,
-                name: 'pkg_2',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 3,
-                name: 'pkg_3',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 4,
-                name: 'pkg_4',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 5,
-                name: 'pkg_5',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 6,
-                name: 'pkg_6',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 7,
-                name: 'pkg_7',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 9,
-                name: 'pkg_9',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 10,
-                name: 'pkg_10',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-            {
-                key: 11,
-                name: 'pkg_11',
-                description: '🧪 A test query package.',
-                contributor: '艾因斯喵',
-            },
-        ]
-        await this.ctx.render('home/index.html', { packages })
+        let { total, list } = await this.ctx.service.package.search(this.ctx.request.query.page || 1)
+        let pkgs = list.map((p) => ({ id: p.id, key: p.rn, name: p.name, contributor: p.owner, createTime: moment(p.createTime).format('YYYY-MM-DD hh:mm:ss'), description: p.description }))
+        let pages = []
+
+        let totalPage = Number.parseInt(total / 20)
+        if (total % 20) totalPage++
+        for (let p = 0; p < totalPage; p++) {
+            pages.push(p + 1)
+        }
+        await this.ctx.render('home/index.html', { packages: pkgs, pages, page: (this.ctx.request.query.page || 1) - 0 })
     }
 }
 

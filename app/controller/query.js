@@ -4,6 +4,7 @@ const dic_condition = require('../dic/dic_conditions')
 const { Wsl, Bool, Nested } = require('../class/wsl')
 
 class QueryController extends Controller {
+    // 查询设计页面
     async index() {
         await this.ctx.render('query/index.html', {
             conditions: dic_condition.common,

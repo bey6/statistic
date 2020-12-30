@@ -3,7 +3,6 @@ const Service = require('egg').Service
 
 const client = new elasticsearch.Client({
     host: '172.30.199.166:9200',
-    // index: 'bei',
     index: 'mrfs',
     apiVersion: '7.6',
 })
