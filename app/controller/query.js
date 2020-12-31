@@ -22,8 +22,7 @@ class QueryController extends Controller {
                     'PatientName',
                     'Diagnosis',
                 ],
-                formData = [],
-                res
+                formData = []
             if (typeof this.ctx.request.body.name === 'string')
                 formData.push(this.ctx.request.body)
             else
@@ -41,22 +40,27 @@ class QueryController extends Controller {
                 })
             // 异次病发
             if (formData.some((v) => v.operation === 'diff'))
-                res = await this.diffParoxysmQuery(formData, columns)
-            else res = await this.standardQuery(formData, columns)
-            console.log(JSON.stringify(res))
-            let resArr = res.map((d) => ({
-                ...d._source,
-                DischargeDateTime: moment(d._source.DischargeDateTime).format(
-                    'YYYY-MM-DD hh:mm:ss'
-                ),
-                Diagnosis: d._source.Diagnosis.map(
-                    (c) => c.InternalICDCode
-                ).filter(d => d).join(', '),
-            }))
-            await this.ctx.render('query/result.html', {
-                list: resArr,
-                columns: columns,
-            })
+                this.diffParoxysmQuery(formData, columns)
+            else this.standardQuery(formData, columns)
+            // if (formData.some((v) => v.operation === 'diff'))
+            //     res = this.diffParoxysmQuery(formData, columns)
+            // else res = this.standardQuery(formData, columns)
+            // let resArr = res.map((d) => ({
+            //     ...d._source,
+            //     DischargeDateTime: moment(d._source.DischargeDateTime).format(
+            //         'YYYY-MM-DD hh:mm:ss'
+            //     ),
+            //     Diagnosis: d._source.Diagnosis.map(
+            //         (c) => c.InternalICDCode
+            //     ).filter(d => d).join(', '),
+            // }))
+            this.ctx.body = {
+                code: 200
+            }
+            // await this.ctx.render('query/result.html', {
+            //     list: resArr,
+            //     columns: columns,
+            // })
         } catch (error) {
             this.ctx.body = error
         }

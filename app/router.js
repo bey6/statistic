@@ -5,6 +5,12 @@ module.exports = (app) => {
     router.post('/search', controller.query.search)
 
     router.get('/fulltext', controller.fullText.index)
-    router.get('/dic/condition', controller.dic.condition)
+
+
+    // dictionary
     router.get('/dic', controller.dic.dictionary)
+    router.get('/dic/condition', controller.dic.condition)
+
+    // notification
+    router.get('/notification', controller.notification.list)
 }

@@ -31,6 +31,7 @@ class ESService extends Service {
     async search(dsl) {
         try {
             const res = await client.search(dsl)
+            console.log(JSON.stringify(res))
             return res.hits.hits
         } catch (error) {
             console.trace(error.message)

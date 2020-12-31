@@ -37,6 +37,14 @@ table.table {
     margin: 0;
 }
 
+.btn .badge--lt {
+    position: absolute;
+    left: 3px;
+    top: 7px;
+    color: #fff;
+    background-color: rgba(220, 20, 60, 0.8);
+}
+
 @-moz-document url-prefix() {
     select.form-control {
         -moz-appearance: none;

@@ -110,6 +110,8 @@ module.exports = {
             code: 'Diagnosis.DiagnosisICDCode',
             name: '北京诊断',
             py: 'bjzd',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
         },
     ],
     /**
@@ -151,17 +153,63 @@ module.exports = {
     /**
      * 医师
      */
-    doctor: [],
+    doctor: [
+        {
+            code: 'Doctor.住院医师.姓名',
+            name: '住院医师',
+            py: 'zyys',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+        },
+    ],
     /**
      * 转科
      */
-    transfer: [],
+    transfer: [
+        {
+            code: 'VTransfer.NewDepCode',
+            name: '转入科室编码',
+            py: 'zrksbm',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+        }
+    ],
     /**
      * 联系地址
      */
-    contact: [],
+    contact: [
+        {
+            code: 'Adress',
+            name: '联系人住址',
+            py: 'lxrzz',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+        }
+    ],
     /**
      * 其他
      */
-    other: [],
+    other: [
+        {
+            code: 'M',
+            name: '肿瘤分期(M)',
+            py: 'zlfqm',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+        },
+        {
+            code: 'N',
+            name: '肿瘤分期(N)',
+            py: 'zlfqn',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+        },
+        {
+            code: 'T',
+            name: '肿瘤分期(T)',
+            py: 'zlfqt',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+        },
+    ],
 }
