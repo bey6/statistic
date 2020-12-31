@@ -2,6 +2,9 @@ const Controller = require('egg').Controller
 const moment = require('moment')
 const dic_condition = require('../dic/dic_conditions')
 const { Wsl, Bool, Nested } = require('../class/wsl')
+const fs = require('fs')
+const Rep = require('../class/rep')
+const util = require('../util')
 
 class QueryController extends Controller {
     // 查询设计页面
@@ -14,7 +17,9 @@ class QueryController extends Controller {
 
     // 查询
     async search() {
+        const uuid = util.uuid()
         try {
+            fs.writeFileSync('search_task/' + uuid + '.json', JSON.stringify({ name: 'bey', age: 23, gender: 1 }))
             let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
                 columns = [
                     'MRID',
@@ -23,46 +28,37 @@ class QueryController extends Controller {
                     'Diagnosis',
                 ],
                 formData = []
-            if (typeof this.ctx.request.body.name === 'string')
-                formData.push(this.ctx.request.body)
-            else
-                mapping.forEach((m, idx) => {
-                    let arr = this.ctx.request.body[m]
-                    arr.forEach((value, idxItem) => {
-                        if (idx === 0) {
-                            formData.push({
-                                [m]: value,
-                            })
-                        } else {
-                            formData[idxItem][m] = value
-                        }
-                    })
+            if (typeof this.ctx.request.body.name === 'string') formData.push(this.ctx.request.body)
+            else mapping.forEach((m, idx) => {
+                let arr = this.ctx.request.body[m]
+                arr.forEach((value, idxItem) => {
+                    if (idx === 0) {
+                        formData.push({
+                            [m]: value,
+                        })
+                    } else {
+                        formData[idxItem][m] = value
+                    }
                 })
-            // 异次病发
-            if (formData.some((v) => v.operation === 'diff'))
-                this.diffParoxysmQuery(formData, columns)
-            else this.standardQuery(formData, columns)
-            // if (formData.some((v) => v.operation === 'diff'))
-            //     res = this.diffParoxysmQuery(formData, columns)
-            // else res = this.standardQuery(formData, columns)
-            // let resArr = res.map((d) => ({
-            //     ...d._source,
-            //     DischargeDateTime: moment(d._source.DischargeDateTime).format(
-            //         'YYYY-MM-DD hh:mm:ss'
-            //     ),
-            //     Diagnosis: d._source.Diagnosis.map(
-            //         (c) => c.InternalICDCode
-            //     ).filter(d => d).join(', '),
-            // }))
-            this.ctx.body = {
-                code: 200
-            }
-            // await this.ctx.render('query/result.html', {
-            //     list: resArr,
-            //     columns: columns,
-            // })
+            })
+            // 后台执行异步查询, 不等待
+            this.asyncRun(formData, columns, uuid)
+            this.ctx.body = new Rep({ msg: 'Task is running at background now.', data: { search_id: uuid } })
         } catch (error) {
-            this.ctx.body = error
+            this.ctx.body = new Rep({ code: 50000, msg: error.message, data: { search_id: uuid } })
+        }
+    }
+
+    // 不等待, 让后台执行查询
+    backgroundRun(formData, columns, search_id) {
+        try {
+            let res
+            if (formData.some((v) => v.operation === 'diff'))
+                res = this.diffParoxysmQuery(formData, columns)
+            else res = this.standardQuery(formData, columns)
+            fs.writeFileSync(__dirname + '/' + search_id, res)
+        } catch (error) {
+            fs.writeFileSync(__dirname + '/' + search_id, error)
         }
     }
 

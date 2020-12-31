@@ -37,6 +37,7 @@
         "egg-scripts": "^2.13.0",
         "egg-view-nunjucks": "^2.2.0",
         "elasticsearch": "^16.7.2",
+        "md5": "^2.3.0",
         "moment": "^2.29.1",
         "mssql": "^6.3.0"
     },

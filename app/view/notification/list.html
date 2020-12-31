@@ -1,13 +1,24 @@
 {% extends "../parent.html" %} {% block header %} {% endblock %} {% block
 content %}
+<div style="margin: 8px 0">
+    <label for="searchId" style="margin: 0 8px 0 0">检索编号</label
+    ><input
+        type="text"
+        id="searchId"
+        placeholder="输入检索编号"
+        class="form-control form-control-sm"
+        style="width: 256px; display: inline-block"
+    />
+</div>
+
 <table class="table table-sm table-bordered table-hover">
     <thead>
         <tr>
             <th scope="col" width="50" style="text-align: center">序号</th>
             <th scope="col">检索编号</th>
             <th scope="col">任务描述</th>
-            <th scope="col">发起时间</th>
-            <th scope="col">耗时</th>
+            <th scope="col">创建时间</th>
+            <th scope="col">任务耗时</th>
             <th scope="col" width="100">完成状态</th>
             <th scope="col" width="100">操作</th>
         </tr>
@@ -19,7 +30,7 @@ content %}
             <td>2018年费用信息</td>
             <td>2020-12-31 12:32:21</td>
             <td>300s</td>
-            <td><span class="badge badge-success">ok</span></td>
+            <td><span class="badge badge-success">completed</span></td>
             <td><a href="/result?id=xxx">查看</a></td>
         </tr>
         <tr>
@@ -36,7 +47,16 @@ content %}
             <td>6015ddb0d68321ef</td>
             <td>2018年费用信息</td>
             <td>2020-12-31 12:32:21</td>
-            <td></td>
+            <td>---</td>
+            <td><span class="badge badge-warning">running</span></td>
+            <td><a href="/result?id=xxx" style="display: none">查看</a></td>
+        </tr>
+        <tr>
+            <th scope="row" width="50" style="text-align: center">3</th>
+            <td>4352efcde16093f5</td>
+            <td>生产diff宫颈癌</td>
+            <td>2020-12-31 14:12:56</td>
+            <td>---</td>
             <td><span class="badge badge-warning">running</span></td>
             <td><a href="/result?id=xxx" style="display: none">查看</a></td>
         </tr>
