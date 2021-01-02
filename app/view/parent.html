@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/public/css/bootstrap-icons.css" />
         <link rel="stylesheet" href="/public/css/style.css" />
+        <script src="/public/js/popper.min.js" defer="defer"></script>
         <script src="/public/js/jquery.min.js" defer="defer"></script>
         <script src="/public/js/bootstrap.min.js" defer="defer"></script>
         {% block header %} {% endblock %}
@@ -45,19 +46,47 @@
                     >任务列表</a
                 >
             </div>
-            <a
-                class="btn"
-                style="position: relative; padding-top: 13px"
-                href="/notification"
-            >
-                <i
-                    class="bi bi-envelope-fill"
-                    style="font-size: 24px; color: #fff"
-                ></i>
-                <span id="notification" class="badge badge-light badge--lt"
-                    >4</span
+
+            <div>
+                <a
+                    class="btn"
+                    style="
+                        position: relative;
+                        top: 5px;
+                        right: 3px;
+                        padding-top: 10px;
+                    "
+                    href="/notification"
+                    role="button"
+                    id="dropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                 >
-            </a>
+                    <i
+                        class="bi bi-envelope-fill"
+                        style="font-size: 24px; color: #fff"
+                    ></i>
+                    <span id="notification" class="badge badge-light badge--lt"
+                        >4</span
+                    >
+                </a>
+
+                <div
+                    class="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="dropdownMenuLink"
+                >
+                    <a class="dropdown-item" href="/result?id=4352efcde16093f5"
+                        >生产diff宫颈癌, 已经执行完毕! 点击查看</a
+                    >
+                    <a class="dropdown-item" href="/result?id=4352efcde16093f5"
+                        >生产diff宫颈癌, 已经执行完毕! 点击查看</a
+                    >
+                    <a class="dropdown-item" href="/result?id=4352efcde16093f5"
+                        >生产diff宫颈癌, 已经执行完毕! 点击查看</a
+                    >
+                </div>
+            </div>
         </header>
 
         {% block content %} {% endblock %}

@@ -86,4 +86,12 @@ content %}
         </li>
     </ul>
 </nav>
+
+<pre>
+    1. 将检索编号作为文件名称保存在 /search_task 目录下
+    2. 每一笔检索任务在 sqlserver 中保存一份检索任务
+    3. 每周清理一次检索任务, 主要是 /search_task 中的内容
+    4. 前端应该有一个检索完成的消息通知
+    5. 考虑使用一个轮训来不停的检测是否存在已经完成的 search_task, 如果有新完成的并且未查看过的 search_task, 则提示
+</pre>
 {% endblock %}
