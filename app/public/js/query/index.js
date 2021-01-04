@@ -2,39 +2,40 @@
 $(function () {
     const storageRanking = 'docimax@statistic:common'
 
-    // // 点击查询按钮
-    // $('#query').click(event => {
-    //     event.preventDefault()
+    // 点击查询按钮
+    $('#query').click(event => {
+        event.preventDefault()
 
-    //     // let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
-    //     //     formData = []
+        // let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
+        //     formData = []
 
-    //     // mapping.forEach((m, idx) => {
-    //     //     document.getElementsByName(m).forEach((t, offset) => {
-    //     //         if (idx === 0) {
-    //     //             formData.push({
-    //     //                 [m]: t.value
-    //     //             })
-    //     //         } else {
-    //     //             formData[offset][m] = t.value
-    //     //         }
-    //     //     })
-    //     // })
-    //     let arr = $('form').serializeArray(),
-    //         action = $('form').attr('action')
-    //     console.log(arr)
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: action,
-    //         data: arr,
-    //         success: res => {
-    //             console.log(res)
-    //         }
-    //     })
+        // mapping.forEach((m, idx) => {
+        //     document.getElementsByName(m).forEach((t, offset) => {
+        //         if (idx === 0) {
+        //             formData.push({
+        //                 [m]: t.value
+        //             })
+        //         } else {
+        //             formData[offset][m] = t.value
+        //         }
+        //     })
+        // })
+        let arr = $('form').serializeArray(),
+            action = $('form').attr('action')
+        console.log(arr)
+        $.ajax({
+            type: 'POST',
+            url: action,
+            data: arr,
+            success: res => {
+                $('#searchId').text('Your search id: ' + res.data.search_id)
+                $('#staticBackdrop').modal('show')
+            }
+        })
 
-    //     return false
-    //     // $('form').submit()
-    // })
+        return false
+        // $('form').submit()
+    })
 
     getCommonTags()
 

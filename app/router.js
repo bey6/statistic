@@ -1,11 +1,12 @@
 module.exports = (app) => {
     const { router, controller } = app
+    // query package list
     router.get('/', controller.home.index)
+
+    // query
     router.get('/query', controller.query.index)
     router.post('/search', controller.query.search)
-
-    router.get('/fulltext', controller.fullText.index)
-
+    router.get('/query/result', controller.query.result)
 
     // dictionary
     router.get('/dic', controller.dic.dictionary)

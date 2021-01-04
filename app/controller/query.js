@@ -1,5 +1,4 @@
 const Controller = require('egg').Controller
-const moment = require('moment')
 const dic_condition = require('../dic/dic_conditions')
 const { Wsl, Bool, Nested } = require('../class/wsl')
 const fs = require('fs')
@@ -15,11 +14,39 @@ class QueryController extends Controller {
         })
     }
 
+    // 结果
+    async result() {
+        if (!this.ctx.request.query.id) {
+            this.ctx.body = new Rep({
+                code: 50000,
+                msg: 'id 参数是必传项',
+            })
+        } else {
+            let filePath = 'search_task/' + this.ctx.request.query.id + '.json'
+            if (!fs.existsSync(filePath)) {
+                this.ctx.body = new Rep({
+                    code: 50000,
+                    msg: 'search_id 无效，或该结果已被清理',
+                })
+            } else {
+                let res = fs.readFileSync(filePath)
+                let resObj = JSON.parse(res.toString())
+                if (resObj.code && resObj.code === 20000) {
+                    await this.ctx.render('query/result.html', {
+                        columns: ['MRID', 'PatientName', 'Diagnosis'],
+                        list: resObj.data
+                    })
+                } else {
+                    this.ctx.body = resObj
+                }
+            }
+        }
+    }
+
     // 查询
     async search() {
         const uuid = util.uuid()
         try {
-            fs.writeFileSync('search_task/' + uuid + '.json', JSON.stringify({ name: 'bey', age: 23, gender: 1 }))
             let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
                 columns = [
                     'MRID',
@@ -43,71 +70,44 @@ class QueryController extends Controller {
             })
             // 后台执行异步查询, 不等待
             this.asyncRun(formData, columns, uuid)
+            await this.ctx.service.mrquery.addSearchTask(uuid, uuid)
             this.ctx.body = new Rep({ msg: 'Task is running at background now.', data: { search_id: uuid } })
         } catch (error) {
             this.ctx.body = new Rep({ code: 50000, msg: error.message, data: { search_id: uuid } })
         }
     }
 
-    // 不等待, 让后台执行查询
-    backgroundRun(formData, columns, search_id) {
+    // 异步执行
+    async asyncRun(formData, columns, uuid) {
+        let res = new Rep({ code: 50000 })
         try {
-            let res
+            let tmp
             if (formData.some((v) => v.operation === 'diff'))
-                res = this.diffParoxysmQuery(formData, columns)
-            else res = this.standardQuery(formData, columns)
-            fs.writeFileSync(__dirname + '/' + search_id, res)
+                tmp = await this.diffParoxysmQuery(formData, columns)
+            else tmp = await this.standardQuery(formData, columns)
+            res.data = tmp.map(d => ({ MRID: d._source.MRID, PatientName: d._source.PatientName, Diagnosis: d._source.Diagnosis.map(g => g.DiagnosisICDCode).join(', ') }))
+            res.code = 20000
         } catch (error) {
-            fs.writeFileSync(__dirname + '/' + search_id, error)
+            res.code = 50000
+            res.msg = error.message
+            res.data = error
+        } finally {
+            fs.writeFileSync('search_task/' + uuid + '.json', JSON.stringify(res))
+            let status = ''
+            if (res.code === 20000) status = 'completed'
+            else status = 'error'
+            this.ctx.service.mrquery.putSearchTask(uuid, status)
         }
     }
 
-    // 获取 wsl
-    getWsl(diagnosis_array, formData, columns) {
-        let wsl = {
-            body: {
-                _source: columns,
-                timeout: '30000s',
-                query: {
-                    bool: {
-                        must: [
-                            {
-                                range: {
-                                    DischargeDateTime: {
-                                        gte: '2007-01-01T18:25:01.000',
-                                        lte: '2014-10-10T18:25:01.000',
-                                    },
-                                },
-                            },
-                            {
-                                nested: {
-                                    path: 'Diagnosis',
-                                    query: {
-                                        bool: {
-                                            should: diagnosis_array.map(
-                                                (d) => ({
-                                                    term: {
-                                                        'Diagnosis.InternalICDCode.keyword': d,
-                                                    },
-                                                })
-                                            ),
-                                            minimum_should_match: 1,
-                                            boost: 1.0,
-                                        },
-                                    },
-                                },
-                            },
-                        ],
-                    },
-                },
-                size: 200000000,
-            },
-        }
-        return wsl
-    }
-
-    // 组装不包含异次病发的基础 wsl
-    packageWsl(formData, columns, size = 20000, from = 1) {
+    /**
+     * 组装不包含异次病发的基础 wsl
+     * @param {*} formData the form data that use submit
+     * @param {*} columns the columns wsl will show
+     * @param {*} size the size will es slice
+     * @param {*} from the offsets will es skip
+     */
+    packageWsl(formData, columns, size = 20000, from = 0) {
         let wsl = new Wsl(columns, '300000ms', size, from, {})
         let query = new Bool()
         // 如果没有 or 关系的，这个参数给 1 拿不到结果
@@ -187,12 +187,12 @@ class QueryController extends Controller {
             wsl.body.query.addNestedTo('must', nested)
             let list = await this.ctx.service.es.search(wsl)
             if (list.length === 0) return []
-            else
-                mrids.push(
-                    ...Array.from(new Set(list.map((d) => d._source.MRID)))
-                )
+            else mrids.push(
+                ...Array.from(new Set(list.map((d) => d._source.MRID)))
+            )
         }
-        Array.from(new Set(mrids)).forEach((mrid) => {
+        // Array.from(new Set(mrids)).forEach((mrid) => {
+        mrids.forEach((mrid) => {
             if (
                 mrids.filter((m) => m === mrid).length ===
                 diagnosis_array_2d.length
@@ -204,8 +204,7 @@ class QueryController extends Controller {
 
     // 获取异次病发文档记录
     async getParoxysmRecords(diagnosis_array_2d, paroxysm_mrids, formData, columns) {
-
-        let wsl = this.packageWsl(formData, columns, 20, 1)
+        let wsl = this.packageWsl(formData, columns, 200000000, 0)
         wsl.body.query.bool.minimum_should_match = 1
         // 填充 filter
         wsl.body.query.addTermsTo('filter', 'MRID', paroxysm_mrids)
@@ -232,7 +231,7 @@ class QueryController extends Controller {
      * @param { array } formData 组织好的参数数组
      */
     async standardQuery(formData, columns) {
-        let wsl = this.packageWsl(formData, columns, 20, 1)
+        let wsl = this.packageWsl(formData, columns, 200000000, 0)
         return await this.ctx.service.es.search(wsl)
     }
 
@@ -256,7 +255,7 @@ class QueryController extends Controller {
         let paroxysm_mrids = await this.getParoxysmMrids(
             paroxysm_diagnosis_items,
             formData,
-            columns
+            ['MRID']
         )
 
         // 根据 MRID 获取异次并发记录

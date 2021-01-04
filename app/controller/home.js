@@ -1,10 +1,10 @@
 const Controller = require('egg').Controller
 const moment = require('moment')
-const Req = require('../class/rep')
+
 class HomeController extends Controller {
     async index() {
         try {
-            let { total, list } = await this.ctx.service.package.search(this.ctx.request.query.page || 1)
+            let { total, list } = await this.ctx.service.mrquery.search(this.ctx.request.query.page || 1)
             let pkgs = list.map((p) => ({ id: p.id, key: p.rn, name: p.name, contributor: p.owner, createTime: moment(p.createTime).format('YYYY-MM-DD hh:mm:ss'), description: p.description }))
             let pages = []
 

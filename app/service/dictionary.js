@@ -23,25 +23,7 @@ const security_db = {
     },
 }
 class DictionaryService extends Service {
-    get mrfsPool() {
-        let pool = undefined
-        return async function () {
-            if (!pool) pool = await mssql.connect(mrfs_db)
-            return pool
-        }
-    }
-
-    get securityPool() {
-        let pool = undefined
-        return async function () {
-            if (!pool) pool = await mssql.connect(security_db)
-            return pool
-        }
-    }
-
-
     async mrfsSearch(keywords) {
-
         let tsql = 'select internalIcdName as name, internalIcdCode as code from dic_icd_internal_diagnosis where (deleted is null or deleted=0) '
         if (keywords) {
             tsql += `and (
@@ -51,9 +33,13 @@ class DictionaryService extends Service {
                         )`
         }
         try {
-            return (await (await this.mrfsPool()).request()).query(tsql)
+            let pool = await mssql.connect(mrfs_db)
+            let res = await pool.request().query(tsql)
+            return res
         } catch (error) {
             console.error(error)
+        } finally {
+            mssql.close()
         }
     }
 
@@ -93,6 +79,8 @@ class DictionaryService extends Service {
             } catch (error) {
                 console.trace(error.message)
                 reject(error)
+            } finally {
+                mssql.close()
             }
         })
     }
