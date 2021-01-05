@@ -4,6 +4,7 @@ const { Wsl, Bool, Nested } = require('../class/wsl')
 const fs = require('fs')
 const Rep = require('../class/rep')
 const util = require('../util')
+const xlsx = require('node-xlsx')
 
 class QueryController extends Controller {
     // 查询设计页面
@@ -16,13 +17,13 @@ class QueryController extends Controller {
 
     // 结果
     async result() {
-        if (!this.ctx.request.query.id) {
+        if (!this.ctx.params.id) {
             this.ctx.body = new Rep({
                 code: 50000,
                 msg: 'id 参数是必传项',
             })
         } else {
-            let filePath = 'search_task/' + this.ctx.request.query.id + '.json'
+            let filePath = 'search_task/' + this.ctx.params.id + '.json'
             if (!fs.existsSync(filePath)) {
                 this.ctx.body = new Rep({
                     code: 50000,
@@ -32,14 +33,49 @@ class QueryController extends Controller {
                 let res = fs.readFileSync(filePath)
                 let resObj = JSON.parse(res.toString())
                 if (resObj.code && resObj.code === 20000) {
+                    this.ctx.service.mrquery.putSearchTaskRead(this.ctx.params.id)
                     await this.ctx.render('query/result.html', {
                         columns: ['MRID', 'PatientName', 'Diagnosis'],
-                        list: resObj.data
+                        list: resObj.data,
+                        search_id: this.ctx.params.id
                     })
                 } else {
                     this.ctx.body = resObj
                 }
             }
+        }
+    }
+
+    // 导出
+    async excel() {
+        if (!this.ctx.params.id) {
+            this.ctx.body = new Rep({
+                code: 50000,
+                msg: 'id 参数是必传项',
+            })
+        } else {
+            let filePath = 'search_task/' + this.ctx.params.id + '.json'
+            if (!fs.existsSync(filePath)) {
+                this.ctx.body = new Rep({
+                    code: 50000,
+                    msg: 'search_id 无效，或该结果已被清理',
+                })
+            } else {
+
+                let res = fs.readFileSync(filePath)
+                let resObj = JSON.parse(res.toString())
+                if (resObj.code && resObj.code === 20000) {
+                    const data = [['MRID', 'PatientName', 'Diagnosis']]
+                    let dataRow = resObj.data.map(row => [row.MRID, row.PatientName, row.Diagnosis])
+                    const options = { '!cols': [{ wch: 10 }, { wch: 10 }, { wch: 40 }] /**, '!rows': [{ hpx: 50 }, { hpx: 50 }] */ }
+                    this.ctx.response.set('content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                    this.ctx.body = xlsx.build([{ name: 'sheet1', data: data.concat(dataRow) }], options)
+                } else {
+                    this.ctx.body = resObj
+                }
+            }
+
+
         }
     }
 
@@ -70,10 +106,17 @@ class QueryController extends Controller {
             })
             // 后台执行异步查询, 不等待
             this.asyncRun(formData, columns, uuid)
-            await this.ctx.service.mrquery.addSearchTask(uuid, uuid)
-            this.ctx.body = new Rep({ msg: 'Task is running at background now.', data: { search_id: uuid } })
+            await this.ctx.service.mrquery.addSearchTask(uuid, '未命名')
+            this.ctx.body = new Rep({
+                msg: 'Task is running at background now.',
+                data: { search_id: uuid },
+            })
         } catch (error) {
-            this.ctx.body = new Rep({ code: 50000, msg: error.message, data: { search_id: uuid } })
+            this.ctx.body = new Rep({
+                code: 50000,
+                msg: error.message,
+                data: { search_id: uuid },
+            })
         }
     }
 
@@ -85,18 +128,28 @@ class QueryController extends Controller {
             if (formData.some((v) => v.operation === 'diff'))
                 tmp = await this.diffParoxysmQuery(formData, columns)
             else tmp = await this.standardQuery(formData, columns)
-            res.data = tmp.map(d => ({ MRID: d._source.MRID, PatientName: d._source.PatientName, Diagnosis: d._source.Diagnosis.map(g => g.DiagnosisICDCode).join(', ') }))
+            res.data = tmp.map((d) => ({
+                MRID: d._source.MRID,
+                PatientName: d._source.PatientName,
+                Diagnosis: d._source.Diagnosis.map(
+                    (g) => g.DiagnosisICDCode
+                ).join(', '),
+            }))
             res.code = 20000
         } catch (error) {
             res.code = 50000
             res.msg = error.message
             res.data = error
         } finally {
-            fs.writeFileSync('search_task/' + uuid + '.json', JSON.stringify(res))
+            fs.writeFileSync(
+                'search_task/' + uuid + '.json',
+                JSON.stringify(res)
+            )
             let status = ''
             if (res.code === 20000) status = 'completed'
             else status = 'error'
-            this.ctx.service.mrquery.putSearchTask(uuid, status)
+            console.log(uuid, status)
+            this.ctx.service.mrquery.putSearchTaskStatus(uuid, status)
         }
     }
 
@@ -121,12 +174,7 @@ class QueryController extends Controller {
                     query.addTermTo(occur, condition.code, condition.vls)
                     break
                 case 'gt':
-                    query.addRangeTo(
-                        occur,
-                        condition.code,
-                        'gt',
-                        condition.vls
-                    )
+                    query.addRangeTo(occur, condition.code, 'gt', condition.vls)
                     break
                 case 'gte':
                     query.addRangeTo(
@@ -137,12 +185,7 @@ class QueryController extends Controller {
                     )
                     break
                 case 'lt':
-                    query.addRangeTo(
-                        occur,
-                        condition.code,
-                        'lt',
-                        condition.vls
-                    )
+                    query.addRangeTo(occur, condition.code, 'lt', condition.vls)
                     break
                 case 'lte':
                     query.addRangeTo(
@@ -177,19 +220,16 @@ class QueryController extends Controller {
             let wsl = this.packageWsl(formData, columns)
             let nestedBool = new Bool([], [], [], [], 1)
             diagnosis_array_1d.forEach((d) => {
-                nestedBool.addTermTo(
-                    'should',
-                    'Diagnosis.InternalICDCode',
-                    d
-                )
+                nestedBool.addTermTo('should', 'Diagnosis.InternalICDCode', d)
             })
             let nested = new Nested('Diagnosis', nestedBool)
             wsl.body.query.addNestedTo('must', nested)
             let list = await this.ctx.service.es.search(wsl)
             if (list.length === 0) return []
-            else mrids.push(
-                ...Array.from(new Set(list.map((d) => d._source.MRID)))
-            )
+            else
+                mrids.push(
+                    ...Array.from(new Set(list.map((d) => d._source.MRID)))
+                )
         }
         // Array.from(new Set(mrids)).forEach((mrid) => {
         mrids.forEach((mrid) => {
@@ -203,7 +243,12 @@ class QueryController extends Controller {
     }
 
     // 获取异次病发文档记录
-    async getParoxysmRecords(diagnosis_array_2d, paroxysm_mrids, formData, columns) {
+    async getParoxysmRecords(
+        diagnosis_array_2d,
+        paroxysm_mrids,
+        formData,
+        columns
+    ) {
         let wsl = this.packageWsl(formData, columns, 200000000, 0)
         wsl.body.query.bool.minimum_should_match = 1
         // 填充 filter
@@ -213,10 +258,10 @@ class QueryController extends Controller {
         for (let x = 0; x < diagnosis_array_2d.length; x++) {
             const diagnosis_array_1d = diagnosis_array_2d[x]
             let bool = new Bool([], [], [], [], 1)
-            bool.bool.should = diagnosis_array_1d.map(d => ({
+            bool.bool.should = diagnosis_array_1d.map((d) => ({
                 term: {
-                    'Diagnosis.InternalICDCode.keyword': d
-                }
+                    'Diagnosis.InternalICDCode.keyword': d,
+                },
             }))
             nestedBool.bool.should.push(bool)
         }
@@ -259,7 +304,12 @@ class QueryController extends Controller {
         )
 
         // 根据 MRID 获取异次并发记录
-        return this.getParoxysmRecords(paroxysm_diagnosis_items, paroxysm_mrids, formData, columns)
+        return this.getParoxysmRecords(
+            paroxysm_diagnosis_items,
+            paroxysm_mrids,
+            formData,
+            columns
+        )
     }
 }
 

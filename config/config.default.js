@@ -1,4 +1,6 @@
+// 应用 key
 exports.keys = 'docimax'
+// 视图引擎
 exports.view = {
     defaultViewEngine: 'nunjucks',
     mapping: {
@@ -11,13 +13,13 @@ exports.middleware == ['robot']
 exports.robot = {
     ua: [/Baiduspider/i],
 }
+// 安全
 exports.security = {
     csrf: {
         queryName: '_csrf', // 通过 query 传递 CSRF token 的默认字段为 _csrf
         bodyName: '_csrf', // 通过 body 传递 CSRF token 的默认字段为 _csrf
     },
 }
-
 // 表单最大长度
 exports.bodyParser = {
     jsonLimit: '2mb',

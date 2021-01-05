@@ -1,0 +1,50 @@
+{% extends "../parent.html" %} {% block header %} {% endblock %} {% block
+content %}
+<div style="margin: 8px 0">
+    <label for="searchId" style="margin: 0 8px 0 0">检索编号</label
+    ><input
+        type="text"
+        id="searchId"
+        placeholder="输入检索编号"
+        class="form-control form-control-sm"
+        style="width: 256px; display: inline-block"
+    />
+</div>
+
+<table class="table table-sm table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col" width="50" style="text-align: center">序号</th>
+            <th scope="col">检索编号</th>
+            <th scope="col">任务描述</th>
+            <th scope="col">创建时间</th>
+            <th scope="col" width="80" style="text-align:center">检索状态</th>
+            <th scope="col" width="80" style="text-align:center">查阅状态</th>
+            <th scope="col" width="100">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <th scope="row" width="50" style="text-align: center">{{task.Key}}</th>
+            <td>{{task.SearchId}}</td>
+            <td>{{task.Name}}</td>
+            <td>{{task.CreateDate}}</td>
+            {% if task.Status === 'completed' %}
+            <td style="text-align:center"><span class="badge badge-success">已完成</span></td>
+            {% elif task.Status === 'running' %}
+            <td style="text-align:center"><span class="badge badge-warning">执行中</span></td>
+            {% else %}
+            <td style="text-align:center"><span class="badge badge-danger">异常</span></td>
+            {% endif %}
+            {% if task.IsRead === 1 %}
+            <td style="text-align:center;color:gray">已读</td>
+            {% else %}
+            <td style="text-align:center">未读</td>
+            {% endif %}
+            <td><a href="/query/result/{{task.SearchId}}">查看</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

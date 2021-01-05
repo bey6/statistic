@@ -2,8 +2,11 @@
 $(function () {
     const storageRanking = 'docimax@statistic:common'
 
+    let cookies = document.cookie.split('; ').map(c => ({ key: c.split('=')[0], value: c.split('=')[1] })),
+        token = cookies.find(c => c.key === 'csrfToken')
+
     // 点击查询按钮
-    $('#query').click(event => {
+    $('#query').click((event) => {
         event.preventDefault()
 
         // let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
@@ -27,14 +30,34 @@ $(function () {
             type: 'POST',
             url: action,
             data: arr,
-            success: res => {
-                $('#searchId').text('Your search id: ' + res.data.search_id)
+            success: (res) => {
+                $('#searchId').text(res.data.search_id)
                 $('#staticBackdrop').modal('show')
-            }
+            },
         })
 
         return false
         // $('form').submit()
+    })
+    $('#btnAlias').click(() => {
+
+        let search_id = $('#searchId').text(),
+            alias = $('#taskAlias').val()
+
+        if (!alias || !search_id) return
+
+        $.ajax({
+            type: 'PUT',
+            url: '/task/' + search_id,
+            data: {
+                name: alias
+            },
+            headers: {
+                'x-csrf-token': token.value
+            }
+        }).done(res => {
+            console.log(res)
+        })
     })
 
     getCommonTags()
@@ -148,8 +171,7 @@ $(function () {
                 </select>
                 <div class="values condition-list__item" style="margin: 0"></div>
                 <i class="bi bi-arrows-move btn-drag"></i>
-            </li>`
-            )
+            </li>`)
             let values = element.find('.values')[0]
             // 可枚举 + string (单项, 多选, 要有区别)
             if (name === '协和诊断')
@@ -158,7 +180,12 @@ $(function () {
                     name: 'vls',
                     size: 'mini',
                     template({ item, value }) {
-                        return item.name + '<span style="position: absolute; right: 10px; color: #8799a3">' + value + '</span>'
+                        return (
+                            item.name +
+                            '<span style="position: absolute; right: 10px; color: #8799a3">' +
+                            value +
+                            '</span>'
+                        )
                     },
                     prop: {
                         name: 'name',
@@ -166,31 +193,31 @@ $(function () {
                     },
                     style: {
                         height: '31px',
-                        'min-width': '221px'
+                        'min-width': '221px',
                     },
                     toolbar: {
                         show: true,
                         showIcon: false,
                     },
                     model: { label: { type: 'text' } },
-                    data: () => ([
+                    data: () => [
                         { name: '霍乱', value: 1 },
-                        { name: '霍乱ex', value: 2 }
-                    ]),
+                        { name: '霍乱ex', value: 2 },
+                    ],
                     paging: true,
                     pageSize: 20,
                     filterable: true,
                     remoteSearch: true,
-                    remoteMethod: function (val, cb, /* show */) {
-                        $.get(`/dic?t=1&k=${val}`, res => {
+                    remoteMethod: function (val, cb /* show */) {
+                        $.get(`/dic?t=1&k=${val}`, (res) => {
                             console.log(res)
                             if (res.code === 200) cb(res.data)
                             else cb([])
                         })
-                    }
+                    },
                 })
-            else if (name === '出院日期') // date
-            {
+            else if (name === '出院日期') {
+                // date
                 let idx = $('#condition-list').children().length
                 let dateEle = $(`
                 <div class="input-group date condition-list__item" id="datetimepicker${idx}" data-target-input="nearest" style="margin:0;min-width: 221px">
@@ -202,11 +229,20 @@ $(function () {
                 $($(dateEle)[0]).datetimepicker({ format: 'YYYY-MM-DD' })
                 values.replaceWith(dateEle)
                 // values.replaceWith($('<input name="vls" type="date" class="condition-list__item form-control form-control-sm datetimepicker-input" value="2018-07-22" min="2018-01-01" max="2018-12-31" style="margin: 0">')[0])
-            }
-            else if (name === '年龄') // number
-                values.replaceWith($('<input name="vls" type="number" class="condition-list__item form-control form-control-sm" style="margin: 0" min="0"/>')[0])
-            else // 不可枚举 + string 
-                values.replaceWith($('<input name="vls" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>')[0])
+            } else if (name === '年龄')
+                // number
+                values.replaceWith(
+                    $(
+                        '<input name="vls" type="number" class="condition-list__item form-control form-control-sm" style="margin: 0" min="0"/>'
+                    )[0]
+                )
+            // 不可枚举 + string
+            else
+                values.replaceWith(
+                    $(
+                        '<input name="vls" class="condition-list__item form-control form-control-sm" type="text" style="margin: 0"/>'
+                    )[0]
+                )
 
             $('#condition-list').append($(element))
             increaseTagScore({ code: code, name: name })
@@ -218,11 +254,12 @@ $(function () {
             rankingObj = JSON.parse(ranking),
             idx = rankingObj.findIndex((r) => r.code === code)
         if (idx !== -1) rankingObj[idx].score++
-        else rankingObj.push({
-            code: code,
-            name: name,
-            score: 1,
-        })
+        else
+            rankingObj.push({
+                code: code,
+                name: name,
+                score: 1,
+            })
 
         rankingObj.sort((x, y) => x.score - y.score)
         if (rankingObj.length < rankingObj[rankingObj.length - 1].score) {

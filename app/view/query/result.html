@@ -1,4 +1,11 @@
-{% extends "../parent.html" %} {% block content %}
+{% extends "../parent.html" %}
+{% block header %}
+    <script src="/public/js/result/index.js" defer="defer"></script>
+{% endblock %}
+{% block content %}
+<div style="padding: 4px;">
+    <button class="btn btn-sm btn-dark" id="dowload" onclick="location.href = '/query/excel/{{search_id}}'"><i class="bi bi-download"></i> 下载结果</button>
+</div>
 <table class="table table-sm table-bordered table-hover">
     <thead>
         <tr>

@@ -21,4 +21,4 @@ CREATE TABLE [dbo].[Table_SearchTask](
 ) ON [PRIMARY]
 GO
 
-
+-- 脚本老旧需要更新

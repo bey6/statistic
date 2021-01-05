@@ -5,7 +5,7 @@ const client = new elasticsearch.Client({
     host: '172.30.199.166:9200',
     index: 'mrfs',
     apiVersion: '7.6',
-    requestTimeout: 300000
+    requestTimeout: 300000,
 })
 
 class ESService extends Service {

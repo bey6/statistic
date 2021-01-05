@@ -37,6 +37,10 @@ table.table {
     margin: 0;
 }
 
+tr {
+    line-height: 100%;
+}
+
 .btn .badge--lt {
     position: absolute;
     left: 3px;

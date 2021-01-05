@@ -172,7 +172,7 @@ module.exports = {
             py: 'zrksbm',
             enumerable: true, // 可枚举
             type: 'string', // 字段类型: string|number|date
-        }
+        },
     ],
     /**
      * 联系地址
@@ -184,7 +184,7 @@ module.exports = {
             py: 'lxrzz',
             enumerable: true, // 可枚举
             type: 'string', // 字段类型: string|number|date
-        }
+        },
     ],
     /**
      * 其他

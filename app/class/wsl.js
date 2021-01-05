@@ -1,20 +1,34 @@
 module.exports.Wsl = class Wsl {
-    constructor(_source = ['MRID'], timeout = '300s', size = 200000000, from = 1, query = {}) {
+    constructor(
+        _source = ['MRID'],
+        timeout = '300s',
+        size = 200000000,
+        from = 1,
+        query = {}
+    ) {
         this.body = {
             _source: _source,
             timeout: timeout,
             size: size,
             from: from,
             query: query,
-            sort: [{
-                'MRID.keyword': { order: 'desc' }
-            }]
+            sort: [
+                {
+                    'MRID.keyword': { order: 'desc' },
+                },
+            ],
         }
     }
 }
 
 module.exports.Bool = class Bool {
-    constructor(filter = [], should = [], must = [], must_not = [], minimum_should_match = 0) {
+    constructor(
+        filter = [],
+        should = [],
+        must = [],
+        must_not = [],
+        minimum_should_match = 0
+    ) {
         this.bool = {
             filter: filter,
             should: should,

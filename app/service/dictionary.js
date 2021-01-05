@@ -24,7 +24,8 @@ const security_db = {
 }
 class DictionaryService extends Service {
     async mrfsSearch(keywords) {
-        let tsql = 'select internalIcdName as name, internalIcdCode as code from dic_icd_internal_diagnosis where (deleted is null or deleted=0) '
+        let tsql =
+            'select internalIcdName as name, internalIcdCode as code from dic_icd_internal_diagnosis where (deleted is null or deleted=0) '
         if (keywords) {
             tsql += `and (
                         (internalIcdCode='${keywords}' or internalIcdCode like '${keywords}%') or    
@@ -46,7 +47,8 @@ class DictionaryService extends Service {
     async search(db, keywords) {
         return new Promise((resolve, reject) => {
             try {
-                let tsql = 'select internalIcdName as name, internalIcdCode as code from dic_icd_internal_diagnosis where (deleted is null or deleted=0) ',
+                let tsql =
+                        'select internalIcdName as name, internalIcdCode as code from dic_icd_internal_diagnosis where (deleted is null or deleted=0) ',
                     result = []
                 if (keywords) {
                     tsql += `and (
@@ -84,7 +86,6 @@ class DictionaryService extends Service {
             }
         })
     }
-
 }
 
 module.exports = DictionaryService

@@ -35,11 +35,13 @@
         "bootstrap-icons": "^1.2.2",
         "egg": "^2.29.1",
         "egg-scripts": "^2.13.0",
+        "egg-socket.io": "^4.1.6",
         "egg-view-nunjucks": "^2.2.0",
         "elasticsearch": "^16.7.2",
         "md5": "^2.3.0",
         "moment": "^2.29.1",
-        "mssql": "^6.3.0"
+        "mssql": "^6.3.0",
+        "node-xlsx": "^0.15.0"
     },
     "devDependencies": {
         "egg-bin": "^4.15.0",
