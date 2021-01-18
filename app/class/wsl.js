@@ -2,7 +2,7 @@ module.exports.Wsl = class Wsl {
     constructor(
         _source = ['MRID'],
         timeout = '300s',
-        from = 1,
+        from = 0,
         size = 100,
         query = {}
     ) {
@@ -35,7 +35,8 @@ module.exports.Bool = class Bool {
         }
     }
 
-    _isKeyword(key) {
+    // 数字类型不需要 .keyword
+    _isNumber(key) {
         return [
             'Age',
             'NewBorn_Month',
@@ -63,7 +64,7 @@ module.exports.Bool = class Bool {
 
     addTermTo(occur, fields, value) {
         let f = fields
-        if (!this._isKeyword(fields)) f = fields + '.keyword'
+        if (!this._isNumber(fields)) f = fields + '.keyword'
         this.bool[occur].push({
             term: {
                 [f]: value,
@@ -73,7 +74,7 @@ module.exports.Bool = class Bool {
 
     addTermsTo(occur, fields, value) {
         let f = fields
-        if (!this._isKeyword(fields)) f = fields + '.keyword'
+        if (!this._isNumber(fields)) f = fields + '.keyword'
         this.bool[occur].push({
             terms: {
                 [f]: value,

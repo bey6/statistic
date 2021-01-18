@@ -1,5 +1,9 @@
 # 首页系统：检索
 
+## 系统架构
+
+![系统架构](./doc/statistic.png)
+
 ## 开发环境
 
 前端库使用 jquery + bootstrap 为主的方式进行开发。
@@ -23,3 +27,18 @@
 -   由于一些现实原因，检索必须是同步的方式完成
     -   在进行大数据量的检索时，由于数据量级过大会导致 es 与 node 应用站点出现 memory 层面的问题，为了解决该问题，es 层面给出了 [search-after](https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html#search-after) 方案，目前正在尝试中···
     -   search-after 不需要传递 from 字段，但是需要传递 search_after 字段，理论上该字段给的是上一页 hits 中最后一项的 sort 字段。
+-   异次病发的个数需要控制，默认只允许 4 级异次，要可配
+
+## 检索
+
+### 关于异次病发的功能设计
+
+> 0. 【可选】取住院次大于 1 的 mrid
+> 1. 【以步骤 0 作为 filter】获取满足第一组诊断的病案号，及其 ipbid
+> 2. 把第一步的 mrid 作为 filter，ipbid 作为 must_not filter，获取满足第二组诊断的病案号，及其 ipbid
+> 3. 把第二步的 mrid 作为 filter，ipbid 作为 must_not filter，获取满足第三组诊断的病案号，及其 ipbid
+> 4. ...
+> 5. 取最后一次命中的 mrid、ipbid，以 mrid 为条件，从循环中的每一步得到的 mrid, ipbid 对中取 mrid 属于最终结果集中的 mrid 的 ipbid 拼接为一个 ipbid 数组
+> 6. 【可选】如果希望支持单次住院满足，则每次的 must_not 可以跳过
+
+## 统计

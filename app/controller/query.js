@@ -72,12 +72,13 @@ class QueryController extends Controller {
                 nextPage = page + 1 > pages_num ? page : page + 1,
                 wsl = uu_session.wsl
 
-            wsl.from = page
-            wsl.size = limit
-
+            wsl.body.from = (page - 1) * limit
+            wsl.body.size = limit
+            console.log('77: ' + JSON.stringify(wsl))
             console.time('search')
             let res = await this.ctx.service.es.search(wsl)
             console.timeEnd('search')
+            // console.log(res)
             await this.ctx.render('query/result.html', {
                 columns: uu_session.columns,
                 list: res.map((d) => ({
@@ -153,6 +154,7 @@ class QueryController extends Controller {
         try {
             let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
                 columns = [
+                    { name: 'ID', code: 'ID' },
                     { name: '病案号', code: 'MRID' },
                     { name: '患者姓名', code: 'PatientName' },
                     { name: '性别', code: 'Gender' },
@@ -188,6 +190,7 @@ class QueryController extends Controller {
             await this.asyncRun(formData, columns, uuid, 1, 50)
             this.ctx.redirect('/query/result/' + uuid + '?page=1')
         } catch (error) {
+            console.log(error)
             this.ctx.body = new Rep({
                 code: 50000,
                 msg: error.message,
@@ -200,9 +203,9 @@ class QueryController extends Controller {
     async asyncRun(formData, columns, uuid, from, size) {
         let count = 0
         console.time('search')
-        if (formData.some((v) => v.operation === 'diff'))
+        if (formData.some((v) => v.operation === 'diff')) // 异次病发查询
             count = await this.diffParoxysmQuery(formData, columns, uuid, from, size)
-        else
+        else // 标准查询
             count = await this.standardQuery(
                 formData,
                 columns,
@@ -229,7 +232,7 @@ class QueryController extends Controller {
      * @param {*} columns the columns wsl will show
      * @param {*} size the size will es slice
      */
-    packageWsl(formData, columns, from = 1, size = 50) {
+    packageWsl(formData, columns, from = 0, size = 50) {
         let wsl = new Wsl(columns, '300000ms', from, size, {})
         let query = new Bool()
         // 如果没有 or 关系的，这个参数给 1 拿不到结果
@@ -279,87 +282,6 @@ class QueryController extends Controller {
         return wsl
     }
 
-    // 获取异次病发病案号
-    async getParoxysmMrids(diagnosis_array_2d, formData) {
-        let mrids = [], // 不去重的 mrids
-            paroxysm = [] // 符合异次病发的 mrid
-        // console.log(JSON.stringify(diagnosis_array_2d))
-        // 每组一次并发条件进行一次循环
-        for (let x = 0; x < diagnosis_array_2d.length; x++) {
-            const diagnosis_array_1d = diagnosis_array_2d[x]
-            let wsl = this.packageWsl(
-                formData,
-                ['MRID'],
-                1,
-                20000000
-            )
-            let nestedBool = new Bool([], [], [], [], 1)
-            diagnosis_array_1d.forEach((d) => {
-                // 本组诊断满足一个即可
-                nestedBool.addTermTo('should', 'Diagnosis.InternalICDCode', d)
-            })
-            let nested = new Nested('Diagnosis', nestedBool)
-            wsl.body.query.addNestedTo('must', nested)
-            // console.log(JSON.stringify(wsl))
-            let count = await this.ctx.service.es.count(wsl)
-            if (count === 0) return []
-            let res = await this.ctx.service.es.search(wsl)
-            console.log(JSON.stringify(res))
-            mrids.push(
-                ...Array.from(new Set(res.map((d) => d._source.MRID)))
-            )
-        }
-        mrids.forEach((mrid) => {
-            if (
-                mrids.filter((m) => m === mrid).length >=
-                diagnosis_array_2d.length
-            )
-                paroxysm.push(mrid)
-        })
-        return paroxysm
-    }
-
-    // 获取异次病发文档记录
-    async getParoxysmRecords(
-        diagnosis_array_2d,
-        paroxysm_mrids,
-        formData,
-        columns,
-        uuid,
-        from,
-        size
-    ) {
-        let wsl = this.packageWsl(
-            formData,
-            columns.map((c) => c.code),
-            from,
-            size
-        )
-        wsl.body.query.bool.minimum_should_match = 1
-        // 填充 filter
-        wsl.body.query.addTermsTo('filter', 'MRID', paroxysm_mrids)
-        let nestedBool = new Bool([], [], [], [], 1)
-        // 填充 should
-        for (let x = 0; x < diagnosis_array_2d.length; x++) {
-            const diagnosis_array_1d = diagnosis_array_2d[x]
-            let bool = new Bool([], [], [], [], 1)
-            bool.bool.should = diagnosis_array_1d.map((d) => ({
-                term: {
-                    'Diagnosis.InternalICDCode.keyword': d,
-                },
-            }))
-            nestedBool.bool.should.push(bool)
-        }
-        let nst = new Nested('Diagnosis', nestedBool)
-        wsl.body.query.addNestedTo('should', nst)
-        // let res = await this.ctx.service.es.search(wsl)
-        let count = await this.ctx.service.es.count(wsl)
-        let session = { total: count, columns, wsl }
-        await this.ctx.service.redis.post(uuid, JSON.stringify(session))
-        return count
-        // return res
-    }
-
     /**
      * 标准查询
      * @param { array } formData 组织好的参数数组
@@ -389,33 +311,191 @@ class QueryController extends Controller {
                 paroxysm_diagnosis_items.push(c.vls.split(','))
             })
 
-        /**
-         * 考虑把异次并发检索过滤出的 mrid 和用户给定的检索项存储到 redis
-         * 1 页以后的检索可以提高性能
-         *
-         * search_after 虽然说性能上被描述为更加强劲，但理论上只能下一页
-         * 而无法完成上一页、跳页等操作，因此可能需要酌情考虑是否合适
-         *
-         * 考虑还是使用 from + size 的组合来实现需求吧，但是要限制最大页码
-         * 限制深度查询
-         */
+        // // 获取符合异次发病的所有 MRID
+        // let paroxysm_mrids = await this.getParoxysmMrids(
+        //     paroxysm_diagnosis_items,
+        //     formData,
+        // )
 
-        // 获取符合异次发病的所有 MRID
-        let paroxysm_mrids = await this.getParoxysmMrids(
-            paroxysm_diagnosis_items,
-            formData,
-            ['MRID']
-        )
-        // 根据 MRID 获取异次并发记录
+
+        // // 根据 MRID 获取异次并发记录
+        // return this.getParoxysmRecords(
+        //     paroxysm_diagnosis_items,
+        //     paroxysm_mrids,
+        //     'MRID',
+        //     formData,
+        //     columns,
+        //     uuid,
+        //     from,
+        //     size
+        // )
+
+        let hit_ipbids = await this.getParoxysmUid(paroxysm_diagnosis_items, formData)
         return this.getParoxysmRecords(
             paroxysm_diagnosis_items,
-            paroxysm_mrids,
+            hit_ipbids,
+            'ID',
             formData,
             columns,
             uuid,
             from,
             size
         )
+    }
+
+    // 获取异次病发病案号
+    async getParoxysmMrids(diagnosis_array_2d, formData) {
+        let mrids = [], // 不去重的 mrids
+            paroxysm = [] // 符合异次病发的 mrid
+        // console.log(JSON.stringify(diagnosis_array_2d))
+        // 每组一次并发条件进行一次循环
+        for (let x = 0; x < diagnosis_array_2d.length; x++) {
+            const diagnosis_array_1d = diagnosis_array_2d[x]
+            let wsl = this.packageWsl(
+                formData,
+                ['MRID'],
+                1,
+                20000000
+            )
+            let nestedBool = new Bool([], [], [], [], 1)
+            diagnosis_array_1d.forEach((d) => {
+                // 本组诊断满足一个即可
+                nestedBool.addTermTo('should', 'Diagnosis.InternalICDCode', d)
+            })
+            let nested = new Nested('Diagnosis', nestedBool)
+            wsl.body.query.addNestedTo('must', nested)
+            // console.log(JSON.stringify(wsl))
+            let count = await this.ctx.service.es.count(wsl)
+            if (count === 0) return []
+            let res = await this.ctx.service.es.search(wsl)
+            // console.log(JSON.stringify(res))
+            mrids.push(
+                ...Array.from(new Set(res.map((d) => d._source.MRID)))
+            )
+        }
+        mrids.forEach((mrid) => {
+            if (
+                mrids.filter((m) => m === mrid).length >=
+                diagnosis_array_2d.length
+            )
+                paroxysm.push(mrid)
+        })
+        return paroxysm
+    }
+
+    // 获取异次病发 id
+    async getParoxysmUid(diagnosis_array_2d, formData) {
+        //  mrids = [], // 不去重的 mrids
+        //     paroxysm = [], // 符合异次病发的 mrid
+        let hit_mrids = [], // 限制在这个范围内检索
+            hit_ipbids = [], // 不要包含这些内容
+            every_times_hited = [], // 每次命中的结果集
+            res = [] // 结果 ipbid
+
+        // 每组一次并发条件进行一次循环
+        for (let x = 0; x < diagnosis_array_2d.length; x++) {
+            const diagnosis_array_1d = diagnosis_array_2d[x]
+            let wsl = this.packageWsl(
+                formData,
+                ['MRID', 'ID'],
+                1,
+                20000000
+            )
+            let nestedBool = new Bool([], [], [], [], 1)
+            diagnosis_array_1d.forEach((d) => {
+                // 本组诊断满足一个即可
+                nestedBool.addTermTo('should', 'Diagnosis.InternalICDCode', d)
+            })
+            let nested = new Nested('Diagnosis', nestedBool)
+            wsl.body.query.addNestedTo('must', nested)
+            if (hit_mrids.length) {
+                if (!wsl.body.query.bool.filter || wsl.body.query.bool.filter.length === 0) {
+                    wsl.body.query.bool.filter = [
+                        {
+                            terms: {
+                                'MRID.keyword': hit_mrids
+                            }
+                        }
+                    ]
+                } else {
+                    wsl.body.query.bool.filter.push({
+                        terms: {
+                            'MRID.keyword': hit_mrids
+                        }
+                    })
+                }
+            }
+            if (hit_ipbids.length) {
+                if (!wsl.body.query.bool.must_not || !wsl.body.query.bool.must_not.length === 0) {
+                    wsl.body.query.bool.must_not = [new Bool([{
+                        terms: {
+                            'ID.keyword': hit_ipbids
+                        }
+                    }])]
+                } else {
+                    wsl.body.query.bool.must_not.push({
+                        terms: {
+                            'ID.keyword': hit_ipbids
+                        }
+                    })
+                }
+            }
+            // console.log(JSON.stringify(wsl))
+            let count = await this.ctx.service.es.count(wsl)
+            if (count === 0) return []
+            let res = await this.ctx.service.es.search(wsl)
+            every_times_hited.push(...res.map(r => r._source))
+            // console.log(res.map(i => i._source.ID))
+            hit_mrids = Array.from(new Set(res.map(f => f._source.MRID)))
+            hit_ipbids = res.map(i => i._source.ID)
+        }
+
+        hit_mrids.forEach(mrid => {
+            let tmp = every_times_hited.filter(h => h.MRID === mrid)
+            res.push(...tmp.map(m => m.ID))
+        })
+        return res
+    }
+
+    // 获取异次病发文档记录
+    async getParoxysmRecords(
+        diagnosis_array_2d,
+        paroxysm_mrids,
+        filter_fields,
+        formData,
+        columns,
+        uuid,
+        from,
+        size
+    ) {
+        let wsl = this.packageWsl(
+            formData,
+            columns.map((c) => c.code),
+            from,
+            size
+        )
+        // wsl.body.query.bool.minimum_should_match = 1
+        // 填充 filter
+        wsl.body.query.addTermsTo('filter', filter_fields, paroxysm_mrids)
+        // let nestedBool = new Bool([], [], [], [], 1)
+        // // 填充 should
+        // for (let x = 0; x < diagnosis_array_2d.length; x++) {
+        //     const diagnosis_array_1d = diagnosis_array_2d[x]
+        //     let bool = new Bool([], [], [], [], 1)
+        //     bool.bool.should = diagnosis_array_1d.map((d) => ({
+        //         term: {
+        //             'Diagnosis.InternalICDCode.keyword': d,
+        //         },
+        //     }))
+        //     nestedBool.bool.should.push(bool)
+        // }
+        // let nst = new Nested('Diagnosis', nestedBool)
+        // wsl.body.query.addNestedTo('should', nst)
+        // return res
+        let count = await this.ctx.service.es.count(wsl)
+        let session = { total: count, columns, wsl }
+        await this.ctx.service.redis.post(uuid, JSON.stringify(session))
+        return count
     }
 }
 
