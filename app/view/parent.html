@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Query</title>
+        <title>{{title}}</title>
         <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/public/css/bootstrap-icons.css" />
         <link rel="stylesheet" href="/public/css/style.css" />
@@ -42,13 +42,18 @@
                     >查询包</a
                 >
                 <a
+                    href="/condition"
+                    style="line-height: 50px; color: #fff; margin-right: 12px"
+                    >条件配置 <sub>dev</sub> </a
+                >
+                <!-- <a
                     href="/task"
                     style="line-height: 50px; color: #fff; margin-right: 12px"
                     >任务列表</a
-                >
+                > -->
             </div>
 
-            <div>
+            <!-- <div>
                 <a
                     class="btn"
                     style="
@@ -76,7 +81,7 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="dropdownMenuLink"
                 ></div>
-            </div>
+            </div> -->
         </header>
         {% block content %} {% endblock %}
     </body>

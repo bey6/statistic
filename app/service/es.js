@@ -9,33 +9,18 @@ const client = new elasticsearch.Client({
 })
 
 class ESService extends Service {
-    async getPatientByName(keywords) {
-        try {
-            let wsl = {
-                body: {
-                    query: {
-                        match: {
-                            patient_name: keywords,
-                        },
-                    },
-                },
-            }
-            console.log(JSON.stringify(wsl))
-            const res = await client.search(wsl)
-            return res.hits.hits
-        } catch (error) {
-            console.trace(error.message)
-        }
+    async search(dsl) {
+        const res = await client.search(dsl)
+        return res.hits.hits
     }
 
-    async search(dsl) {
-        try {
-            const res = await client.search(dsl)
-            console.log(JSON.stringify(res))
-            return res.hits.hits
-        } catch (error) {
-            console.trace(error.message)
-        }
+    async count(dsl) {
+        const res = await client.count({
+            body: {
+                query: dsl.body.query,
+            },
+        })
+        return res.count
     }
 }
 

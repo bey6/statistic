@@ -15,12 +15,12 @@ const config = {
 }
 
 class MrqueryService extends Service {
-    async search(page) {
+    async search(page, size) {
         try {
             let tsql = `select * from (
         select id, name, owner, createTime, description, ROW_NUMBER() OVER(ORDER BY createTime desc) as rn from table_model
         ) as t 
-        where t.rn > ${(page - 1) * 20} and t.rn <= ${page * 20}`
+        where t.rn > ${(page - 1) * size} and t.rn <= ${page * size}`
             let pool = await mssql.connect(config)
             let resData = await pool.request().query(tsql)
             let resTotal = await pool
@@ -90,7 +90,7 @@ class MrqueryService extends Service {
             let res = await pool
                 .request()
                 .query(
-                    'select SearchId, Name, Status, CreateDate, IsRead from table_searchTask where status=\'completed\' and (isread=0 or isread is null)'
+                    "select SearchId, Name, Status, CreateDate, IsRead from table_searchTask where status='completed' and (isread=0 or isread is null)"
                 )
             return res
         } catch (error) {

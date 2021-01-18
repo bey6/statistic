@@ -5,7 +5,8 @@ class HomeController extends Controller {
     async index() {
         try {
             let { total, list } = await this.ctx.service.mrquery.search(
-                this.ctx.request.query.page || 1
+                this.ctx.request.query.page || 1,
+                this.ctx.request.query.limit || 50
             )
             let pkgs = list.map((p) => ({
                 id: p.id,
@@ -17,8 +18,7 @@ class HomeController extends Controller {
             }))
             let pages = []
 
-            let totalPage = Number.parseInt(total / 20)
-            if (total % 20) totalPage++
+            let totalPage = Math.ceil(total / 50)
             for (let p = 0; p < totalPage; p++) {
                 pages.push(p + 1)
             }
@@ -26,11 +26,12 @@ class HomeController extends Controller {
                 prevPage = page - 1 < 1 ? 1 : page - 1,
                 nextPage = page + 1 > pages.length ? page : page + 1
             await this.ctx.render('home/index.html', {
+                title: '查询包列表',
                 packages: pkgs,
                 pages,
                 prevPage,
                 page,
-                nextPage
+                nextPage,
             })
         } catch (error) {
             await this.ctx.render('error/index.html', { msg: error.message })

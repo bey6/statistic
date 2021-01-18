@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "egg-bin dev",
+        "dev": "egg-bin dev --max_semi_space_size=256",
         "debug": "egg-bin debug",
         "test-local": "egg-bin test",
         "test": "npm run lint -- --fix && npm run test-local",
@@ -32,6 +32,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "axios": "^0.21.1",
         "bootstrap-icons": "^1.2.2",
         "egg": "^2.29.1",
         "egg-scripts": "^2.13.0",

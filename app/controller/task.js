@@ -27,12 +27,24 @@ class TaskController extends Controller {
     async putTask() {
         try {
             if (!this.ctx.params.id) {
-                this.ctx.body = new Rep({ code: 40000, msg: 'the param \'id\' is invalid' })
+                this.ctx.body = new Rep({
+                    code: 40000,
+                    msg: "the param 'id' is invalid",
+                })
             } else if (!this.ctx.request.body.name) {
-                this.ctx.body = new Rep({ code: 40000, msg: 'the body param \'name\' is invalid' })
+                this.ctx.body = new Rep({
+                    code: 40000,
+                    msg: "the body param 'name' is invalid",
+                })
             } else {
-                let res = await this.ctx.service.mrquery.putSearchTaskName(this.ctx.params.id, this.ctx.request.body.name)
-                let response = new Rep({ code: 50000, data: res.rowsAffected[0] })
+                let res = await this.ctx.service.mrquery.putSearchTaskName(
+                    this.ctx.params.id,
+                    this.ctx.request.body.name
+                )
+                let response = new Rep({
+                    code: 50000,
+                    data: res.rowsAffected[0],
+                })
                 if (response.data === 1) response.code = 200
                 this.ctx.body = response
             }

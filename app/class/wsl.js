@@ -2,21 +2,17 @@ module.exports.Wsl = class Wsl {
     constructor(
         _source = ['MRID'],
         timeout = '300s',
-        size = 200000000,
         from = 1,
+        size = 100,
         query = {}
     ) {
         this.body = {
             _source: _source,
             timeout: timeout,
-            size: size,
             from: from,
+            size: size,
             query: query,
-            sort: [
-                {
-                    'MRID.keyword': { order: 'desc' },
-                },
-            ],
+            sort: [{ 'MRID.keyword': 'desc' }, { 'ID.keyword': 'desc' }],
         }
     }
 }
@@ -39,22 +35,53 @@ module.exports.Bool = class Bool {
         }
     }
 
+    _isKeyword(key) {
+        return [
+            'Age',
+            'NewBorn_Month',
+            'NewBorn_Day',
+            'NewBorn_Hour',
+            'NewBorn_Weight',
+            'Newborn_AdmissionWeight',
+            'HospitalizedTimes',
+            'InpatientDay',
+            'RescueTime',
+            'RescueSuccessTime',
+            'DCPCIBeforeDay',
+            'DCPCIBeforeHour',
+            'DCPCIBeforeMinute',
+            'DCPCIAfterDay',
+            'DCPCIAfterHour',
+            'DCPCIAfterMinute',
+            'CodeState',
+            'Totalcost',
+            'SelfPayment',
+            'MRWorkType',
+            'DataSource',
+        ].some((f) => f === key)
+    }
+
     addTermTo(occur, fields, value) {
+        let f = fields
+        if (!this._isKeyword(fields)) f = fields + '.keyword'
         this.bool[occur].push({
             term: {
-                [fields + '.keyword']: value,
+                [f]: value,
             },
         })
     }
 
     addTermsTo(occur, fields, value) {
+        let f = fields
+        if (!this._isKeyword(fields)) f = fields + '.keyword'
         this.bool[occur].push({
             terms: {
-                [fields + '.keyword']: value,
+                [f]: value,
             },
         })
     }
 
+    // range 理论上只能支持数字类型和日期类型
     addRangeTo(occur, fields, r, v) {
         this.bool[occur].push({
             range: {

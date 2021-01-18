@@ -9,12 +9,15 @@ module.exports = (app) => {
     router.get('/query/result/:id', controller.query.result)
     router.get('/query/excel/:id', controller.query.excel)
 
-    // dictionary
-    router.get('/dic', controller.dic.dictionary)
-    router.get('/dic/condition', controller.dic.condition)
-
     // task
     router.get('/task', controller.task.list)
     router.put('/task/:id', controller.task.putTask)
     router.get('/task/remind', controller.task.remind)
+
+    // condition
+    router.get('/condition', controller.condition.index)
+
+    // dictionary
+    router.get('/dic', controller.dic.dictionary)
+    router.get('/dic/condition', controller.dic.condition)
 }

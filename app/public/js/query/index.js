@@ -5,40 +5,24 @@ $(function () {
     let cookies = document.cookie.split('; ').map(c => ({ key: c.split('=')[0], value: c.split('=')[1] })),
         token = cookies.find(c => c.key === 'csrfToken')
 
-    // 点击查询按钮
-    $('#query').click((event) => {
-        event.preventDefault()
+    // // 点击查询按钮
+    // $('#query').click((event) => {
+    //     event.preventDefault()
 
-        // let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
-        //     formData = []
+    //     let arr = $('form').serializeArray(),
+    //         action = $('form').attr('action')
 
-        // mapping.forEach((m, idx) => {
-        //     document.getElementsByName(m).forEach((t, offset) => {
-        //         if (idx === 0) {
-        //             formData.push({
-        //                 [m]: t.value
-        //             })
-        //         } else {
-        //             formData[offset][m] = t.value
-        //         }
-        //     })
-        // })
-        let arr = $('form').serializeArray(),
-            action = $('form').attr('action')
-        console.log(arr)
-        $.ajax({
-            type: 'POST',
-            url: action,
-            data: arr,
-            success: (res) => {
-                $('#searchId').text(res.data.search_id)
-                $('#staticBackdrop').modal('show')
-            },
-        })
-
-        return false
-        // $('form').submit()
-    })
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: action,
+    //         data: arr,
+    //         success: (res) => {
+    //             $('#searchId').text(res.data.search_id)
+    //             $('#staticBackdrop').modal('show')
+    //         },
+    //     })
+    //     return false
+    // })
     $('#btnAlias').click(() => {
 
         let search_id = $('#searchId').text(),
@@ -277,5 +261,11 @@ $(function () {
             rankingObj = JSON.parse(ranking)
         rankingObj.sort((x, y) => y.score - x.score)
         generateTagList(rankingObj)
+    }
+
+
+    // 页面离开时，清理状态
+    window.onunload = () => {
+        $('#staticBackdrop').modal('hide')
     }
 })

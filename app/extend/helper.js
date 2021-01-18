@@ -6,9 +6,13 @@ exports.relativeTime = (time) => moment(new Date(time * 1000)).fromNow()
 
 module.exports = {
     parseMsg(action, payload = {}, metadata = {}) {
-        const meta = Object.assign({}, {
-            timestamp: Date.now(),
-        }, metadata);
+        const meta = Object.assign(
+            {},
+            {
+                timestamp: Date.now(),
+            },
+            metadata
+        )
 
         return {
             meta,
@@ -16,6 +20,6 @@ module.exports = {
                 action,
                 payload,
             },
-        };
+        }
     },
-};
+}

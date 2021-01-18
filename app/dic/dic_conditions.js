@@ -65,10 +65,12 @@ module.exports = {
                     code: 'eq',
                 },
                 {
-                    name: '大于',
-                    code: 'gt',
+                    name: '包含',
+                    code: 'in',
                 },
             ],
+            db: '',
+            table: '',
         },
         {
             key: 1,
@@ -87,12 +89,509 @@ module.exports = {
             code: 'Age',
             name: '年龄',
             py: 'nl',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
         },
         {
             key: 4,
             code: 'DischargeDateTime',
             name: '出院日期',
             py: 'cyrq',
+            enumerable: false, // 可枚举
+            type: 'date', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+
+        {
+            key: 21,
+            code: 'NationCode',
+            name: '民族',
+            py: 'mz',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '包含',
+                    code: 'in',
+                },
+            ],
+            db: '',
+            table: 'BaseDic_Nation',
+        },
+        {
+            key: 22,
+            code: 'ProvinceCode',
+            name: '籍贯（省）',
+            py: 'jgs',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '包含',
+                    code: 'in',
+                },
+            ],
+            db: '',
+            table: 'BaseDic_Province',
+        },
+        {
+            key: 23,
+            code: 'Newborn_AdmissionWeight',
+            name: '新生儿入院体重',
+            py: 'xserytz',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 24,
+            code: 'NewBorn_Day',
+            name: '新生儿年龄(天)',
+            py: 'xsenlt',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 25,
+            code: 'NewBorn_Month',
+            name: '新生儿年龄(月)',
+            py: 'xsenly',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 26,
+            code: 'NewBorn_Weight',
+            name: '新生儿出生体重',
+            py: 'xsecstz',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: 'Dic_Occupation',
+        },
+        {
+            key: 27,
+            code: 'OccupationCode',
+            name: '职业',
+            py: 'zy',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: 'Dic_Occupation',
+        },
+        {
+            key: 28,
+            code: 'QualityDate1',
+            name: '质控日期1',
+            py: 'zkrq1',
+            enumerable: false, // 可枚举
+            type: 'date', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 29,
+            code: 'QualityDate2',
+            name: '质控日期2',
+            py: 'zkrq2',
+            enumerable: false, // 可枚举
+            type: 'date', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 30,
+            code: 'ReadmissionIn31',
+            name: '出院31天再入院计划',
+            py: 'cy31tzryjh',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 31,
+            code: 'RescueSuccessTime',
+            name: '成功次数',
+            py: 'cgcs',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 32,
+            code: 'RescueTime',
+            name: '抢救次数',
+            py: 'qjcs',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 33,
+            code: 'RespiratorTime',
+            name: '呼吸机使用时间',
+            py: 'hxjsysj',
+            enumerable: false, // 可枚举
+            type: 'number', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '大于',
+                    code: 'gt',
+                },
+                {
+                    name: '大于等于',
+                    code: 'gte',
+                },
+                {
+                    name: '小于',
+                    code: 'lt',
+                },
+                {
+                    name: '小于等于',
+                    code: 'lte',
+                },
+                {
+                    name: '介于',
+                    code: 'between',
+                },
+            ],
+            db: '',
+            table: '',
+        },
+        {
+            key: 34,
+            code: 'RhCode',
+            name: 'RH血型',
+            py: 'rhxx',
+            enumerable: true, // 可枚举
+            type: 'string', // 字段类型: string|number|date
+            operation: [
+                {
+                    name: '等于',
+                    code: 'eq',
+                },
+                {
+                    name: '包含',
+                    code: 'in',
+                },
+            ],
+            db: '',
+            table: '',
         },
     ],
     /**

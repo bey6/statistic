@@ -1,0 +1,21 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true
+            },
+            "previewLimit": 50,
+            "server": "172.30.199.163\\dev",
+            "port": 1433,
+            "driver": "MSSQL",
+            "name": "dev",
+            "group": "docimax",
+            "database": "MRFSQuery",
+            "username": "sa",
+            "password": "Docimax@123",
+            "connectString": "Server=172.30.199.163\\dev;database=MRFSQuery;user id=sa;password=Docimax@123"
+        }
+    ]
+}

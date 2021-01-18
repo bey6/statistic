@@ -20,7 +20,7 @@
         method="POST"
         enctype="application/x-www-form-urlencoded"
         autocomplete="off"
-        timeout="300000ms"
+        onkeydown="if(event.keyCode==13){return false;}"
     >
         <div class="condition-list">
             <ol id="condition-list"></ol>
@@ -41,11 +41,11 @@
                     设置统计项
                 </button>
                 <button
-                    class="btn btn-sm btn-primary"
                     id="query"
+                    type="submit"
                     data-toggle="modal"
                     data-target="#staticBackdrop"
-                    type="submit"
+                    class="btn btn-sm btn-primary"
                 >
                     <i class="bi bi-search" style="margin-right: 8px"></i> 执行
                 </button>
@@ -81,28 +81,28 @@
 >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">您的检索序号为：</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
+              </div> -->
             <div class="modal-body">
-                <!-- <div class="spinner-border text-success" role="status">
+                <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
                 <h3 style="display: inline-block; margin: 0 0 0 12px">
                     正在拼命检索 ···
-                </h3> -->
-                <h4 id="searchId" style="text-align: center;"></h4>
+                </h3>
+                <!-- <h4 id="searchId" style="text-align: center;"></h4>
                 <hr>
                 <p>是否为您的本次检索任务起个别名？</p>
-                <input id="taskAlias" type="text" class="form-control form-control-sm" maxlength="50">
+                <input id="taskAlias" type="text" class="form-control form-control-sm" maxlength="50"> -->
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="bi bi-x"></i> 不需要</button>
                 <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="btnAlias"><i class="bi bi-check2"></i> 确定</button>
-              </div>
+              </div> -->
         </div>
     </div>
 </div>
