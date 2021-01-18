@@ -123,7 +123,7 @@ $(function () {
             // draggable="true"
             let element = $(`
             <li>
-                <i class="bi bi-x btn-del rounded" style="color: brown"></i>
+                <i class="bi bi-arrows-move btn-drag"></i>
                 <select
                     name="relation"
                     class="form-control form-control-sm condition-list__item"
@@ -154,7 +154,7 @@ $(function () {
                     <option value="diff">异次病发</option>
                 </select>
                 <div class="values condition-list__item" style="margin: 0"></div>
-                <i class="bi bi-arrows-move btn-drag"></i>
+                <i class="bi bi-x btn-del rounded" style="color: brown"></i>
             </li>`)
             let values = element.find('.values')[0]
             // 可枚举 + string (单项, 多选, 要有区别)

@@ -27,8 +27,15 @@ class QueryController extends Controller {
             })
         } else {
             // { total: 123456, columns: [], wsl: {} }
-            let f = this.ctx.service.redis.get(this.ctx.params.id),
-                uu_session = JSON.parse(f),
+            let f = await this.ctx.service.redis.get(this.ctx.params.id)
+            // uu_session = JSON.parse(f),
+            if (!f) {
+                await this.ctx.render('error/index.html', { msg: '查询会话已超时，请重新检索' })
+                return
+                // new Rep({ code: 50000, msg: '查询回话已超时，请重新检索' })
+                // return
+            }
+            let uu_session = f,
                 limit = this.ctx.request.query.limit || 50,
                 pages_num = Math.ceil(
                     uu_session.total / (this.ctx.request.query.limit || 50)
@@ -74,7 +81,6 @@ class QueryController extends Controller {
 
             wsl.body.from = (page - 1) * limit
             wsl.body.size = limit
-            console.log('77: ' + JSON.stringify(wsl))
             console.time('search')
             let res = await this.ctx.service.es.search(wsl)
             console.timeEnd('search')

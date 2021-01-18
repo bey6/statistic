@@ -38,7 +38,7 @@ table.table {
     margin: 0;
 }
 
-thead tr {
+table.table-stick thead tr {
     position: sticky;
     top:0;
     background-color: #f8f8f8;
@@ -47,7 +47,7 @@ thead tr {
     box-shadow: 0 0 2px 4px rgba(221, 221, 221, 0.911);
 }
 
-th,td {
+table.table th,td {
     white-space: nowrap;
 }
 
