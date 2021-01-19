@@ -5,24 +5,30 @@ $(function () {
     let cookies = document.cookie.split('; ').map(c => ({ key: c.split('=')[0], value: c.split('=')[1] })),
         token = cookies.find(c => c.key === 'csrfToken')
 
-    // // 点击查询按钮
-    // $('#query').click((event) => {
-    //     event.preventDefault()
+    // 点击查询按钮
+    $('#query').click((event) => {
+        event.preventDefault()
+        if ($('form').serializeArray().length === 0) {
+            return false
+        } else {
+            // $('#staticBackdrop').modal('show')
+            $('form').submit()
+            return true
+        }
+        // let arr = $('form').serializeArray(),
+        //     action = $('form').attr('action')
 
-    //     let arr = $('form').serializeArray(),
-    //         action = $('form').attr('action')
-
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: action,
-    //         data: arr,
-    //         success: (res) => {
-    //             $('#searchId').text(res.data.search_id)
-    //             $('#staticBackdrop').modal('show')
-    //         },
-    //     })
-    //     return false
-    // })
+        // $.ajax({
+        //     type: 'POST',
+        //     url: action,
+        //     data: arr,
+        //     success: (res) => {
+        //         $('#searchId').text(res.data.search_id)
+        //         $('#staticBackdrop').modal('show')
+        //     },
+        // })
+        // return false
+    })
     $('#btnAlias').click(() => {
 
         let search_id = $('#searchId').text(),

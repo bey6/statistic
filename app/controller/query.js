@@ -160,12 +160,12 @@ class QueryController extends Controller {
         try {
             let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
                 columns = [
-                    { name: 'ID', code: 'ID' },
+                    // { name: 'ID', code: 'ID' },
                     { name: '病案号', code: 'MRID' },
                     { name: '患者姓名', code: 'PatientName' },
                     { name: '性别', code: 'Gender' },
                     { name: '年龄', code: 'Age' },
-                    { name: '编码状态', code: 'CodeState' },
+                    // { name: '编码状态', code: 'CodeState' },
                     { name: '出院时间', code: 'DischargeDateTime' },
                     { name: '协和诊断', code: 'Diagnosis' },
                     { name: '生日', code: 'Birthday' },

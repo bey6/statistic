@@ -17,7 +17,7 @@ class DicController extends Controller {
             if (!this.ctx.request.query.t) {
                 this.ctx.body = new Rep({
                     code: 401,
-                    msg: "paramater 't' missed",
+                    msg: 'paramater \'t\' missed',
                     data: [],
                 })
             } else {
