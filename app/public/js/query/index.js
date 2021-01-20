@@ -12,7 +12,7 @@ $(function () {
             return false
         } else {
             // $('#staticBackdrop').modal('show')
-            $('form').submit()
+            // $('form').submit()
             return true
         }
         // let arr = $('form').serializeArray(),
@@ -29,25 +29,46 @@ $(function () {
         // })
         // return false
     })
-    $('#btnAlias').click(() => {
 
-        let search_id = $('#searchId').text(),
-            alias = $('#taskAlias').val()
+    $('#btnRun').click(() => {
 
-        if (!alias || !search_id) return
-
-        $.ajax({
-            type: 'PUT',
-            url: '/task/' + search_id,
-            data: {
-                name: alias
-            },
-            headers: {
-                'x-csrf-token': token.value
-            }
-        }).done(res => {
-            console.log(res)
+        let columns = $('#selectedColumns').children()
+        if (columns.length === 0) {
+            // $('#columnAlert').alert('xxxx')
+            alert('请选择输出列')
+            return false
+        }
+        let fmtColumns = []
+        $(columns).each((idx, ele) => {
+            fmtColumns.push({
+                name: $(ele).find('h5').text().trim(),
+                extension: {
+                    show_code: $(ele).find('.show_code')[0].checked,
+                    separate_main: $(ele).find('.separate_main')[0].checked
+                }
+            })
         })
+        let strColumns = JSON.stringify(fmtColumns).replace(/"/g, '&quot;')
+        var input = '<input type="hidden" name="extension" value="' + strColumns + '">'
+        $('.condition-list').append(input)
+        $('form').submit()
+        return true
+
+        // console.log($('#columnAlert').find('.code'))
+        // console.log($('#columnAlert').find('.spreate-main'))
+
+        // $.ajax({
+        //     type: 'PUT',
+        //     url: '/task/' + search_id,
+        //     data: {
+        //         name: alias
+        //     },
+        //     headers: {
+        //         'x-csrf-token': token.value
+        //     }
+        // }).done(res => {
+        //     console.log(res)
+        // })
     })
 
     getCommonTags()

@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "egg-bin dev --max_semi_space_size=256",
+        "dev-old": "egg-bin dev --max_semi_space_size=256",
+        "dev": "egg-bin dev",
         "debug": "egg-bin debug",
         "test-local": "egg-bin test",
         "test": "npm run lint -- --fix && npm run test-local",

@@ -92,3 +92,30 @@ div > xm-select {
     border: var(--bd);
     border-radius: var(--bdr);
 }
+
+.column-select-area {
+    display: flex;
+    overflow-y: auto;
+    border: var(--bd);
+    border-top: none;
+    flex-wrap: wrap;
+    max-height: 300px;
+}
+.column-select-area li {
+    margin: 4px;
+}
+.column-selected-table {
+    display: flex;
+    padding: 0;
+    overflow-x: auto;
+}
+
+.column-selected-table li {
+    margin-right: 4px;
+    white-space: nowrap;
+}
+
+.column-selected-table li:last-of-type {
+    margin-right: 0;
+    
+}

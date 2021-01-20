@@ -1,16 +1,18 @@
 const { Controller } = require('egg')
 const dicCondition = require('../dic/dic_conditions')
+const dicColumn = require('../dic/dic_columns');
 const Rep = require('../class/rep')
 
 class DicController extends Controller {
     async conditionTag() {
         this.ctx.body = new Rep({ data: dicCondition.mapping })
     }
-
     async condition() {
         this.ctx.body = new Rep({ data: dicCondition[this.ctx.query.t] })
     }
-
+    async columns() {
+        this.ctx.body = new Rep({ data: dicColumn[this.ctx.query.t] })
+    }
     // 获取字典
     async dictionary() {
         try {
@@ -31,6 +33,8 @@ class DicController extends Controller {
             this.ctx.body = new Rep({ code: 500, msg: error.message, data: [] })
         }
     }
+
+
 }
 
 module.exports = DicController

@@ -19,6 +19,10 @@ body {
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+hr {
+    border-top: var(--bd);
+}
+
 ol,
 ul {
     padding: 8px;

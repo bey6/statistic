@@ -20,4 +20,5 @@ module.exports = (app) => {
     // dictionary
     router.get('/dic', controller.dic.dictionary)
     router.get('/dic/condition', controller.dic.condition)
+    router.get('/dic/column', controller.dic.columns)
 }

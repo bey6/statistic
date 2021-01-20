@@ -1,10 +1,12 @@
 const Controller = require('egg').Controller
 const dic_condition = require('../dic/dic_conditions')
+const dic_column = require('../dic/dic_columns')
 const { Wsl, Bool, Nested } = require('../class/wsl')
 const fs = require('fs')
 const Rep = require('../class/rep')
 const util = require('../util')
 const xlsx = require('node-xlsx')
+const formatter = require('../formatter')
 
 class QueryController extends Controller {
     // 查询设计页面
@@ -84,20 +86,9 @@ class QueryController extends Controller {
             console.time('search')
             let res = await this.ctx.service.es.search(wsl)
             console.timeEnd('search')
-            // console.log(res)
             await this.ctx.render('query/result.html', {
                 columns: uu_session.columns,
-                list: res.map((d) => ({
-                    ...d._source,
-                    DischargeDateTime: d._source.DischargeDateTime.slice(0, 19).replace('T', ' '),
-                    Diagnosis: d._source.Diagnosis.map(
-                        (b) => {
-                            if (b.InternalICDCode) {
-                                return b.InternalICDCode + '（' + b.InternalICDName + '）'
-                            } else return ''
-                        }
-                    ).join(', '),
-                })),
+                list: res.map(row => this.mapping(row._source, uu_session.columns)),
                 search_id: this.ctx.params.id,
                 pages,
                 prevPage,
@@ -159,24 +150,24 @@ class QueryController extends Controller {
         const uuid = util.uuid()
         try {
             let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
-                columns = [
-                    // { name: 'ID', code: 'ID' },
-                    { name: '病案号', code: 'MRID' },
-                    { name: '患者姓名', code: 'PatientName' },
-                    { name: '性别', code: 'Gender' },
-                    { name: '年龄', code: 'Age' },
-                    // { name: '编码状态', code: 'CodeState' },
-                    { name: '出院时间', code: 'DischargeDateTime' },
-                    { name: '协和诊断', code: 'Diagnosis' },
-                    { name: '生日', code: 'Birthday' },
-                    { name: '民族', code: 'Nation' },
-                    { name: '已婚', code: 'Marriage' },
-                    { name: '入院部门', code: 'InDepart' },
-                    { name: '出院部门', code: 'OutDepart' },
-                    { name: '血型', code: 'ABO' },
-                    { name: '一般医疗服务费', code: 'VFee.一般医疗服务费' },
-                ],
+                columns = [],
                 formData = []
+            console.log(this.ctx.request.body.extension)
+            JSON.parse(this.ctx.request.body.extension).forEach(col => {
+                let column = dic_column.columns.find(c => c.name === col.name)
+                if (column) {
+                    let t = JSON.parse(JSON.stringify(column))
+                    if (t.extension) {
+                        if (!col.extension.show_code) t.extension.show_code = false
+                        if (col.extension.separate_main) t.extension.separate_main = true
+                    }
+                    columns.push(t)
+                }
+            })
+            if (columns.length === 0) {
+                await this.ctx.render('error/index.html', { msg: '缺失输出列或所选输出列无效' })
+                return
+            }
             if (typeof this.ctx.request.body.name === 'string')
                 formData.push(this.ctx.request.body)
             else
@@ -295,7 +286,7 @@ class QueryController extends Controller {
     async standardQuery(formData, columns, uuid, from, size) {
         let wsl = this.packageWsl(
             formData,
-            columns.map((c) => c.code),
+            columns.map(c => this.splitColumnsFields(c)).join(',').split(','), (',').split(','),
             from,
             size
         )
@@ -317,25 +308,6 @@ class QueryController extends Controller {
                 paroxysm_diagnosis_items.push(c.vls.split(','))
             })
 
-        // // 获取符合异次发病的所有 MRID
-        // let paroxysm_mrids = await this.getParoxysmMrids(
-        //     paroxysm_diagnosis_items,
-        //     formData,
-        // )
-
-
-        // // 根据 MRID 获取异次并发记录
-        // return this.getParoxysmRecords(
-        //     paroxysm_diagnosis_items,
-        //     paroxysm_mrids,
-        //     'MRID',
-        //     formData,
-        //     columns,
-        //     uuid,
-        //     from,
-        //     size
-        // )
-
         let hit_ipbids = await this.getParoxysmUid(paroxysm_diagnosis_items, formData)
         return this.getParoxysmRecords(
             paroxysm_diagnosis_items,
@@ -347,46 +319,6 @@ class QueryController extends Controller {
             from,
             size
         )
-    }
-
-    // 获取异次病发病案号
-    async getParoxysmMrids(diagnosis_array_2d, formData) {
-        let mrids = [], // 不去重的 mrids
-            paroxysm = [] // 符合异次病发的 mrid
-        // console.log(JSON.stringify(diagnosis_array_2d))
-        // 每组一次并发条件进行一次循环
-        for (let x = 0; x < diagnosis_array_2d.length; x++) {
-            const diagnosis_array_1d = diagnosis_array_2d[x]
-            let wsl = this.packageWsl(
-                formData,
-                ['MRID'],
-                1,
-                20000000
-            )
-            let nestedBool = new Bool([], [], [], [], 1)
-            diagnosis_array_1d.forEach((d) => {
-                // 本组诊断满足一个即可
-                nestedBool.addTermTo('should', 'Diagnosis.InternalICDCode', d)
-            })
-            let nested = new Nested('Diagnosis', nestedBool)
-            wsl.body.query.addNestedTo('must', nested)
-            // console.log(JSON.stringify(wsl))
-            let count = await this.ctx.service.es.count(wsl)
-            if (count === 0) return []
-            let res = await this.ctx.service.es.search(wsl)
-            // console.log(JSON.stringify(res))
-            mrids.push(
-                ...Array.from(new Set(res.map((d) => d._source.MRID)))
-            )
-        }
-        mrids.forEach((mrid) => {
-            if (
-                mrids.filter((m) => m === mrid).length >=
-                diagnosis_array_2d.length
-            )
-                paroxysm.push(mrid)
-        })
-        return paroxysm
     }
 
     // 获取异次病发 id
@@ -476,7 +408,7 @@ class QueryController extends Controller {
     ) {
         let wsl = this.packageWsl(
             formData,
-            columns.map((c) => c.code),
+            columns.map(c => this.splitColumnsFields(c)).join(',').split(','),
             from,
             size
         )
@@ -503,6 +435,86 @@ class QueryController extends Controller {
         await this.ctx.service.redis.post(uuid, JSON.stringify(session))
         return count
     }
+
+    splitColumnsFields(c) {
+        if (c.path) {
+            return c.columns.split(',').map(f => c.path + '.' + f).join(',')
+        }
+        return c.columns
+    }
+
+    mapping(data_row, columns) {
+        let row = {}
+        columns.forEach((c) => {
+            let t = this.getValue(data_row, c)
+            row[c.code] = t
+        })
+        return row
+    }
+    // 获取值
+    getValue(row, col) {
+        let value = ''
+        if (!col.fileds_type || !col.path || col.fileds_type === 'r') {
+            col.columns.split(',').forEach((c, idx) => {
+                let v = row[c]
+                if (idx !== 0 && col.extension.show_code) v = `（${v}）`
+                value += v
+            })
+        } else {
+            let path_split = col.path.split(',')
+            path_split.reduce((prev, cur, idx) => {
+                if (idx === path_split.length - 1) {
+                    if (col.fileds_type === 'rf') {
+                        col.columns.split(',').forEach((c, idx) => {
+                            let v = prev[cur][c]
+                            if (idx !== 0 && col.extension.show_code) v = `（${v}）`
+                            value += v
+                        })
+                    } else {
+                        let arr = prev[cur]
+                        if (col.nested_order_fields) arr.sort((x, y) => x[col.nested_order_fields] - y[col.nested_order_fields])
+                        value = arr.map((r) => {
+                            let t = ''
+                            if (col.extension.show_code) {
+                                col.columns.split(',').forEach((c, idx) => {
+                                    let v = r[c] || ''
+                                    if (idx !== 0 && col.extension.show_code && v) v = `（${v}）`
+                                    t += v
+                                })
+                            } else {
+                                t = r[col.columns.split(',')[0]] || ''
+                            }
+                            return t
+                        }).filter(x => x).join(', ')
+                    }
+                } else return prev[cur]
+            }, row)
+        }
+        if (col.formatter) value = this.fmtValue(col.formatter, value)
+        return value
+    }
+    // 查找值
+    findValue(row, fields, path, type) {
+        if (!type || !path || type === 'r') {
+            return row[fields]
+        }
+        let path_split = path.split(',')
+        return path_split.reduce((prev, cur, idx) => {
+            if (idx === path_split.length - 1) {
+                if (type === 'rf') {
+                    return prev[cur][fields]
+                } else {
+                    return prev[cur].map((r) => r[fields]).filter(x => x).join(', ')
+                }
+            } else return prev[cur]
+        }, row)
+    }
+    // 格式化值
+    fmtValue(fmt, value) {
+        if (!fmt || !formatter[fmt]) return value
+        else return formatter[fmt](value)
+    }
+
 }
 
 module.exports = QueryController

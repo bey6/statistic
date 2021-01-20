@@ -1,5 +1,50 @@
 module.exports = {
+    // { name: '出院时间', code: 'DischargeDateTime' },
+    // { name: '协和诊断', code: 'Diagnosis' },
     columns: [
+        {
+            name: '病案号',
+            code: 'mrid',
+            columns: 'MRID',
+            py: 'bah',
+            formatter: '',
+            fileds_type: 'r',
+            path: ''
+        },
+        {
+            name: '年龄',
+            code: 'age',
+            columns: 'Age',
+            py: 'nl',
+            formatter: '',
+            fileds_type: 'r',
+            path: ''
+        },
+        {
+            name: '出院时间',
+            code: 'out_time',
+            columns: 'DischargeDateTime',
+            py: 'cysj',
+            formatter: 'timeFmt',
+            fileds_type: 'r',
+            path: ''
+        },
+        {
+            name: '协和诊断',
+            code: 'xh_diagnosis',
+            columns: 'InternalICDName,InternalICDCode',
+            py: 'xhzd',
+            formatter: '',
+            fileds_type: 'raf',
+            path: 'Diagnosis',
+            nested_order_fields: 'DiagnosisOrder',
+            extension: {
+                separate_main: true,
+                show_code: true,
+            }
+        },
+
+
         {
             name: '民族',
             code: 'nation',
@@ -58,6 +103,7 @@ module.exports = {
             path: '',
             extension: {
                 show_code: true
+                // separate_main
             }
         },
     ],

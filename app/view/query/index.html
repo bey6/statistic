@@ -79,30 +79,125 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
 >
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-            <!-- <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">您的检索序号为：</h5>
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLabel">您的检索序号为：</h5> -->
+                <h5 class="modal-title" id="exampleModalLabel">选择输出列</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div> -->
+              </div>
             <div class="modal-body">
-                <div class="spinner-border text-success" role="status">
+                <!-- <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
                 <h3 style="display: inline-block; margin: 0 0 0 12px">
                     正在拼命检索 ···
-                </h3>
+                </h3> -->
                 <!-- <h4 id="searchId" style="text-align: center;"></h4>
                 <hr>
                 <p>是否为您的本次检索任务起个别名？</p>
                 <input id="taskAlias" type="text" class="form-control form-control-sm" maxlength="50"> -->
+
+                <ul class="nav nav-tabs" style="padding-bottom: 0;">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">常用</a>
+                      </li>
+                    {% for tag in tags %}
+                        <li class="nav-item" data-code="{{tag.code}}">
+                            <a class="nav-link" href="#">{{tag.name}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <ul class="column-select-area">
+                    <li><button type="button" class="btn btn-sm btn-light">病案号</button></li>
+                    <li><button type="button" class="btn btn-sm btn-light">姓名</button></li>
+                    <li><button type="button" class="btn btn-sm btn-light">性别</button></li>
+                    <li><button type="button" class="btn btn-sm btn-light">年龄</button></li>
+                    <li><button type="button" class="btn btn-sm btn-light">出院日期</button></li>
+                    <li><button type="button" class="btn btn-sm btn-success">协和出院诊断</button></li>
+                    <li><button type="button" class="btn btn-sm btn-warning">北京出院诊断</button></li>
+                </ul>
+                <hr>
+                <ol class="column-selected-table" id="selectedColumns">
+                    <li>
+                        <div class="card">
+                            <h5 class="card-header" style="padding: 0.5rem 1rem;font-size: 1rem;">病案号<sup><button type="button" class="btn btn-light" style="padding: 0;"><i class="bi bi-x" style="color: red;"></i></button></h5></sup>
+                            <div class="card-body" style="padding: 8px;font-size: 0.9rem;">
+                                <div class="form-group form-check" style="margin-bottom: 8px">
+                                    <input type="checkbox" class="form-check-input show_code" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">显示编码</label>
+                                </div>
+                                <div class="form-group form-check" style="margin-bottom: 0">
+                                    <input type="checkbox" class="form-check-input separate_main" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">主诊单列</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card">
+                            <h5 class="card-header" style="padding: 0.5rem 1rem;font-size: 1rem;">年龄<sup><button type="button" class="btn btn-light" style="padding: 0;"><i class="bi bi-x" style="color: red;"></i></button></h5></sup>
+                            <div class="card-body" style="padding: 8px;font-size: 0.9rem;">
+                                <div class="form-group form-check" style="margin-bottom: 8px">
+                                    <input type="checkbox" class="form-check-input show_code" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">显示编码</label>
+                                </div>
+                                <div class="form-group form-check" style="margin-bottom: 0">
+                                    <input type="checkbox" class="form-check-input separate_main" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">主诊单列</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card">
+                            <h5 class="card-header" style="padding: 0.5rem 1rem;font-size: 1rem;">协和诊断<sup><button type="button" class="btn btn-light" style="padding: 0;"><i class="bi bi-x" style="color: red;"></i></button></h5></sup>
+                            <div class="card-body" style="padding: 8px;font-size: 0.9rem;">
+                                <div class="form-group form-check" style="margin-bottom: 8px">
+                                    <input type="checkbox" class="form-check-input show_code" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">显示编码</label>
+                                </div>
+                                <div class="form-group form-check" style="margin-bottom: 0">
+                                    <input type="checkbox" class="form-check-input separate_main" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">主诊单列</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card">
+                            <h5 class="card-header" style="padding: 0.5rem 1rem;font-size: 1rem;">出院时间<sup><button type="button" class="btn btn-light" style="padding: 0;"><i class="bi bi-x" style="color: red;"></i></button></h5></sup>
+                            <div class="card-body" style="padding: 8px;font-size: 0.9rem;">
+                                <div class="form-group form-check" style="margin-bottom: 8px">
+                                    <input type="checkbox" class="form-check-input show_code" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">显示编码</label>
+                                </div>
+                                <div class="form-group form-check" style="margin-bottom: 0">
+                                    <input type="checkbox" class="form-check-input separate_main" id="exampleCheck1" style="margin-top: 2px;">
+                                    <label class="form-check-label" for="exampleCheck1">主诊单列</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+                <!-- <div id="columnAlert">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 12px 0 0 0;">
+                        您还没有选择输出列
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div> -->
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="bi bi-x"></i> 不需要</button>
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="btnAlias"><i class="bi bi-check2"></i> 确定</button>
-              </div> -->
+            <div class="modal-footer">
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="remenberme" style="margin-top: 2px;"><label class="form-check-label" for="remenberme" style="font-size: 0.8em;">记住我的选择</label>
+                </div>
+                <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="bi bi-x"></i> 取消</button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="btnRun"><i class="bi bi-check2"></i> 选好了</button>
+            </div>
         </div>
     </div>
 </div>
