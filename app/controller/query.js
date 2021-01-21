@@ -107,41 +107,50 @@ class QueryController extends Controller {
                 msg: 'id 参数是必传项',
             })
         } else {
-            let filePath = 'search_task/' + this.ctx.params.id + '.json'
-            if (!fs.existsSync(filePath)) {
-                this.ctx.body = new Rep({
-                    code: 50000,
-                    msg: 'search_id 无效，或该结果已被清理',
-                })
-            } else {
-                let res = fs.readFileSync(filePath)
-                let resObj = JSON.parse(res.toString())
-                if (resObj.code && resObj.code === 20000) {
-                    const data = [['MRID', 'PatientName', 'Diagnosis']]
-                    let dataRow = resObj.data.map((row) => [
-                        row.MRID,
-                        row.PatientName,
-                        row.Diagnosis,
-                    ])
-                    const options = {
-                        '!cols': [
-                            { wch: 10 },
-                            { wch: 10 },
-                            { wch: 40 },
-                        ] /**, '!rows': [{ hpx: 50 }, { hpx: 50 }] */,
-                    }
-                    this.ctx.response.set(
-                        'content-type',
-                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    )
-                    this.ctx.body = xlsx.build(
-                        [{ name: 'sheet1', data: data.concat(dataRow) }],
-                        options
-                    )
-                } else {
-                    this.ctx.body = resObj
-                }
+            let f = await this.ctx.service.redis.get(this.ctx.params.id)
+            if (!f) {
+                await this.ctx.render('error/index.html', { msg: '查询会话已超时，请重新检索' })
+                return
+                // new Rep({ code: 50000, msg: '查询回话已超时，请重新检索' })
+                // return
             }
+
+            let uu_session = f,
+                limit = 1000,
+                pages_num = Math.ceil(uu_session.total / limit),
+                wsl = uu_session.wsl
+            wsl.body.size = limit
+
+            // 列头
+            const data = [[...uu_session.columns.map(c => c.name)]]
+            let dataRow = []
+            console.time('dowload')
+            for (let p = 0; p < pages_num; p++) {
+                wsl.body.from = p * limit
+                let res = await this.ctx.service.es.search(wsl)
+                dataRow = dataRow.concat(res.map(row => this.mapping(row._source, uu_session.columns, 'array')))
+            }
+            console.timeEnd('dowload')
+
+            // // 样式
+            // const options = {
+            //     '!cols': [
+            //         { wch: 10 },
+            //         { wch: 10 },
+            //         { wch: 40 },
+            //     ] /**, '!rows': [{ hpx: 50 }, { hpx: 50 }] */,
+            // }
+
+            // 设置相应体类型
+            this.ctx.response.set(
+                'content-type',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+            // 构建 excel
+            this.ctx.body = xlsx.build(
+                [{ name: 'sheet1', data: data.concat(dataRow) }]
+                // options
+            )
         }
     }
 
@@ -152,7 +161,6 @@ class QueryController extends Controller {
             let mapping = ['name', 'code', 'relation', 'operation', 'vls'],
                 columns = [],
                 formData = []
-            console.log(this.ctx.request.body.extension)
             JSON.parse(this.ctx.request.body.extension).forEach(col => {
                 let column = dic_column.columns.find(c => c.name === col.name)
                 if (column) {
@@ -212,15 +220,6 @@ class QueryController extends Controller {
             )
         console.timeEnd('search')
         return count
-        // res.total = tmp.total
-        // res.data = tmp.data.map((d) => ({
-        //     ...d._source,
-        //     Diagnosis: d._source.Diagnosis.map((g) => g.InternalICDCode).join(
-        //         ', '
-        //     ),
-        // }))
-
-        // return res
     }
 
     /**
@@ -437,17 +436,23 @@ class QueryController extends Controller {
     }
 
     splitColumnsFields(c) {
+        let columns = ''
         if (c.path) {
-            return c.columns.split(',').map(f => c.path + '.' + f).join(',')
-        }
-        return c.columns
+            columns = c.columns.split(',').map(f => c.path + '.' + f).join(',')
+            if (c.nested_order_fields) {
+                columns += `,${c.path}.${c.nested_order_fields}`
+            }
+        } else columns = c.columns
+        return columns
     }
 
-    mapping(data_row, columns) {
+    mapping(data_row, columns, type = 'obj') {
         let row = {}
+        if (type === 'array') row = []
         columns.forEach((c) => {
             let t = this.getValue(data_row, c)
-            row[c.code] = t
+            if (type === 'array') row.push(t)
+            else row[c.code] = t
         })
         return row
     }
@@ -472,6 +477,7 @@ class QueryController extends Controller {
                         })
                     } else {
                         let arr = prev[cur]
+                        if (!arr) return ''
                         if (col.nested_order_fields) arr.sort((x, y) => x[col.nested_order_fields] - y[col.nested_order_fields])
                         value = arr.map((r) => {
                             let t = ''
@@ -493,28 +499,11 @@ class QueryController extends Controller {
         if (col.formatter) value = this.fmtValue(col.formatter, value)
         return value
     }
-    // 查找值
-    findValue(row, fields, path, type) {
-        if (!type || !path || type === 'r') {
-            return row[fields]
-        }
-        let path_split = path.split(',')
-        return path_split.reduce((prev, cur, idx) => {
-            if (idx === path_split.length - 1) {
-                if (type === 'rf') {
-                    return prev[cur][fields]
-                } else {
-                    return prev[cur].map((r) => r[fields]).filter(x => x).join(', ')
-                }
-            } else return prev[cur]
-        }, row)
-    }
     // 格式化值
     fmtValue(fmt, value) {
         if (!fmt || !formatter[fmt]) return value
         else return formatter[fmt](value)
     }
-
 }
 
 module.exports = QueryController
