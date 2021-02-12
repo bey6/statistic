@@ -1,0 +1,23 @@
+{% extends "../parent.html" %} {% block header %} {% endblock %} {% block
+content %}
+<table class="table table-sm table-bordered table-hover table-stick">
+  <thead>
+    <tr>
+      <th scope="col" style="text-align: center">序号</th>
+      {% for col in columns %}
+      <th scope="col">{{ col.name }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in list %}
+    <tr>
+      <th scope="col" width="50" style="text-align: center">{{loop.index}}</th>
+      {% for col in columns %}
+      <td>{{row[col.code]}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #2cbf9a;
+  --sub-color: #239175;
+  --bd: 1px solid #ced4da;
+  --bdr: 3px;
+  --bgc: #eee;
+}
+
+html,
+body {
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+hr {
+  border-top: var(--bd);
+}
+
+ol,
+ul {
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+}
+
+header {
+  display: flex;
+  background-color: var(--main-color);
+  height: 51px;
+  border-bottom: 1px solid #555;
+}
+
+table.table {
+  position: relative;
+  margin: 0;
+}
+
+table.table-stick thead tr {
+  position: sticky;
+  top: 0;
+  background-color: #f8f8f8;
+}
+
+thead tr {
+  top: 0;
+}
+
+table.table th,
+td {
+  white-space: nowrap;
+}
+
+tr {
+  line-height: 100%;
+}
+
+sub {
+  color: crimson;
+}
+
+.btn .badge--lt {
+  position: absolute;
+  left: 3px;
+  top: 7px;
+  color: #fff;
+  background-color: rgba(220, 20, 60, 0.8);
+}
+
+@-moz-document url-prefix() {
+  select.form-control {
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('../img/chevron-down.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 7px) 50%;
+    background-size: 14px 14px;
+    border-radius: 3px;
+    padding: 0;
+  }
+}
