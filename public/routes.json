@@ -1,0 +1,15 @@
+{
+  "label": "通用",
+  "items": [
+    {
+      "label": "主页",
+      "icon": "pi pi-fw pi-home",
+      "to": "/"
+    },
+    {
+      "label": "包",
+      "icon": "pi pi-fw pi-th-large",
+      "to": "/packages"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+.p-panelmenu .p-panelmenu-panel:last-child .p-panelmenu-content {
+  border: 0;
+}
+.p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header > a {
+  border-radius: 0;
+}
+.p-panelmenu
+  .p-panelmenu-panel:last-child
+  .p-panelmenu-header:not(.p-highlight)
+  > a {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+.p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header > a {
+  border-left: none;
+  border-right: none;
+}
+.p-panelmenu .p-panelmenu-panel:not(:first-child) .p-panelmenu-header > a {
+  border-left: none;
+  border-right: none;
+}
+.p-panelmenu .p-panelmenu-panel .p-panelmenu-content {
+  border-left: none;
+  border-right: none;
+}
+.p-menu {
+  width: 100%;
+  border: 0;
+  li.p-menuitem {
+    padding: 0 12px;
+  }
+}
+
+.p-avatar img {
+  border-radius: 3px;
+}
+.p-divider.p-divider-horizontal {
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+  border-radius: 3px;
+}
