@@ -1,0 +1,120 @@
+{
+  "columns": [
+    {
+      "name": "病案号",
+      "code": "mrid",
+      "columns": "MRID",
+      "py": "bah",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": ""
+    },
+    {
+      "name": "年龄",
+      "code": "age",
+      "columns": "Age",
+      "py": "nl",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": ""
+    },
+    {
+      "name": "出院时间",
+      "code": "out_time",
+      "columns": "DischargeDateTime",
+      "py": "cysj",
+      "formatter": "timeFmt",
+      "fileds_type": "r",
+      "path": ""
+    },
+    {
+      "name": "协和主诊断",
+      "code": "xh_m_diagnosis",
+      "columns": "InternalICDName,InternalICDCode",
+      "py": "xhzzd",
+      "formatter": "",
+      "fileds_type": "rf",
+      "path": "BaseDiagnosis",
+      "nested_order_fields": "",
+      "extension": {
+        "separate_main": true,
+        "show_code": true
+      }
+    },
+    {
+      "name": "协和诊断",
+      "code": "xh_diagnosis",
+      "columns": "InternalICDName,InternalICDCode",
+      "py": "xhzd",
+      "formatter": "",
+      "fileds_type": "raf",
+      "path": "Diagnosis",
+      "nested_order_fields": "DiagnosisOrder",
+      "extension": {
+        "separate_main": true,
+        "show_code": true
+      }
+    },
+
+    {
+      "name": "民族",
+      "code": "nation",
+      "columns": "NationName,NationCode",
+      "py": "mz",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": "",
+      "extension": {
+        "show_code": true
+      }
+    },
+    {
+      "name": "籍贯（省）",
+      "code": "province",
+      "columns": "ProvinceName,ProvinceCode",
+      "py": "jgs",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": "",
+      "extension": {
+        "show_code": true
+      }
+    },
+    {
+      "name": "新生儿入院体重",
+      "code": "ProvinceName",
+      "columns": "ProvinceName,ProvinceCode",
+      "py": "jgs",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": "",
+      "extension": {
+        "show_code": true
+      }
+    },
+    {
+      "code": "ProvinceName",
+      "name": "新生儿年龄(天)",
+      "columns": "ProvinceName,ProvinceCode",
+      "py": "jgs",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": "",
+      "extension": {
+        "show_code": true
+      }
+    },
+    {
+      "code": "ProvinceName",
+      "name": "新生儿年龄(月)",
+      "columns": "ProvinceName,ProvinceCode",
+      "py": "jgs",
+      "formatter": "",
+      "fileds_type": "r",
+      "path": "",
+      "extension": {
+        "show_code": true
+      }
+    }
+  ]
+}

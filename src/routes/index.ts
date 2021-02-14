@@ -4,6 +4,7 @@ import Packages from '../pages/Packages.vue'
 import About from '../pages/About.vue'
 import Profile from '../pages/Profile.vue'
 import Settings from '../pages/Settings.vue'
+import Result from '../pages/Result.vue'
 
 const routes = [
   {
@@ -18,6 +19,13 @@ const routes = [
     component: Packages,
     meta: {
       label: '包',
+    },
+  },
+  {
+    path: '/result',
+    component: Result,
+    meta: {
+      label: '结果',
     },
   },
   {

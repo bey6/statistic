@@ -1,7 +1,12 @@
 <template>
   <div class="p-grid nested-grid">
     <div class="p-col-fixed" style="width: 200px">
-      <Listbox :options="cities" optionLabel="name" style="height: 100%" />
+      <Listbox
+        :options="cities"
+        optionLabel="name"
+        style="height: 100%"
+        v-model="pkg"
+      />
     </div>
     <div class="p-col">
       <div class="p-d-flex p-flex-column" style="height: 100%">
@@ -30,6 +35,9 @@
                 @complete="searchCountry($event)"
                 field="name"
               />
+            </div>
+            <div>
+              <Button label="Search" icon="pi pi-search" @click="onSearch" />
             </div>
           </div>
         </div>
@@ -61,6 +69,7 @@ export default defineComponent({
   },
   data() {
     return {
+      pkg: null,
       cities: [
         { name: '常用查询包', code: 'NY' },
         { name: '顺位表统计', code: 'RM' },
@@ -94,6 +103,9 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(['setMenuStatus']),
+    onSearch() {
+      this.$router.push('/result')
+    },
   },
   mounted() {
     this.setMenuStatus(!this.getMenuStatus)
@@ -104,6 +116,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 .border {
   margin-bottom: 14px;
-  border: 1px solid #dee2e6;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  background-color: #fff;
+}
+.border:last-of-type {
+  margin-bottom: 0;
 }
 </style>

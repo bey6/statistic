@@ -43,3 +43,10 @@
 .p-menu .p-menuitem-link:not(.p-disabled):hover {
   border-radius: 3px;
 }
+.layout-wrapper .layout-content {
+  position: relative;
+  padding: 1rem;
+}
+.p-listbox .p-listbox-list .p-listbox-item.p-highlight {
+  border-right: 2px solid #393;
+}
