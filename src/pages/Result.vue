@@ -1,5 +1,12 @@
 <template>
   <div class="card" style="height: 100%">
+    <div>
+      <Button
+        icon="pi pi-angle-left"
+        class="p-button-rounded p-button-text"
+        @click="$router.go(-1)"
+      />
+    </div>
     <h5>The result of your search</h5>
     <DataTable
       :value="customers"

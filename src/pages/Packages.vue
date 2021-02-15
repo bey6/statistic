@@ -11,15 +11,7 @@
     <div class="p-col">
       <div class="p-d-flex p-flex-column" style="height: 100%">
         <div class="border">
-          <TabView>
-            <TabPanel v-for="tab in tabs" :key="tab.title" :header="tab.title">
-              <ul class="condition-list">
-                <li v-for="cdt in conditions[tab.content]" :key="cdt.key">
-                  {{ cdt.name }}
-                </li>
-              </ul>
-            </TabPanel>
-          </TabView>
+          <Tags :conditions="conditions" v-model="condition" />
         </div>
         <div class="p-d-flex border" style="padding: 12px 20px">
           <div class="p-mr-2">
@@ -32,7 +24,7 @@
             />
           </div>
           <div class="p-mr-2">
-            <span style="line-height: 32px">出院31天再入院计划</span>
+            <span style="line-height: 32px">{{ condition.name }}</span>
           </div>
           <div class="p-mr-2">
             <Dropdown
@@ -44,13 +36,11 @@
             />
           </div>
           <div class="p-mr-2">
-            <AutoComplete
-              :multiple="true"
+            <!-- :multiple="true"
               v-model="selectedCountries"
               :suggestions="filteredCountries"
-              @complete="searchCountry($event)"
-              field="name"
-            />
+              @complete="searchCountry($event)" -->
+            <AutoComplete field="name" />
           </div>
           <div class="p-mr-2">
             <Button label="添加" icon="pi pi-plus" class="p-button-sm" />
@@ -62,7 +52,7 @@
             <li>并且 年龄 介于 18-50</li>
           </ol>
         </div>
-        <div class="" style="text-align: right">
+        <div style="text-align: right">
           <Button
             label="选好了"
             icon="pi pi-arrow-right"
@@ -72,17 +62,44 @@
         </div>
       </div>
     </div>
+
+    <Dialog
+      header="您希望查看哪些首页字段项？"
+      v-model:visible="displayModal"
+      :style="{ width: '80vw' }"
+      :modal="true"
+    >
+      <div class="border">
+        <Tags :conditions="conditions" v-model="condition" />
+      </div>
+      <template #footer>
+        <Button
+          label="取消"
+          icon="pi pi-times"
+          @click="onModalClose"
+          class="p-button-text"
+        />
+        <Button
+          label="选好了"
+          icon="pi pi-check"
+          @click="onModalConfirm"
+          autofocus
+        />
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
+import Tags from '../components/Tags.vue'
 import AutoComplete from 'primevue/autocomplete'
 import Listbox from 'primevue/listbox'
 
 export default defineComponent({
   components: {
+    Tags,
     AutoComplete,
     Listbox,
   },
@@ -118,11 +135,19 @@ export default defineComponent({
         },
       ],
       conditions: [],
+      condition: {},
+      displayModal: false,
     }
   },
   methods: {
     ...mapMutations(['setMenuStatus']),
     onSearch() {
+      this.displayModal = true
+    },
+    onModalClose() {
+      this.displayModal = false
+    },
+    onModalConfirm() {
       this.$router.push('/result')
     },
   },
@@ -130,9 +155,9 @@ export default defineComponent({
     this.setMenuStatus(!this.getMenuStatus)
   },
   created() {
-    fetch('conditions.json').then((hres) =>
-      hres.json().then((dres) => {
-        this.conditions = dres
+    fetch('conditions.json').then((http) =>
+      http.json().then((res) => {
+        this.conditions = res.conditions
       })
     )
   },
@@ -140,12 +165,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.border {
-  margin-bottom: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 3px;
-  background-color: #fff;
-}
 .border:last-of-type {
   margin-bottom: 0;
 }
