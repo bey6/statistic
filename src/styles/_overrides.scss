@@ -48,5 +48,9 @@
   padding: 1rem;
 }
 .p-listbox .p-listbox-list .p-listbox-item.p-highlight {
-  border-right: 2px solid #393;
+  border-right: 2px solid #2096f3;
+}
+.p-dropdown .p-dropdown-label {
+  padding: 0 8px;
+  line-height: 32px;
 }

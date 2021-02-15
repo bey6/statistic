@@ -2,9 +2,9 @@
   <div class="p-grid nested-grid">
     <div class="p-col-fixed" style="width: 200px">
       <Listbox
-        :options="cities"
+        :options="packages"
         optionLabel="name"
-        style="height: 100%"
+        style="min-height: 256px; height: 100%"
         v-model="pkg"
       />
     </div>
@@ -13,40 +13,62 @@
         <div class="border">
           <TabView>
             <TabPanel v-for="tab in tabs" :key="tab.title" :header="tab.title">
-              <p>{{ tab.content }}</p>
+              <ul class="condition-list">
+                <li v-for="cdt in conditions[tab.content]" :key="cdt.key">
+                  {{ cdt.name }}
+                </li>
+              </ul>
             </TabPanel>
           </TabView>
         </div>
-        <div class="border">
-          <div class="p-grid">
-            <div>
-              <Dropdown
-                v-model="relation"
-                :options="relations"
-                optionLabel="name"
-                placeholder="Select a relations"
-              />
-            </div>
-            <div class="p-col-4">
-              <AutoComplete
-                :multiple="true"
-                v-model="selectedCountries"
-                :suggestions="filteredCountries"
-                @complete="searchCountry($event)"
-                field="name"
-              />
-            </div>
-            <div>
-              <Button label="Search" icon="pi pi-search" @click="onSearch" />
-            </div>
+        <div class="p-d-flex border" style="padding: 12px 20px">
+          <div class="p-mr-2">
+            <Dropdown
+              v-model="relation"
+              :options="relations"
+              optionLabel="name"
+              style="height: 32px"
+              placeholder="选择一个关系"
+            />
+          </div>
+          <div class="p-mr-2">
+            <span style="line-height: 32px">出院31天再入院计划</span>
+          </div>
+          <div class="p-mr-2">
+            <Dropdown
+              v-model="operation"
+              :options="operations"
+              optionLabel="name"
+              style="height: 32px"
+              placeholder="选择一个比较符"
+            />
+          </div>
+          <div class="p-mr-2">
+            <AutoComplete
+              :multiple="true"
+              v-model="selectedCountries"
+              :suggestions="filteredCountries"
+              @complete="searchCountry($event)"
+              field="name"
+            />
+          </div>
+          <div class="p-mr-2">
+            <Button label="添加" icon="pi pi-plus" class="p-button-sm" />
           </div>
         </div>
         <div class="border">
           <ol>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
+            <li>并且 病案号 等于 2021982</li>
+            <li>并且 年龄 介于 18-50</li>
           </ol>
+        </div>
+        <div class="" style="text-align: right">
+          <Button
+            label="选好了"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            @click="onSearch"
+          />
         </div>
       </div>
     </div>
@@ -70,7 +92,7 @@ export default defineComponent({
   data() {
     return {
       pkg: null,
-      cities: [
+      packages: [
         { name: '常用查询包', code: 'NY' },
         { name: '顺位表统计', code: 'RM' },
       ],
@@ -79,26 +101,23 @@ export default defineComponent({
         { name: '或者', code: 'or' },
       ],
       relation: { name: '并且', code: 'and' },
+      operations: [
+        { name: '等于', code: '=' },
+        { name: '大于', code: '>' },
+        { name: '小于', code: '<' },
+      ],
+      operation: { name: '等于', code: '=' },
       tabs: [
         {
-          title: '全部',
-          content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-        },
-        {
           title: '常用',
-          content: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                            voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.`,
+          content: 'basic',
         },
         {
           title: '住院',
-          content: `At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-                            cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-                            Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.`,
+          content: 'inpatient',
         },
       ],
+      conditions: [],
     }
   },
   methods: {
@@ -109,6 +128,13 @@ export default defineComponent({
   },
   mounted() {
     this.setMenuStatus(!this.getMenuStatus)
+  },
+  created() {
+    fetch('conditions.json').then((hres) =>
+      hres.json().then((dres) => {
+        this.conditions = dres
+      })
+    )
   },
 })
 </script>
@@ -122,5 +148,27 @@ export default defineComponent({
 }
 .border:last-of-type {
   margin-bottom: 0;
+}
+.condition-list {
+  display: flex;
+  padding: 8px;
+  margin: 0;
+  flex-wrap: wrap;
+  list-style: none;
+
+  li {
+    margin: 0 8px 8px 0;
+    padding: 0 12px;
+    border: 1px solid #ced4da;
+    background-color: #fafafa;
+    border-radius: 3px;
+    height: 32px;
+    line-height: 32px;
+
+    &:hover {
+      background-color: #e6e8ec;
+      cursor: default;
+    }
+  }
 }
 </style>
