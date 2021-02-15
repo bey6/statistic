@@ -54,7 +54,7 @@
         </div>
         <div style="text-align: right">
           <Button
-            label="选好了"
+            label="检索条件选好了"
             icon="pi pi-arrow-right"
             iconPos="right"
             @click="onSearch"
@@ -64,13 +64,20 @@
     </div>
 
     <Dialog
-      header="您希望查看哪些首页字段项？"
+      header="您希望查阅哪些首页字段项？"
       v-model:visible="displayModal"
       :style="{ width: '80vw' }"
       :modal="true"
     >
       <div class="border">
         <Tags :conditions="conditions" v-model="condition" />
+      </div>
+      <div class="border" style="overflow-x: auto">
+        <ol id="selected-columns-list">
+          <li v-for="col in selectedColumns" :key="col.key" draggable="true">
+            {{ col.name }}
+          </li>
+        </ol>
       </div>
       <template #footer>
         <Button
@@ -137,6 +144,7 @@ export default defineComponent({
       conditions: [],
       condition: {},
       displayModal: false,
+      selectedColumns: [],
     }
   },
   methods: {
@@ -160,6 +168,15 @@ export default defineComponent({
         this.conditions = res.conditions
       })
     )
+  },
+  watch: {
+    condition: {
+      handler(nv: object) {
+        if (nv) {
+          this.selectedColumns.push(nv)
+        }
+      },
+    },
   },
 })
 </script>
@@ -187,6 +204,33 @@ export default defineComponent({
     &:hover {
       background-color: #e6e8ec;
       cursor: default;
+    }
+  }
+}
+#selected-columns-list {
+  padding: 18px;
+  margin: 0;
+  list-style: none;
+  max-height: 10rem;
+  white-space: nowrap;
+  text-align: start;
+
+  li {
+    padding: 0.2rem 0.5rem;
+    display: inline-block;
+    vertical-align: top;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    width: 2rem;
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    border-radius: 2px;
+
+    &:hover {
+      background: #f1f1f1;
     }
   }
 }
