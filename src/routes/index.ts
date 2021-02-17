@@ -11,14 +11,14 @@ const routes = [
     path: '/',
     component: Home,
     meta: {
-      label: '主页',
+      label: '仪表盘',
     },
   },
   {
     path: '/packages',
     component: Packages,
     meta: {
-      label: '包',
+      label: '检索与统计分析',
     },
   },
   {

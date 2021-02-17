@@ -1,0 +1,20 @@
+{
+  "packages": [
+    {
+      "key": "",
+      "name": "常用查询包",
+      "signature": "",
+      "public_key": "",
+      "fields": [],
+      "statistic": []
+    },
+    {
+      "key": "",
+      "name": "顺位表统计",
+      "signature": "",
+      "public_key": "",
+      "fields": [],
+      "statistic": []
+    }
+  ]
+}

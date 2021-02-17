@@ -32,7 +32,7 @@ import TabPanel from 'primevue/tabpanel'
 import Dialog from 'primevue/dialog'
 
 export default (app: any) => {
-  app.use(primevue)
+  app.use(primevue, { ripple: true })
   let c = {
     Button,
     Card,

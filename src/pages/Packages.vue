@@ -1,13 +1,13 @@
 <template>
   <div class="p-grid nested-grid">
-    <div class="p-col-fixed" style="width: 200px">
+    <!-- <div class="p-col-fixed" style="width: 200px">
       <Listbox
         :options="packages"
         optionLabel="name"
         style="min-height: 256px; height: 100%"
         v-model="pkg"
       />
-    </div>
+    </div> -->
     <div class="p-col">
       <div class="p-d-flex p-flex-column" style="height: 100%">
         <div class="border">
@@ -53,11 +53,12 @@
           </ol>
         </div>
         <div style="text-align: right">
+          <Button label="去检索" icon="pi pi-search" @click="onSearch" />
           <Button
-            label="检索条件选好了"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            @click="onSearch"
+            label="去统计"
+            icon="pi pi-chart-bar"
+            class="p-button-warning"
+            style="margin-left: 12px"
           />
         </div>
       </div>
